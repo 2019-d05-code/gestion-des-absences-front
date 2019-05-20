@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import {Collegue} from "./auth.domains";
-import {AuthService} from "./auth.service";
-import {Router} from "@angular/router";
+import { Collegue } from "./auth.domains";
+import { AuthService } from "./auth.service";
+import { Router } from "@angular/router";
 
 /**
  * Formulaire d'authentification.
@@ -9,15 +9,15 @@ import {Router} from "@angular/router";
 @Component({
   selector: 'app-auth',
   templateUrl: './auth.component.html',
-  styles: []
+  styles: ['./auth.component.css']
 })
 export class AuthComponent implements OnInit {
 
 
-  collegue:Collegue = new Collegue({});
-  err:boolean;
+  collegue: Collegue = new Collegue({});
+  err: boolean;
 
-  constructor(private _authSrv:AuthService, private _router:Router) { }
+  constructor(private _authSrv: AuthService, private _router: Router) { }
 
   ngOnInit() {
   }
@@ -30,7 +30,17 @@ export class AuthComponent implements OnInit {
         col => this._router.navigate(['/tech']),
 
         // en cas d'erreur, affichage d'un message d'erreur
-        err =>this.err = true
+        err => this.err = true
+      );
+  }
+
+  deconnecter() {
+    this._authSrv.seDeconnecter()
+      .subscribe(
+        // en cas de succès, redirection vers la page d'accueil
+        // TODO
+        col => this._router.navigate(['/tech']),
+
       );
   }
 
