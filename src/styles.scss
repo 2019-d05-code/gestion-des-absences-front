@@ -1,1 +1,28 @@
 /* You can add global styles to this file, and also import other style files */
+
+/* Allez un peu de charte graphique hein ;) */
+body,h1,h2,h3,h4,h5,h6 {font-family: "Lato", sans-serif;}
+body, html {
+  height: 100%;
+  color: #777;
+  line-height: 1.8;
+}
+
+/* Create a Parallax Effect */
+.bgimg-1, .bgimg-2, .bgimg-3 {
+  background-attachment: fixed;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+/* First image (Logo. Full height) */
+.bgimg-1 {
+  background-image: url('https://i.pinimg.com/originals/0e/0f/9a/0e0f9a113ab39082226e71fbbcab3a31.jpg');
+  background-position: bottom;
+  min-height: 70%;
+}
+
+.w3-wide {letter-spacing: 10px;}
+.w3-hover-opacity {cursor: pointer;}
+
