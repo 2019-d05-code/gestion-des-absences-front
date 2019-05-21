@@ -12,11 +12,11 @@ import { GestionAbsencesComponent } from './gestion-absences/gestion-absences.co
 
 export const routes: Routes = [
 	{ path:'accueil', component: AccueilComponent, canActivate:[StatutConnecteService] },
-	{ path:'gestion-absences', component: GestionAbsencesComponent},
-	{ path:'planning-absences', component: PlanningComponent},
-	{ path:'validation-demandes', component: ValidationDemandesComponent},
-	{ path:'vues-synthetiques', component: ManagerVueSynthetiqueComponent},
-	{ path:'jour-feries', component: JourFerieVisuComponent},
+	{ path:'gestion-absences', component: GestionAbsencesComponent, canActivate:[StatutConnecteService]},
+	{ path:'planning-absences', component: PlanningComponent, canActivate:[StatutConnecteService]},
+	{ path:'validation-demandes', component: ValidationDemandesComponent, canActivate:[StatutConnecteService]},
+	{ path:'vues-synthetiques', component: ManagerVueSynthetiqueComponent, canActivate:[StatutConnecteService]},
+	{ path:'jour-feries', component: JourFerieVisuComponent, canActivate:[StatutConnecteService]},
 	{ path:'connexion', component: AuthComponent},
 
 
