@@ -27,7 +27,7 @@ export class AuthComponent implements OnInit {
       .subscribe(
         // en cas de succès, redirection vers la page d'accueil
         // TODO
-        col => this._router.navigate(['/tech']),
+        col => this._router.navigate(['/accueil']),
 
         // on utilise pas l'erreur (pour l'instant)
         () => this.err = true
@@ -39,7 +39,7 @@ export class AuthComponent implements OnInit {
       .subscribe(
         // en cas de succès, redirection vers la page d'accueil
         // TODO
-        col => this._router.navigate(['/tech']),
+        col => this._router.navigate(['/auth']),
 
 		// on utilise pas l'erreur (pour l'instant)
         () => this.err = true
