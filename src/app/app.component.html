@@ -6,10 +6,6 @@
     </div>
   </div>
 
-    <div *ngIf="!(collegueConnecte | async).estAnonyme()">
-      <span>{{(collegueConnecte | async).email}}</span>
-      <span>({{(collegueConnecte | async).roles}})</span>
-      <a  class="btn btn-danger" (click)="seDeconnecter()">Se déconnecter</a>
-    </div>
+    <app-deconnexion></app-deconnexion>
 
   <router-outlet></router-outlet>
