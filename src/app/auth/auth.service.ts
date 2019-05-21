@@ -93,7 +93,6 @@ export class AuthService {
    * @returns {Observable<any>}
    */
   seDeconnecter() {
-
     const config = {
       headers: new HttpHeaders({
         'Content-Type': 'application/x-www-form-urlencoded'
