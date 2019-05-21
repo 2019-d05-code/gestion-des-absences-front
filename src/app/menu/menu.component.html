@@ -28,22 +28,26 @@
 				<a class="nav-link" routerLink="/planning-absences" routerLinkActive="active-link">Planning des
 					absences</a>
 			</li>
-			<li class="nav-item">
-				<a class="nav-link" routerLink="/planning-absences" routerLinkActive="active-link">Validation
-					demandes</a>
-			</li>
-			<li class="nav-item">
+			<div *ngIf="!(collegueConnecte | async).estAnonyme()">
 
+				<li class="nav-item">
+					<a class="nav-link" routerLink="/planning-absences" routerLinkActive="active-link">Validation
+						demandes</a>
+				</li>
+			</div>
+			<div *ngIf="!(collegueConnecte | async).estAnonyme()">
+			<li class="nav-item">
 				<a class="nav-link" routerLink="/planning-absences" routerLinkActive="active-link">Vues synthétiques</a>
 			</li>
-
-			<li class="nav-item">
-				<a class="nav-link" routerLink="/jour-feries" routerLinkActive="active-link">Jour Fériés</a>
-			</li>
-		</ul>
+		</div>
+	<li class="nav-item">
+		<a class="nav-link" routerLink="/jour-feries" routerLinkActive="active-link">Jour Fériés</a>
+	</li>
+	</ul>
 
 
 	</div>
 
 </nav>
+
 <!--/.Navbar-->
