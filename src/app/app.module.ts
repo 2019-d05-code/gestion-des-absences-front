@@ -23,6 +23,7 @@ import { ValidationDemandesComponent } from './validation-demandes/validation-de
 import { RouterModule } from '@angular/router';
 import { routes } from './app.routes';
 import { DeconnexionComponent } from './deconnexion/deconnexion.component';
+import { GestionAbsencesComponent } from './gestion-absences/gestion-absences.component';
 
 /* import du module calendrier */
 import { CalendarModule, DateAdapter } from 'angular-calendar';
@@ -30,43 +31,43 @@ import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 
-
 @NgModule({
-  declarations: [
-    AppComponent,
-    TechComponent,
-	AuthComponent,
-	AccueilComponent,
-	CreerDemandeAbsenceComponent,
-	JourFerieCreationComponent,
-	JourFerieModifComponent,
-	JourFerieVisuComponent,
-	ManagerVueDptCollabComponent,
-	ManagerVueSynthetiqueComponent,
-	ManagerVueHistogrammeComponent,
-	MenuComponent,
-	PlanningComponent,
-	ValidationDemandesComponent,
-    ModifDemandeAbsenceComponent,
-    DeconnexionComponent
-  ],
-  imports: [
-    BrowserModule,
-    RouterModule.forRoot(routes),
-    HttpClientModule,
-    MDBBootstrapModule.forRoot(),
-	FormsModule,
-	BrowserAnimationsModule,
-    CalendarModule.forRoot({
-      provide: DateAdapter,
-      useFactory: adapterFactory
-    })
-  ],
-  providers: [{
-    provide: HTTP_INTERCEPTORS,
-    useClass: AuthInterceptorService,
-    multi: true
-  }],
-  bootstrap: [AppComponent]
+	declarations: [
+		AppComponent,
+		TechComponent,
+		AuthComponent,
+		AccueilComponent,
+		CreerDemandeAbsenceComponent,
+		JourFerieCreationComponent,
+		JourFerieModifComponent,
+		JourFerieVisuComponent,
+		ManagerVueDptCollabComponent,
+		ManagerVueSynthetiqueComponent,
+		ManagerVueHistogrammeComponent,
+		MenuComponent,
+		PlanningComponent,
+		ValidationDemandesComponent,
+		ModifDemandeAbsenceComponent,
+		DeconnexionComponent,
+		GestionAbsencesComponent,
+	],
+	imports: [
+		BrowserModule,
+		RouterModule.forRoot(routes),
+		HttpClientModule,
+		MDBBootstrapModule.forRoot(),
+		FormsModule,
+		BrowserAnimationsModule,
+		CalendarModule.forRoot({
+			provide: DateAdapter,
+			useFactory: adapterFactory
+		})
+	],
+	providers: [{
+		provide: HTTP_INTERCEPTORS,
+		useClass: AuthInterceptorService,
+		multi: true
+	}],
+	bootstrap: [AppComponent]
 })
 export class AppModule { }
