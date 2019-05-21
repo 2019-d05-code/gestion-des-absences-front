@@ -22,6 +22,7 @@ import { PlanningComponent } from './planning/planning.component';
 import { ValidationDemandesComponent } from './validation-demandes/validation-demandes.component';
 import { RouterModule } from '@angular/router';
 import { routes } from './app.routes';
+import { DeconnexionComponent } from './deconnexion/deconnexion.component';
 
 
 
@@ -41,7 +42,8 @@ import { routes } from './app.routes';
 	MenuComponent,
 	PlanningComponent,
 	ValidationDemandesComponent,
-    ModifDemandeAbsenceComponent
+    ModifDemandeAbsenceComponent,
+    DeconnexionComponent
   ],
   imports: [
     BrowserModule,

@@ -1,0 +1,5 @@
+<div *ngIf="!(collegueConnecte | async).estAnonyme()">
+	<span>{{(collegueConnecte | async).email}}</span>
+	<span>({{(collegueConnecte | async).roles}})</span>
+	<button  class="w3-button w3-black w3-right w3-section" (click)="deconnecter()">Se déconnecter</button>
+  </div>
