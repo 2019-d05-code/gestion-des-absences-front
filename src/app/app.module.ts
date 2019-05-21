@@ -24,6 +24,11 @@ import { RouterModule } from '@angular/router';
 import { routes } from './app.routes';
 import { DeconnexionComponent } from './deconnexion/deconnexion.component';
 
+/* import du module calendrier */
+import { CalendarModule, DateAdapter } from 'angular-calendar';
+import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
 
 
 @NgModule({
@@ -50,7 +55,12 @@ import { DeconnexionComponent } from './deconnexion/deconnexion.component';
     RouterModule.forRoot(routes),
     HttpClientModule,
     MDBBootstrapModule.forRoot(),
-    FormsModule
+	FormsModule,
+	BrowserAnimationsModule,
+    CalendarModule.forRoot({
+      provide: DateAdapter,
+      useFactory: adapterFactory
+    })
   ],
   providers: [{
     provide: HTTP_INTERCEPTORS,
