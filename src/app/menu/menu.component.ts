@@ -5,9 +5,9 @@ import { Collegue } from '../auth/auth.domains';
 import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-menu',
-  templateUrl: './menu.component.html',
-  styles: []
+	selector: 'app-menu',
+	templateUrl: './menu.component.html',
+	styles: []
 })
 export class MenuComponent implements OnInit {
 
@@ -16,9 +16,9 @@ export class MenuComponent implements OnInit {
 
 	}
 
-  ngOnInit() {
-	this.collegueConnecte = this._authSrv.collegueConnecteObs;
+	ngOnInit() {
+		this.collegueConnecte = this._authSrv.collegueConnecteObs;
 
-  }
+	}
 
 }
