@@ -16,7 +16,7 @@ export const routes: Routes = [
 	{ path:'validation-demandes', component: ValidationDemandesComponent},
 	{ path:'vues-synthetiques', component: ManagerVueSynthetiqueComponent},
 	{ path:'jour-feries', component: JourFerieVisuComponent},
-	{ path:'auth', component: AuthComponent},
+	{ path:'connexion', component: AuthComponent},
 
 
 	{ path: '', redirectTo: '/accueil', pathMatch: 'full'}
