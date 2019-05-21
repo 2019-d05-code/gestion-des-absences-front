@@ -29,8 +29,8 @@ export class AuthComponent implements OnInit {
         // TODO
         col => this._router.navigate(['/tech']),
 
-        // en cas d'erreur, affichage d'un message d'erreur
-        err => this.err = true
+        // on utilise pas l'erreur (pour l'instant)
+        () => this.err = true
       );
   }
 
