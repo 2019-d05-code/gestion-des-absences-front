@@ -6,11 +6,7 @@ import { Router } from '@angular/router';
 
 @Component({
 	selector: 'app-deconnexion',
-	template: `
-    <p>
-      deconnexion works!
-    </p>
-  `,
+	templateUrl: './deconnexion.component.html',
 	styles: []
 })
 export class DeconnexionComponent implements OnInit {

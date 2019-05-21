@@ -20,8 +20,9 @@ body, html {
 /* First image (Logo. Full height) */
 .bgimg-1 {
   background-image: url('https://i.pinimg.com/originals/0e/0f/9a/0e0f9a113ab39082226e71fbbcab3a31.jpg');
-  background-position: center;
-  min-height: 70%;
+  background-position: top;
+  max-height: 40%;
+  min-height: 40%;
 }
 
 .w3-wide {letter-spacing: 10px;}
