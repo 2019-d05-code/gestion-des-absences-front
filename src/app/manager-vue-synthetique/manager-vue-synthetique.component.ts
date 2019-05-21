@@ -2,11 +2,7 @@ import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-manager-vue-synthetique',
-  template: `
-    <p>
-      manager-vue-synthetique works!
-    </p>
-  `,
+  templateUrl: './manager-vue-synthetique.component.html',
   styles: []
 })
 export class ManagerVueSynthetiqueComponent implements OnInit {

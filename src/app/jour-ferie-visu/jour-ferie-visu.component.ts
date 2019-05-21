@@ -2,11 +2,7 @@ import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-jour-ferie-visu',
-  template: `
-    <p>
-      jour-ferie-visu works!
-    </p>
-  `,
+  templateUrl: './jour-ferie-visu.component.html',
   styles: []
 })
 export class JourFerieVisuComponent implements OnInit {

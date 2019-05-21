@@ -2,11 +2,7 @@ import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-planning',
-  template: `
-    <p>
-      planning works!
-    </p>
-  `,
+  templateUrl: './planning.component.html',
   styles: []
 })
 export class PlanningComponent implements OnInit {
