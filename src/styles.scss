@@ -2,11 +2,30 @@
 @import "../node_modules/angular-calendar/css/angular-calendar.css";
 
 /* Allez un peu de charte graphique hein ;) */
-body,h1,h2,h3,h4,h5,h6 {font-family: "Lato", sans-serif;}
+body,h1,h2,h3,h4,h5,h6 {font-family: "Raleway", sans-serif;}
 body, html {
   height: 100%;
-  color: #777;
+  color: #F2E9D8;
   line-height: 1.8;
+  border-radius: 10px;
+}
+
+div {
+	border-radius: 10px;
+}
+
+.navbar {
+	border-radius: 10px;
+}
+
+.primary-color {
+    background-color: #023059 !important;
+}
+
+.btn-primary {
+    background-color: #023059 !important;
+	color: #F2E9D8 !important;
+	border-radius: 10px;
 }
 
 /* Create a Parallax Effect */
