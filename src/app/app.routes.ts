@@ -4,6 +4,7 @@ import { AuthComponent } from './auth/auth.component';
 import { AccueilComponent } from './accueil/accueil.component';
 
 
+
 export const routes: Routes = [
 	{ path:'accueil', component: AccueilComponent, canActivate:[StatutConnecteService] },
 	{ path:'auth', component: AuthComponent},

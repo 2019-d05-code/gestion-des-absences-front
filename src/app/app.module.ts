@@ -2,13 +2,12 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
 import { AppComponent } from './app.component';
-import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
+import { HTTP_INTERCEPTORS, HttpClientModule } from "@angular/common/http";
 import { TechComponent } from './tech/tech.component';
 import { MDBBootstrapModule } from 'angular-bootstrap-md';
 import { AuthComponent } from './auth/auth.component';
-import {FormsModule} from "@angular/forms";
-import {StatutConnecteService} from "./auth/statut-connecte.service";
-import {AuthInterceptorService} from "./auth/auth-interceptor.service";
+import { FormsModule } from "@angular/forms";
+import { AuthInterceptorService } from "./auth/auth-interceptor.service";
 import { ModifDemandeAbsenceComponent } from './modif-demande-absence/modif-demande-absence.component';
 import { AccueilComponent } from './accueil/accueil.component';
 import { CreerDemandeAbsenceComponent } from './creer-demande-absence/creer-demande-absence.component';
@@ -32,7 +31,6 @@ import { routes } from './app.routes';
     TechComponent,
 	AuthComponent,
 	AccueilComponent,
-	AuthComponent,
 	CreerDemandeAbsenceComponent,
 	JourFerieCreationComponent,
 	JourFerieModifComponent,
