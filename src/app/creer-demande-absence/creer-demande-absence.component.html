@@ -1,7 +1,51 @@
-<br />
-<h1 class="text-center">Gestion des absences</h1>
-
-
-<form class="text-center border border-light p-5">
-
-	</form>
+<div class="container-fluid">
+	<h1 class="display-4 text-center">Demande d'absence</h1>
+	<hr>
+	<div class="container">
+		<form class="form-group" #ajoutForm="ngForm" (ngSubmit)="creerDemande()">
+			<div class="form-group">
+				<label for="debut">Date de début</label>
+				<input required type="date" name="debut" id="debut" #debut="ngModel" [(ngModel)]="demande.dateDebut"
+					class="form-control">
+				<div class="alert alert-danger" *ngIf="(debut.dirty || debut.touched) && debut.errors">
+					Ce champ est obligatoire
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="fin">Date de fin</label>
+				<input required type="date" name="fin" id="fin" #fin="ngModel" [(ngModel)]="demande.dateFin"
+					class="form-control">
+				<div class="alert alert-danger" *ngIf="(fin.dirty || fin.touched) && fin.errors">
+					Ce champ est obligatoire
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="type">Type de congé</label>
+				<select required name="type" id="type" #type="ngModel" [(ngModel)]="demande.type" class="form-control">
+					<option value="CONGES_PAYES">Congés payés</option>
+					<option value="RTT">RTT</option>
+					<option value="CONGES_SANS_SOLDE">Congés sans solde</option>
+				</select>
+				<div class="alert alert-danger" *ngIf="(type.dirty || type.touched) && type.errors">
+					Ce champ est obligatoire
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="motif">Motif</label>
+				<textarea class="form-control" name="motif" id="motif" rows="5" #motif="ngModel"
+					[(ngModel)]="demande.motif"></textarea>
+			</div>
+			<div class="text-center">
+				<button class="btn btn-danger" routerLink="/gestion-absences">Annuler</button>
+				<button [disabled]="ajoutForm.invalid" class="btn btn-success" type="submit">Valider</button>
+			</div>
+			<div class="alert alert-danger text-center" *ngIf="messageErreur">
+				<p><strong>{{ messageErreur }}</strong></p>
+			</div>
+			<div class="alert alert-success text-center" *ngIf="messageSucces">
+				<p><strong>{{ messageSucces }}</strong></p>
+			</div>
+			<br>
+		</form>
+	</div>
+</div>
