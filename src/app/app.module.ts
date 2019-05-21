@@ -23,6 +23,7 @@ import { ValidationDemandesComponent } from './validation-demandes/validation-de
 import { RouterModule } from '@angular/router';
 import { routes } from './app.routes';
 import { DeconnexionComponent } from './deconnexion/deconnexion.component';
+import { GestionAbsencesComponent } from './gestion-absences/gestion-absences.component';
 
 
 
@@ -43,7 +44,8 @@ import { DeconnexionComponent } from './deconnexion/deconnexion.component';
 	PlanningComponent,
 	ValidationDemandesComponent,
     ModifDemandeAbsenceComponent,
-    DeconnexionComponent
+    DeconnexionComponent,
+    GestionAbsencesComponent
   ],
   imports: [
     BrowserModule,
