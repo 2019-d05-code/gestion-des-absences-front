@@ -25,6 +25,10 @@ import { routes } from './app.routes';
 import { DeconnexionComponent } from './deconnexion/deconnexion.component';
 import { GestionAbsencesComponent } from './gestion-absences/gestion-absences.component';
 
+/** imports pour le calendrier */
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { CalendarModule, DateAdapter } from 'angular-calendar';
+import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 
 @NgModule({
 	declarations: [
@@ -52,6 +56,11 @@ import { GestionAbsencesComponent } from './gestion-absences/gestion-absences.co
 		HttpClientModule,
 		MDBBootstrapModule.forRoot(),
 		FormsModule,
+		BrowserAnimationsModule,
+		CalendarModule.forRoot({
+			provide: DateAdapter,
+			useFactory: adapterFactory
+		})
 	],
 	providers: [{
 		provide: HTTP_INTERCEPTORS,
