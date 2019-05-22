@@ -5,6 +5,8 @@ import { DemandeAbsence } from '../models/DemandeAbsence';
 import { Observable } from 'rxjs';
 import { AuthService } from '../auth/auth.service';
 import { Collegue } from '../auth/auth.domains';
+import { map } from 'rxjs/operators';
+import { TypeDemande } from '../models/TypeDemande';
 
 @Injectable({
 	providedIn: 'root'
@@ -25,7 +27,23 @@ export class GestionAbsencesService {
 	}
 
 	getListeAbsences(email :string): Observable<DemandeAbsence[]> {
-		return this._http.get<DemandeAbsence[]>(`${environment.baseUrl}/${environment.apiListeAbsences}/${email}`);
+		let url: string = `${environment.baseUrl}/gestion-absences/${environment.apiListeAbsences}${email}`;
+		console.log(url);
+		return this._http.get<any[]>(url).pipe(
+			map(listDemandesServ => {
+				return listDemandesServ.map(
+					uneDemande => {
+						const uneDemandeCoteClient = new DemandeAbsence(
+							new Date(uneDemande.dateDebut),
+							new Date(uneDemande.dateFin),
+							 TypeDemande.CONGES_PAYES,
+							"kkkk"
+						);
+						return uneDemandeCoteClient;
+					}
+				)
+			})
+		);
 	}
 
 	ngOnInit() {
