@@ -19,7 +19,7 @@ export class DeconnexionComponent implements OnInit {
 	//Action déconnecter collègue.
 	deconnecter() {
 		this._authSrv.seDeconnecter().subscribe(
-			value => this._router.navigate(['/auth'])
+			value => this._router.navigate(['/connexion'])
 		);
 	}
 
