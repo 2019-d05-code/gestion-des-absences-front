@@ -1,0 +1,44 @@
+<div class="row text-center">
+	<div class="col-md-9 col-sm-12">
+		<div class="btn-group">
+			<div class="btn btn-primary" (click)="anneePrecedente()">
+				Année précédente
+			</div>
+			<div class="btn btn-primary"  mwlCalendarPreviousView  [view]="view" [(viewDate)]="viewDate">
+				Précédent
+			</div>
+			<div class="btn btn-outline-secondary" mwlCalendarToday [(viewDate)]="viewDate">
+				Aujourd'hui
+			</div>
+			<div class="btn btn-primary" mwlCalendarNextView [view]="view" [(viewDate)]="viewDate">
+				Suivant
+			</div>
+			<div class="btn btn-primary" (click)="anneeSuivante()">
+				Année suivante
+			</div>
+		</div>
+	</div>
+	<div class="col-md-3 col-sm-12">
+		<h3>
+			{{ viewDate | calendarDate:(view + 'ViewTitle'):locale:weekStartsOn }}
+		</h3>
+	</div>
+
+
+
+</div>
+<br />
+
+<div [ngSwitch]="view">
+	<mwl-calendar-month-view *ngSwitchCase="'month'" [viewDate]="viewDate" [events]="events" [locale]="locale"
+		[weekStartsOn]="weekStartsOn" [weekendDays]="weekendDays">
+	</mwl-calendar-month-view>
+
+</div>
+
+<div class="alert alert-danger text-center" *ngIf="messageErreur">
+	<p><strong>{{ messageErreur}}</strong></p>
+</div>
+<div class="alert alert-success text-center" *ngIf="messageSucces">
+	<p><strong>{{ messageSucces | json }}</strong></p>
+</div>
