@@ -1,23 +1,58 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, Input } from '@angular/core';
 import { AuthService } from '../auth/auth.service';
-import { Observable } from 'rxjs';
 import { Collegue } from '../auth/auth.domains';
 import { Router } from '@angular/router';
+import { MatMenuTrigger, MatMenuModule } from '@angular/material';
 
 @Component({
 	selector: 'app-menu',
-	templateUrl: './menu.component.html',
-	styles: []
+	templateUrl: './menu.component.html'
 })
 export class MenuComponent implements OnInit {
 
-	collegueConnecte: Observable<Collegue>;
-	constructor(private _authSrv: AuthService, private _router: Router) {
+	collegueConnecte: Collegue;
+	@Input() connecte: boolean;
+	roleManager: string[];
+
+	// Gestion du menu responsive
+	@ViewChild(MatMenuTrigger) trigger: MatMenuTrigger;
+
+	constructor(private _authSrv: AuthService, private _router: Router) { }
+
+	verifRoleManager(): boolean {
+
+		if (this.connecte) {
+
+			let granted = false;
+
+			const roleManager = this.collegueConnecte.roles.filter(role => role === 'ROLE_MANAGER');
+
+			if (roleManager.length > 0) {
+				granted = true;
+			}
+
+			return granted;
+		}
 
 	}
 
+	menu() {
+		this.trigger.openMenu();
+	}
+
 	ngOnInit() {
-		this.collegueConnecte = this._authSrv.collegueConnecteObs;
+		this._authSrv.collegueConnecteObs
+			.subscribe(
+				collegue => {
+					this.collegueConnecte = collegue;
+					if (this.collegueConnecte.estAnonyme()) {
+						this.connecte = false;
+					} else {
+						this.connecte = true;
+					}
+				},
+				() => this.connecte = false
+			);
 
 	}
 

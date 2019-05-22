@@ -1,19 +1,19 @@
-
 <div class="container-fluid">
-    <div class="jumbotron">
-        <h1 class="display-1 text-center">GESTION DES ABSENCES</h1>
-    </div>
-    <br>
-    <div *ngIf="user" class="container-fluid">
+	<div class="jumbotron">
+		<h1 class="display-1 text-center">GESTION DES ABSENCES</h1>
+	</div>
+	<br>
+	<div *ngIf="connecte" class="container-fluid">
 		<div class="float-right">
 			<p><strong>Bonjour, {{ user.prenom }} {{ user.nom }}</strong></p>
-			<button type="button" (click)="deconnexion()" class="btn btn-danger">Déconnexion</button>
+			<button type="button" (click)="deconnexion()" class="btn btn-danger">Deconnexion</button>
+			<br>
 		</div>
 	</div>
-	<div class="container-fluid">
-		<app-menu></app-menu>
+	<div class="container text-center">
+		<app-menu [connecte]="connecte"></app-menu>
 	</div>
-    <br>
+	<br>
 
-    <router-outlet></router-outlet>
+	<router-outlet></router-outlet>
 </div>

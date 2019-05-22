@@ -14,6 +14,7 @@ export class AppComponent implements OnInit {
 
 	user: Collegue;
 	messageErreur: string;
+	connecte = false;
 
 	constructor(private _serviceAuth: AuthService, private router: Router) {
 
@@ -22,7 +23,8 @@ export class AppComponent implements OnInit {
 	deconnexion(): void {
 		this._serviceAuth.seDeconnecter().subscribe(
 			() => {
-				this.user = null;
+				this.user = undefined;
+				this.connecte = false;
 			},
 			error => {
 				this.messageErreur = error.error;
@@ -37,9 +39,17 @@ export class AppComponent implements OnInit {
 
 	ngOnInit(): void {
 		this._serviceAuth.collegueConnecteObs.subscribe(
-			collegue => this.user = collegue,
+			collegue => {
+				this.user = collegue;
+				if (this.user.estAnonyme()) {
+					this.connecte = false;
+				} else {
+					this.connecte = true;
+				}
+			},
 			error => {
 				this.messageErreur = error.error;
+				this.user = undefined;
 				setTimeout(
 					() => this.messageErreur = undefined,
 					7000
