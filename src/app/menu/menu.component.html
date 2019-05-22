@@ -1,4 +1,5 @@
-<div class="container-fluid mb-4 mt-5" *ngIf="connecte">
+
+<div class="container-fluid mb-4 mt-5 .d-none .d-xl-block" *ngIf="connecte">
 	<br>
 	<br>
 	<br>
@@ -14,7 +15,7 @@
 	</nav>
 
 	<br>
-	<div class="d-none d-md-block d-sm-block d-xs-block">
+	<div class="d-none d-sm-block d-md-none">
 		<button class="btn btn-dark" mat-button [matMenuTriggerFor]="menu">Menu</button>
 		<mat-menu #menu="matMenu">
 			<button mat-menu-item routerLink="/accueil">Accueil</button>
