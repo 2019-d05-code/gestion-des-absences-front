@@ -17,6 +17,7 @@ import { Observable } from 'rxjs';
 import { GestionAbsencesService } from '../gestion-absences/gestion-absences.service';
 import { AuthService } from '../auth/auth.service';
 import { Collegue } from '../auth/auth.domains';
+import { CalendarEventActionsComponent } from 'angular-calendar/modules/common/calendar-event-actions.component';
 
 
 // couleurs du calendrier
@@ -48,7 +49,7 @@ export class PlanningComponent {
 					this.collegue = collegue;
 				}
 			);
-			console.log(this.collegue.email);
+		console.log(this.collegue.email);
 	}
 
 	view: CalendarView = CalendarView.Month;
@@ -56,11 +57,11 @@ export class PlanningComponent {
 
 	evenement: CalendarEvent = {
 		start: startOfDay(new Date()),
-		end: addDays(new Date(), 2),
-		title: `Evenememnt bateau au cas où il y a zéro événèements :p`,
-			};
+		end: addDays(new Date(), 5),
+		title: `Evenememnt bateau au cas où il y a zéro évènements :p`,
+	};
 
-	events: CalendarEvent[]= [this.evenement];
+	events: CalendarEvent[] = [this.evenement];
 	collegue: Collegue = new Collegue({});
 
 
@@ -83,12 +84,18 @@ export class PlanningComponent {
 		this._srv.getListeAbsences(this.collegue.email).subscribe(
 			demTab => {
 				demTab.map(demande => {
-					this.evenement.start = demande.dateDebut;
-					this.evenement.end = demande.dateFin;
-					this.events.push(this.evenement);
-					console.log(this.events);
+					let evenement2 = {
+						start: startOfDay(demande.dateDebut),
+						end: addDays(demande.dateDebut, 2),
+						title: `evenement indépendant`
+					};
+					this.events.push(evenement2);
 					this._changeRef.detectChanges();
+					console.log(this.events);
+
+
 				});
+
 			},
 			error => {
 				console.log(error.error);
