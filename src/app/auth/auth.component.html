@@ -22,7 +22,7 @@
         <form>
             <div class="md-form">
                 <i class="fa fa-envelope prefix grey-text"></i>
-                <input type="text" [validateSuccess]="false" data-error="Une adresse email est requise" id="defaultForm-email" class="form-control" name="email" mdbInputDirective [(ngModel)]="collegue.email" required>
+                <input type="text" [validateSuccess]="false" data-error="Une adresse email est requise et doit être au format mail@mail.fr" id="defaultForm-email" class="form-control" name="email" mdbInputDirective [(ngModel)]="collegue.email" required pattern="[a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+.[a-zA-Z.]{2,15}">
                 <label for="defaultForm-email">Email</label>
             </div>
 

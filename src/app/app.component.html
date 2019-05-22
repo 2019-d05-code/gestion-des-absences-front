@@ -1,12 +1,19 @@
 
-  <!--First Parallax Image with Logo Text-->
-  <div class="bgimg-1 w3-display-container w3-opacity-min" id="home">
-    <div class="w3-display-middle" style="white-space:nowrap;">
-      <span class="w3-center w3-padding-large w3-black w3-xlarge w3-wide w3-animate-opacity">GDA <span class="w3-hide-medium w3-hide-small">- GESTION DES ABSENCES</span></span>
+<div class="container-fluid">
+    <div class="jumbotron">
+        <h1 class="display-1 text-center">GESTION DES ABSENCES</h1>
     </div>
-  </div>
-	<app-menu></app-menu>
+    <br>
+    <div *ngIf="user" class="container-fluid">
+		<div class="float-right">
+			<p><strong>Bonjour, {{ user.prenom }} {{ user.nom }}</strong></p>
+			<button type="button" (click)="deconnexion()" class="btn btn-danger">Déconnexion</button>
+		</div>
+	</div>
+	<div class="container-fluid">
+		<app-menu></app-menu>
+	</div>
+    <br>
 
-
-  <router-outlet></router-outlet>
-  <app-deconnexion></app-deconnexion>
+    <router-outlet></router-outlet>
+</div>
