@@ -12,9 +12,9 @@ import {
 } from 'angular-calendar';
 import { CustomDateFormatter } from './custom-date-formatter.provider';
 import { addYears, subYears, startOfDay, addDays } from 'date-fns';
-import { PlanningService } from './planning.service';
 import { DemandeAbsence } from '../models/DemandeAbsence';
 import { Observable } from 'rxjs';
+import { GestionAbsencesService } from '../gestion-absences/gestion-absences.service';
 
 
 // couleurs du calendrier
@@ -39,7 +39,7 @@ const colors: any = {
 })
 export class PlanningComponent {
 
-	constructor(private _srv: PlanningService, private _changeRef: ChangeDetectorRef) { }
+	constructor(private _srv: GestionAbsencesService, private _changeRef: ChangeDetectorRef) { }
 
 	view: CalendarView = CalendarView.Month;
 	viewDate = new Date();
