@@ -34,6 +34,8 @@ import { registerLocaleData } from '@angular/common';
 
 registerLocaleData(localeFr);
 
+import {MatMenuModule, MatMenuTrigger} from '@angular/material';
+
 @NgModule({
 	declarations: [
 		AppComponent,
@@ -64,7 +66,8 @@ registerLocaleData(localeFr);
 		CalendarModule.forRoot({
 			provide: DateAdapter,
 			useFactory: adapterFactory
-		})
+		}),
+		MatMenuModule
 	],
 	providers: [{
 		provide: HTTP_INTERCEPTORS,
