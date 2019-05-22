@@ -29,6 +29,10 @@ import { GestionAbsencesComponent } from './gestion-absences/gestion-absences.co
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CalendarModule, DateAdapter } from 'angular-calendar';
 import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
+import localeFr from '@angular/common/locales/fr';
+import { registerLocaleData } from '@angular/common';
+
+registerLocaleData(localeFr);
 
 @NgModule({
 	declarations: [
