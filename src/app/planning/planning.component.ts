@@ -2,6 +2,7 @@ import {
 	Component,
 	ChangeDetectionStrategy,
 	OnInit,
+	ChangeDetectorRef,
 } from '@angular/core';
 import {
 	CalendarDateFormatter,
@@ -15,13 +16,14 @@ import { PlanningService } from './planning.service';
 import { DemandeAbsence } from '../models/DemandeAbsence';
 import { Observable } from 'rxjs';
 
+
 // couleurs du calendrier
 const colors: any = {
 	red: {
 		primary: '#ad2121',
 		secondary: '#FAE3E3'
 	}
-}
+};
 
 @Component({
 	selector: 'app-planning',
@@ -37,34 +39,58 @@ const colors: any = {
 })
 export class PlanningComponent {
 
-	constructor(private _srv: PlanningService) { }
+	constructor(private _srv: PlanningService, private _changeRef: ChangeDetectorRef) { }
 
 	view: CalendarView = CalendarView.Month;
 	viewDate = new Date();
 
-	events: CalendarEvent[] = [
-		{
-			start: startOfDay(new Date()),
-			end: addDays(new Date(), 2),
-			title: `Evenememnt de 3 jours qui commence aujourd'hui`,
-			color: colors.red,
-			allDay: true,
-		},
-	];
+	events: CalendarEvent[] = [];
+
+	evenement: CalendarEvent = {
+		start: startOfDay(new Date()),
+		end: addDays(new Date(), 2),
+		title: `Evenememnt bateau au cas où il y a zéro événèements :p`,
+		color: colors.red,
+		allDay: true,
+	};
 
 	locale = 'fr';
 	weekStartsOn: number = DAYS_OF_WEEK.MONDAY;
 	weekendDays: number[] = [DAYS_OF_WEEK.FRIDAY, DAYS_OF_WEEK.SATURDAY];
 	CalendarView = CalendarView;
 
-	//Création des tableaux de demande
+	// Création des tableaux de demande
 	listeDemandes: DemandeAbsence[] = new Array();
 	demandeTab: Observable<DemandeAbsence[]>;
 
+	// String pour les messages d'erreur
+	messageSucces: string;
+	messageErreur: string;
+
 	// A l'initialisation, on récupère la liste des absences depuis le back
 	ngOnInit(): void {
-		this.demandeTab = this._srv.getListeAbsences()
-		this.demandeTab.subscribe(demandeTab => this.listeDemandes = demandeTab);
+		this.demandeTab = this._srv.getListeAbsences();
+		this.demandeTab.subscribe(
+			demTab => {
+				demTab.map(demande => {
+					this.evenement.start = demande.dateDebut;
+					this.evenement.end = demande.dateFin;
+					this.events.push(this.evenement);
+				});
+			},
+			error => {
+				if (error.message === 'Http failure response for http://localhost:8080/listeAbsences: 404 OK') {
+					this.messageErreur = `Pas d'absences disponible`;
+				} else {
+					this.messageErreur = error.message;
+				}
+				this._changeRef.detectChanges();
+				setTimeout(
+					() => this.messageErreur = undefined,
+					7000
+				);
+			}
+		);
 	}
 
 	setView(view: CalendarView) {

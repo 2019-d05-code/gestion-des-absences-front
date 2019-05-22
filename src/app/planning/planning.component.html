@@ -35,3 +35,10 @@
 	</mwl-calendar-month-view>
 
 </div>
+
+<div class="alert alert-danger text-center" *ngIf="messageErreur">
+	<p><strong>{{ messageErreur}}</strong></p>
+</div>
+<div class="alert alert-success text-center" *ngIf="messageSucces">
+	<p><strong>{{ messageSucces | json }}</strong></p>
+</div>
