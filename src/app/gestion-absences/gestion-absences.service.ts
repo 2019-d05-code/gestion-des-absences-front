@@ -24,8 +24,8 @@ export class GestionAbsencesService {
 
 	}
 
-	getListeAbsences(): Observable<DemandeAbsence[]> {
-		return this._http.get<DemandeAbsence[]>(`${environment.baseUrl}/${environment.apiListeAbsences}${this.collegueConnecte.email}`);
+	getListeAbsences(email :string): Observable<DemandeAbsence[]> {
+		return this._http.get<DemandeAbsence[]>(`${environment.baseUrl}/${environment.apiListeAbsences}/${email}`);
 	}
 
 	ngOnInit() {

@@ -15,6 +15,8 @@ import { addYears, subYears, startOfDay, addDays } from 'date-fns';
 import { DemandeAbsence } from '../models/DemandeAbsence';
 import { Observable } from 'rxjs';
 import { GestionAbsencesService } from '../gestion-absences/gestion-absences.service';
+import { AuthService } from '../auth/auth.service';
+import { Collegue } from '../auth/auth.domains';
 
 
 // couleurs du calendrier
@@ -39,12 +41,13 @@ const colors: any = {
 })
 export class PlanningComponent {
 
-	constructor(private _srv: GestionAbsencesService, private _changeRef: ChangeDetectorRef) { }
+	constructor(private _authSrv: AuthService, private _srv: GestionAbsencesService, private _changeRef: ChangeDetectorRef) { }
 
 	view: CalendarView = CalendarView.Month;
 	viewDate = new Date();
 
 	events: CalendarEvent[] = [];
+	collegue: Collegue = new Collegue({});
 
 	evenement: CalendarEvent = {
 		start: startOfDay(new Date()),
@@ -69,7 +72,8 @@ export class PlanningComponent {
 
 	// A l'initialisation, on récupère la liste des absences depuis le back
 	ngOnInit(): void {
-		this.demandeTab = this._srv.getListeAbsences();
+		this.demandeTab = this._srv.getListeAbsences(this.collegue.email);
+
 		this.demandeTab.subscribe(
 			demTab => {
 				demTab.map(demande => {
@@ -91,6 +95,15 @@ export class PlanningComponent {
 				);
 			}
 		);
+		this._authSrv.collegueConnecteObs
+			.subscribe(
+				collegue => {
+					if (!collegue.estAnonyme()){
+						this.collegue = collegue;
+					}
+				}
+			);
+
 	}
 
 	setView(view: CalendarView) {
@@ -104,6 +117,7 @@ export class PlanningComponent {
 	anneePrecedente() {
 		this.viewDate = subYears(this.viewDate, 1);
 	}
+
 
 
 
