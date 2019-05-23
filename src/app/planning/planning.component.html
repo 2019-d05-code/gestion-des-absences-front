@@ -4,7 +4,7 @@
 			<div class="btn btn-primary" (click)="anneePrecedente()">
 				Année précédente
 			</div>
-			<div class="btn btn-primary"  mwlCalendarPreviousView  [view]="view" [(viewDate)]="viewDate">
+			<div class="btn btn-primary" mwlCalendarPreviousView [view]="view" [(viewDate)]="viewDate">
 				Précédent
 			</div>
 			<div class="btn btn-outline-secondary" mwlCalendarToday [(viewDate)]="viewDate">
@@ -30,11 +30,37 @@
 <br />
 
 <div [ngSwitch]="view">
-	<mwl-calendar-month-view *ngSwitchCase="'month'" [viewDate]="viewDate" [events]="events" [locale]="locale"
+	<mwl-calendar-month-view *ngSwitchCase="'month'" [viewDate]="viewDate" [events]="events | async" [locale]="locale"
 		[weekStartsOn]="weekStartsOn" [weekendDays]="weekendDays">
 	</mwl-calendar-month-view>
 
 </div>
+<hr />
+<h2>Code couleur</h2>
+<div class="row">
+	<div class="col-lg-4 row col-md-12">
+		<div class="col-3">
+			<i class="fas fa-mug-hot"></i>
+		</div>
+		<h3 class="col-9 mt-3">RTT</h3>
+	</div>
+	<div class="col-lg-4  col-md-12 row">
+		<div class="col-3">
+			<i class="fas fa-cookie-bite"></i>
+		</div>
+		<h3 class="col-9 mt-3">Congés payés</h3>
+	</div>
+	<div class="col-lg-4 col-md-12 row">
+		<div class="col-3">
+			<i class="fas fa-plane"></i>
+		</div>
+		<h3 class="col-9 mt-3">Congés sans solde</h3>
+	</div>
+</div>
+
+
+<br />
+<br />
 
 <div class="alert alert-danger text-center" *ngIf="messageErreur">
 	<p><strong>{{ messageErreur}}</strong></p>
@@ -42,3 +68,6 @@
 <div class="alert alert-success text-center" *ngIf="messageSucces">
 	<p><strong>{{ messageSucces | json }}</strong></p>
 </div>
+
+<br />
+<br />
