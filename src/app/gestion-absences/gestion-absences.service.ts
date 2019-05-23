@@ -26,7 +26,7 @@ export class GestionAbsencesService {
 
 	}
 
-	getListeAbsences(email :string): Observable<DemandeAbsence[]> {
+	getListeAbsencesValidees(email :string): Observable<DemandeAbsence[]> {
 		let url: string = `${environment.baseUrl}/gestion-absences/${environment.apiListeAbsences}${email}`;
 		console.log(url);
 		return this._http.get<any[]>(url).pipe(

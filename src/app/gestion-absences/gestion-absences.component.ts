@@ -4,22 +4,22 @@ import { ModifDemandeAbsenceComponent } from '../modif-demande-absence/modif-dem
 import { SuppressionDemandeAbsenceComponent } from '../suppression-demande-absence/suppression-demande-absence.component';
 
 @Component({
-  selector: 'app-gestion-absences',
-  templateUrl: './gestion-absences.component.html',
-  styles: []
+	selector: 'app-gestion-absences',
+	templateUrl: './gestion-absences.component.html',
+	styles: []
 })
 export class GestionAbsencesComponent implements OnInit {
 
-  constructor(private modal: NgbModal) { }
+	constructor(private modal: NgbModal) { }
 
-  ngOnInit() {
-  }
+	ngOnInit() {
+	}
 
-  chargerModifModal(){
-	this.modal.open(ModifDemandeAbsenceComponent);
-  }
+	chargerModifModal() {
+		this.modal.open(ModifDemandeAbsenceComponent);
+	}
 
-  chargerSuppresionModal(){
-	this.modal.open(SuppressionDemandeAbsenceComponent);
-  }
+	chargerSuppresionModal() {
+		this.modal.open(SuppressionDemandeAbsenceComponent);
+	}
 }
