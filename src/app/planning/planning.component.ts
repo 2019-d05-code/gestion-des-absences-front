@@ -11,13 +11,14 @@ import {
 	DAYS_OF_WEEK
 } from 'angular-calendar';
 import { CustomDateFormatter } from './custom-date-formatter.provider';
-import { addYears, subYears, startOfDay, addDays } from 'date-fns';
+import { addYears, subYears, startOfDay, addDays, endOfDay } from 'date-fns';
 import { DemandeAbsence } from '../models/DemandeAbsence';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { GestionAbsencesService } from '../gestion-absences/gestion-absences.service';
 import { AuthService } from '../auth/auth.service';
 import { Collegue } from '../auth/auth.domains';
-import { CalendarEventActionsComponent } from 'angular-calendar/modules/common/calendar-event-actions.component';
+import { map, catchError } from 'rxjs/operators';
+import { TypeDemande } from '../models/TypeDemande';
 
 
 // couleurs du calendrier
@@ -25,6 +26,14 @@ const colors: any = {
 	red: {
 		primary: '#ad2121',
 		secondary: '#FAE3E3'
+	},
+	blue: {
+		primary: '#1e90ff',
+		secondary: '#D1E8FF'
+	},
+	yellow: {
+		primary: '#e3bc08',
+		secondary: '#FDF1BA'
 	}
 };
 
@@ -61,7 +70,7 @@ export class PlanningComponent {
 		title: `Evenememnt bateau au cas où il y a zéro évènements :p`,
 	};
 
-	events: CalendarEvent[] = [this.evenement];
+	events: Observable<CalendarEvent[]>;
 	collegue: Collegue = new Collegue({});
 
 
@@ -81,37 +90,77 @@ export class PlanningComponent {
 
 	// A l'initialisation, on récupère la liste des absences depuis le back
 	ngOnInit(): void {
-		this._srv.getListeAbsences(this.collegue.email).subscribe(
-			demTab => {
-				demTab.map(demande => {
-					let evenement2 = {
-						start: startOfDay(demande.dateDebut),
-						end: addDays(demande.dateDebut, 2),
-						title: `evenement indépendant`
-					};
-					this.events.push(evenement2);
-					this._changeRef.detectChanges();
-					console.log(this.events);
+
+		this.events = this._srv.getListeAbsences(this.collegue.email)
+			.pipe(
+				map(
+					demTab => demTab.map(demande => {
+						//on implémente les oculeurs en fonction du type d'absence
+						let couleur = colors.yellow;
+						if (demande.type.toString() === 'RTT') {
+							couleur = colors.red;
+						} else if (demande.type.toString() === 'CONGES_PAYES') {
+							couleur = colors.blue;
+						}
+
+						return <CalendarEvent>{
+							start: startOfDay(demande.dateDebut),
+							end: endOfDay(demande.dateFin),
+							title: `${demande.type} - motif : ${demande.motif}`,
+							color: couleur,
+						};
+
+					})
+				),
+				catchError(error => {
+					console.log(error.error);
+					if (error.message === 'Http failure response for http://localhost:8080/listeAbsences: 404 OK') {
+						this.messageErreur = `Pas d'absences disponible`;
+					} else {
+						this.messageErreur = error.message;
+					}
+					setTimeout(
+						() => this.messageErreur = undefined,
+						7000
+					);
+					return of([]);
+				})
+			)
+		/*
+				this._srv.getListeAbsences(this.collegue.email).subscribe(
+					demTab => {
 
 
-				});
+						demTab.forEach(demande => {
+							let evenement2 = {
+								start: startOfDay(demande.dateDebut),
+								end: addDays(demande.dateDebut, 2),
+								title: `evenement indépendant`
+							};
+							this.events.push(evenement2);
+							console.log(this.events);
 
-			},
-			error => {
-				console.log(error.error);
-				if (error.message === 'Http failure response for http://localhost:8080/listeAbsences: 404 OK') {
-					this.messageErreur = `Pas d'absences disponible`;
-				} else {
-					this.messageErreur = error.message;
-				}
-				this._changeRef.detectChanges();
-				setTimeout(
-					() => this.messageErreur = undefined,
-					7000
+
+						});
+
+						//this._changeRef.detectChanges();
+
+					},
+					error => {
+						console.log(error.error);
+						if (error.message === 'Http failure response for http://localhost:8080/listeAbsences: 404 OK') {
+							this.messageErreur = `Pas d'absences disponible`;
+						} else {
+							this.messageErreur = error.message;
+						}
+						this._changeRef.detectChanges();
+						setTimeout(
+							() => this.messageErreur = undefined,
+							7000
+						);
+					}
 				);
-			}
-		);
-
+		*/
 	}
 
 	setView(view: CalendarView) {

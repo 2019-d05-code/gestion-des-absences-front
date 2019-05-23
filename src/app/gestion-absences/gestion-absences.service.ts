@@ -36,8 +36,8 @@ export class GestionAbsencesService {
 						const uneDemandeCoteClient = new DemandeAbsence(
 							new Date(uneDemande.dateDebut),
 							new Date(uneDemande.dateFin),
-							 TypeDemande.CONGES_PAYES,
-							"kkkk"
+							uneDemande.type,
+							uneDemande.motif,
 						);
 						return uneDemandeCoteClient;
 					}
