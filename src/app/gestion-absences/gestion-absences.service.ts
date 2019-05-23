@@ -26,8 +26,32 @@ export class GestionAbsencesService {
 
 	}
 
-	getListeAbsencesValidees(email :string): Observable<DemandeAbsence[]> {
+	// Service pour récupérer la liste de toutes les absences confondues
+	getListeAbsences(email: string): Observable<DemandeAbsence[]> {
 		let url: string = `${environment.baseUrl}/gestion-absences/${environment.apiListeAbsences}${email}`;
+		console.log(url);
+		return this._http.get<any[]>(url).pipe(
+			map(listDemandesServ => {
+				return listDemandesServ.map(
+					uneDemande => {
+						const uneDemandeCoteClient = new DemandeAbsence(
+							new Date(uneDemande.dateDebut),
+							new Date(uneDemande.dateFin),
+							uneDemande.type,
+							uneDemande.status,
+							uneDemande.motif,
+						);
+						console.log(uneDemande);
+						return uneDemandeCoteClient;
+					}
+				);
+			})
+		);
+	}
+
+	// Service pour récupérer la liste de toutes les absences validées
+	getListeAbsencesValidees(email: string): Observable<DemandeAbsence[]> {
+		let url: string = `${environment.baseUrl}/gestion-absences/${environment.apiListeAbsencesValidees}${email}`;
 		console.log(url);
 		return this._http.get<any[]>(url).pipe(
 			map(listDemandesServ => {
@@ -39,6 +63,7 @@ export class GestionAbsencesService {
 							uneDemande.type,
 							uneDemande.motif,
 						);
+
 						return uneDemandeCoteClient;
 					}
 				)
