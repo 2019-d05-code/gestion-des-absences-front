@@ -91,7 +91,7 @@ export class PlanningComponent {
 	// A l'initialisation, on récupère la liste des absences depuis le back
 	ngOnInit(): void {
 
-		this.events = this._srv.getListeAbsences(this.collegue.email)
+		this.events = this._srv.getListeAbsencesValidees(this.collegue.email)
 			.pipe(
 				map(
 					demTab => demTab.map(demande => {
