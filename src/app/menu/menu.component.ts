@@ -1,8 +1,7 @@
 import { Component, OnInit, ViewChild, Input } from '@angular/core';
 import { AuthService } from '../auth/auth.service';
 import { Collegue } from '../auth/auth.domains';
-import { Router } from '@angular/router';
-import { MatMenuTrigger, MatMenuModule } from '@angular/material';
+import { MatMenuTrigger } from '@angular/material';
 
 @Component({
 	selector: 'app-menu',
@@ -17,7 +16,7 @@ export class MenuComponent implements OnInit {
 	// Gestion du menu responsive
 	@ViewChild(MatMenuTrigger) trigger: MatMenuTrigger;
 
-	constructor(private _authSrv: AuthService, private _router: Router) { }
+	constructor(private _authSrv: AuthService) { }
 
 	verifRoleManager(): boolean {
 

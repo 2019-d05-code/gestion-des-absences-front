@@ -22,7 +22,6 @@ import { PlanningComponent } from './planning/planning.component';
 import { ValidationDemandesComponent } from './validation-demandes/validation-demandes.component';
 import { RouterModule } from '@angular/router';
 import { routes } from './app.routes';
-import { DeconnexionComponent } from './deconnexion/deconnexion.component';
 import { GestionAbsencesComponent } from './gestion-absences/gestion-absences.component';
 
 /** imports pour le calendrier */
@@ -53,7 +52,6 @@ import {MatMenuModule, MatMenuTrigger} from '@angular/material';
 		PlanningComponent,
 		ValidationDemandesComponent,
 		ModifDemandeAbsenceComponent,
-		DeconnexionComponent,
 		GestionAbsencesComponent,
 	],
 	imports: [

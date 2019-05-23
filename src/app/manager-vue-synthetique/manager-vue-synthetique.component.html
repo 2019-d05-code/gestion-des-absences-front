@@ -1,3 +1,15 @@
-<p>
-	manager-vue-synthetique works!
-  </p>
+<ng-container
+  *ngIf="verifRoleManager(); then manager; else reconnexion;">
+</ng-container>
+
+<ng-template #manager>
+  <div>
+	Affiche Vue Synthétique.
+  </div>
+</ng-template>
+
+<ng-template #reconnexion>
+  <div>
+   Merci de vous connecter en tant que Manager.
+  </div>
+</ng-template>

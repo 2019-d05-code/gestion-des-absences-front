@@ -7,9 +7,9 @@
 		<button class="btn btn-dark" routerLink="/accueil">Accueil</button>
 		<button class="btn btn-dark" routerLink="/gestion-absences">Gestion des Absences</button>
 		<button class="btn btn-dark" routerLink="/planning-absences">Planning des absences</button>
-		<button *ngIf="verifRoleManager()" class="btn btn-dark" routerLink="/validation-demandes-manager">Validation des
+		<button *ngIf="verifRoleManager()" class="btn btn-dark" routerLink="/validation-demandes">Validation des
 			demandes</button>
-		<button *ngIf="verifRoleManager()" class="btn btn-dark" routerLink="/planning-absences-manager">Vues
+		<button *ngIf="verifRoleManager()" class="btn btn-dark" routerLink="/vues-synthetiques">Vues
 			synthétiques</button>
 		<button class="btn btn-dark" routerLink="/jour-feries">Jour Fériés</button>
 	</nav>
@@ -21,9 +21,9 @@
 			<button mat-menu-item routerLink="/accueil">Accueil</button>
 			<button mat-menu-item routerLink="/gestion-absences">Gestion des Absences</button>
 			<button mat-menu-item routerLink="/planning-absences">Planning des absences</button>
-			<button *ngIf="verifRoleManager()" mat-menu-item routerLink="/validation-demandes-manager">Validation des
+			<button *ngIf="verifRoleManager()" mat-menu-item routerLink="/validation-demandes">Validation des
 				demandes</button>
-			<button *ngIf="verifRoleManager()" mat-menu-item routerLink="/planning-absences-manager">Vues
+			<button *ngIf="verifRoleManager()" mat-menu-item routerLink="/vues-synthetiques">Vues
 				synthétiques</button>
 			<button mat-menu-item routerLink="/jour-feries">Jour Fériés</button>
 		</mat-menu>
