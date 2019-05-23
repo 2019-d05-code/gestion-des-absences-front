@@ -11,19 +11,19 @@
 
 		<div [hidden]="edition" class="row ">
 			<p class="col-6 card-text">Date de début :</p>
-			<p class="col-6 card-text">Là Aurélien tu t'en occupes</p>
+			<p class="col-6 card-text" >{{demande.dateDebut | date: 'dd/MM/yyyy' | async}}</p>
 
 			<p class="col-6 card-text">Date de fin :</p>
-			<p class="col-6 card-text">Là Aurélien tu t'en occupes</p>
+			<p class="col-6 card-text">{{demande.dateFin | date: 'dd/MM/yyyy' | async}}</p>
 
 			<p class="col-6 card-text">Type d'absence :</p>
-			<p class="col-6 card-text">Là Aurélien tu t'en occupes</p>
+			<p class="col-6 card-text">{{demande.type | async}}</p>
 
 			<p class="col-6 card-text">Motif : </p>
-			<p class="col-6 card-text">Là Aurélien tu t'en occupes</p>
+			<p class="col-6 card-text">{{demande.motif | async}}</p>
 
 			<p class="col-6 card-text">Statut :</p>
-			<p class="col-6 card-text">Là Aurélien tu t'en occupes</p>
+			<p class="col-6 card-text">{{demande.status | async}}</p>
 		</div>
 
 		<!--Body qui change lorsuq'on clique sur le bouton modifier-->
@@ -46,7 +46,7 @@
 					</div>
 				</div>
 				<div class="form-group">
-					<label for="type">Type de congé</label>
+					<label for="type">Type de congés</label>
 					<select required name="type" id="type" #type="ngModel" [(ngModel)]="demande.type"
 						class="form-control">
 						<option value="CONGES_PAYES">Congés payés</option>
@@ -71,8 +71,11 @@
 			<!--Ajouter un bouton Valider désactivé tant que le formulaire n'est pas valide-->
 			<!--TODO-->
 
-			<button [hidden]="!edition" type="button" class="btn btn-outline-dark"
-				(click)="quitterModifModal();submit()">Valider</button>
+				<div class="row justify-content-center" [hidden]="!edition">
+						<div class="center">
+							<button class="btn btn-danger" (click)="quitterModifModal();">Annuler</button>
+							<button class="btn btn-success"(click)="quitterModifModal();submit()">Valider</button>
+						</div>
 		</div>
 
 	</div>

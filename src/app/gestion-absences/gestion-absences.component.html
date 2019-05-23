@@ -17,7 +17,7 @@
 			<td>{{demande.dateFin | date: 'dd/MM/yyyy'}}</td>
 			<td>{{demande.type}}</td>
 			<td>{{demande.status}}</td>
-			<td> <a><i class="fa fa-eye" aria-hidden="true"></i></a> - <a (click)="chargerModifModal();"><i class="fa fa-pencil-square-o"
+			<td> <a><i class="fa fa-eye" aria-hidden="true"></i></a> - <a (click)="chargerModifModal(demande);"><i class="fa fa-pencil-square-o"
 						aria-hidden="true"></i></a> - <a (click)="chargerSuppresionModal();"><i class="fa fa-trash"></i></a>
 			</td>
 		</tr>

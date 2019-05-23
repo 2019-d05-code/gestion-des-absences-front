@@ -78,7 +78,7 @@ import { SuppressionDemandeAbsenceComponent } from './suppression-demande-absenc
 		multi: true
 	}],
 	bootstrap: [AppComponent],
-	entryComponents: [ModifDemandeAbsenceComponent]
+	entryComponents: [ModifDemandeAbsenceComponent, SuppressionDemandeAbsenceComponent]
 
 })
 export class AppModule { }

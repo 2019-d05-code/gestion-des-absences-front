@@ -43,8 +43,8 @@ export class GestionAbsencesComponent implements OnInit {
 			});
 	}
 
-	chargerModifModal() {
-		this.modal.open(ModifDemandeAbsenceComponent);
+	chargerModifModal(demande) {
+		this.modal.open(ModifDemandeAbsenceComponent,demande);
 	}
 
 	chargerSuppresionModal() {

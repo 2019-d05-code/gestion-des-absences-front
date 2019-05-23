@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { NgbActiveModal, NgbModal, ModalDismissReasons, NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
 import { DemandeAbsence } from '../models/DemandeAbsence';
 
@@ -7,14 +7,16 @@ import { DemandeAbsence } from '../models/DemandeAbsence';
 	templateUrl: './modif-demande-absence.component.html',
 	styles: []
 })
+
 export class ModifDemandeAbsenceComponent implements OnInit {
 	// Boolean pour afficher les bouton basculer en mode édition ou valider
 	edition = false;
 
 	// création de la demande pour mettre dans le formulaire, qui sera récupérée après
+
 	demande: DemandeAbsence = new DemandeAbsence(undefined, undefined, undefined);
 
-	ngOnInit() {
+	ngOnInit() {	console.log(this.demande.dateDebut);
 	}
 
 	closeResult: string;
@@ -27,7 +29,8 @@ export class ModifDemandeAbsenceComponent implements OnInit {
 		return new Date(this.dateDebut.year, this.dateDebut.month, this.dateDebut.day);
 	}
 
-	open(content) {
+	open(content, demande) {
+		this.demande = demande;
 		this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' }).result.then((result) => {
 			this.closeResult = ` `; // Affiche la phrase si résultat ok. On peut récupérer le result en le mettant dans la phrase
 		}, (reason) => {
@@ -62,7 +65,7 @@ export class ModifDemandeAbsenceComponent implements OnInit {
 	// Fonction pour fermer la modal
 	quitterModifModal(){
 		this.modalService.dismissAll(ModifDemandeAbsenceComponent);
-	  }
-
+	}
 
 }
+
