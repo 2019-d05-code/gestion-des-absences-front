@@ -36,6 +36,7 @@ registerLocaleData(localeFr);
 import { MatMenuModule, MatMenuTrigger } from '@angular/material';
 import { NgbModalBackdrop } from '@ng-bootstrap/ng-bootstrap/modal/modal-backdrop';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { SuppressionDemandeAbsenceComponent } from './suppression-demande-absence/suppression-demande-absence.component';
 
 @NgModule({
 	declarations: [
@@ -55,6 +56,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 		ValidationDemandesComponent,
 		ModifDemandeAbsenceComponent,
 		GestionAbsencesComponent,
+		SuppressionDemandeAbsenceComponent,
 	],
 	imports: [
 		BrowserModule,

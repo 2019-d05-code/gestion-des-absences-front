@@ -67,6 +67,10 @@
 
 		<div class="modal-footer">
 			<button [hidden]="edition" (click)="afficherModification()">Basculer en mode édition</button>
+
+			<!--Ajouter un bouton Valider désactivé tant que le formulaire n'est pas valide-->
+			<!--TODO-->
+
 			<button [hidden]="!edition" type="button" class="btn btn-outline-dark"
 				(click)="quitterModifModal();submit()">Valider</button>
 		</div>
