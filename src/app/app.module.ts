@@ -33,7 +33,10 @@ import { registerLocaleData } from '@angular/common';
 
 registerLocaleData(localeFr);
 
-import {MatMenuModule, MatMenuTrigger} from '@angular/material';
+import { MatMenuModule, MatMenuTrigger } from '@angular/material';
+import { NgbModalBackdrop } from '@ng-bootstrap/ng-bootstrap/modal/modal-backdrop';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { SuppressionDemandeAbsenceComponent } from './suppression-demande-absence/suppression-demande-absence.component';
 
 @NgModule({
 	declarations: [
@@ -53,6 +56,7 @@ import {MatMenuModule, MatMenuTrigger} from '@angular/material';
 		ValidationDemandesComponent,
 		ModifDemandeAbsenceComponent,
 		GestionAbsencesComponent,
+		SuppressionDemandeAbsenceComponent,
 	],
 	imports: [
 		BrowserModule,
@@ -65,14 +69,16 @@ import {MatMenuModule, MatMenuTrigger} from '@angular/material';
 			provide: DateAdapter,
 			useFactory: adapterFactory
 		}),
-		MatMenuModule
+		MatMenuModule,
+		NgbModule
 	],
 	providers: [{
 		provide: HTTP_INTERCEPTORS,
 		useClass: AuthInterceptorService,
 		multi: true
 	}],
-	bootstrap: [AppComponent]
+	bootstrap: [AppComponent],
+	entryComponents: [ModifDemandeAbsenceComponent]
 
 })
 export class AppModule { }
