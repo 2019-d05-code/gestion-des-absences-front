@@ -57,10 +57,9 @@ export class ModifDemandeAbsenceComponent implements OnInit {
 	}
 	// Pour récupérer les informations du form et les basculer vers le back
 	// /!\ au format de date qui sort du calendrier!!
-	submit() {
-		this.demandeModal.email = this.collegueConnecte.email;
+	submit(demande) {
 
-		this._serviceGestionAbsence.ajouterDemandeAbsence(this.demandeModal)
+		this._serviceGestionAbsence.modifDemandeAbsence(demande)
 			.subscribe(
 				() => {
 					this.messageSucces = 'Votre Modification d\'absence a été enregistrée avec succès';
@@ -68,6 +67,7 @@ export class ModifDemandeAbsenceComponent implements OnInit {
 						() => this.messageSucces = undefined,
 						7000
 					);
+					this.quitterModifModal();
 				},
 				error => {
 					this.messageErreur = error.error;

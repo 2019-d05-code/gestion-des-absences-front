@@ -71,13 +71,13 @@
 			<!--TODO-->
 
 			<button [hidden]="!edition" type="button" class="btn btn-success" [disabled]="formCtrl.invalid"
-				(click)="quitterModifModal();submit()">Valider</button>
+				(click)="submit(demandeModal)">Valider</button>
 
 				<div class="alert alert-danger text-center" *ngIf="messageErreur">
-					<p><strong>{{ messageErreur }}</strong></p>
+					<p><strong>{{ messageErreur | json }}</strong></p>
 				</div>
 				<div class="alert alert-success text-center" *ngIf="messageSucces">
-					<p><strong>{{ messageSucces }}</strong></p>
+					<p><strong>{{ messageSucces | json }}</strong></p>
 		</div>
 
 	</div>
