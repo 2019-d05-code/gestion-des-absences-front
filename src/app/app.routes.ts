@@ -8,6 +8,9 @@ import { ManagerVueSynthetiqueComponent } from './manager-vue-synthetique/manage
 import { PlanningComponent } from './planning/planning.component';
 import { GestionAbsencesComponent } from './gestion-absences/gestion-absences.component';
 import { CreerDemandeAbsenceComponent } from './creer-demande-absence/creer-demande-absence.component';
+import { VisuDemandeAbsenceComponent } from './visu-demande-absence/visu-demande-absence.component';
+import { ModifDemandeAbsenceComponent } from './modif-demande-absence/modif-demande-absence.component';
+import { SuppressionDemandeAbsenceComponent } from './suppression-demande-absence/suppression-demande-absence.component';
 
 
 
@@ -19,6 +22,10 @@ export const routes: Routes = [
 	{ path:'vues-synthetiques', component: ManagerVueSynthetiqueComponent, canActivate:[StatutConnecteService]},
 	{ path:'jour-feries', component: JourFerieVisuComponent, canActivate:[StatutConnecteService]},
 	{ path:'demande-absence', component: CreerDemandeAbsenceComponent, canActivate:[StatutConnecteService]},
+	{ path:'visu-absence', component: VisuDemandeAbsenceComponent, canActivate:[StatutConnecteService]},
+	{ path:'modif-absence/', component: ModifDemandeAbsenceComponent, canActivate:[StatutConnecteService]},
+	{ path:'suppression-absence', component: SuppressionDemandeAbsenceComponent, canActivate:[StatutConnecteService]},
+
 
 	{ path:'connexion', component: AuthComponent},
 

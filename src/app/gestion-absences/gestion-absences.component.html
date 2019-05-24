@@ -17,17 +17,16 @@
 			<td>{{demande.dateFin | date: 'dd/MM/yyyy'}}</td>
 			<td>{{demande.type}}</td>
 			<td>{{demande.status}}</td>
-			<td> <a><i class="fa fa-eye" aria-hidden="true"></i></a> - <a (click)="chargerModifModal(demande);"><i class="fa fa-pencil-square-o"
-						aria-hidden="true"></i></a> - <a (click)="chargerSuppresionModal();"><i class="fa fa-trash"></i></a>
-			<td> <a><i class="fa fa-eye" aria-hidden="true"></i></a>
+			<td>{{demande.id}} - id</td>
+			<td> <a [routerLink]="['/visu-absence/',(demande.id)]" (click)="recupDemande(demande)"><i class="fa fa-eye" aria-hidden="true"></i></a>
 				-
 				<!--TODO : a changer par demande.status.toString() == 'VALIDEE' || demande.status.toString() == 'REJETEE'
 					quand on aura récupéré les status des demandes-->
 				<div *ngIf="demande.type.toString() == 'RTT' || demande.type.toString() == 'CONGES_SANS_SOLDE'">
-					<a (click)="chargerModifModal();"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
+					<a [routerLink]="['/modif-absence/',(demande.id)]" (click)="recupDemande(demande)"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
 				</div>
 				-
-				<a (click)="chargerSuppresionModal();"><i class="fa fa-trash"></i></a>
+				<a [routerLink]="['/suppression-absence/',(demande.id)]" (click)="recupDemande(demande)"><i class="fa fa-trash"></i></a>
 			</td>
 		</tr>
 

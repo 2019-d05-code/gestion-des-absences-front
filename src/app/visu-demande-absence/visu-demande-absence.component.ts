@@ -1,27 +1,26 @@
 import { Component, OnInit } from '@angular/core';
-import { NgbModal, NgbDateStruct, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { DemandeAbsence } from '../models/DemandeAbsence';
-import { Observable } from 'rxjs';
-import { Collegue } from '../auth/auth.domains';
+import { NgbModal, NgbDateStruct, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
+import { ModifDemandeAbsenceComponent } from '../modif-demande-absence/modif-demande-absence.component';
 import { GestionAbsencesService } from '../gestion-absences/gestion-absences.service';
 import { AuthService } from '../auth/auth.service';
-import { ModifDemandeAbsenceComponent } from '../modif-demande-absence/modif-demande-absence.component';
+import { Observable } from 'rxjs';
+import { Collegue } from '../auth/auth.domains';
 
 @Component({
-  selector: 'app-suppression-demande-absence',
-  templateUrl: `./suppression-demande-absence.component.html`,
-  styles: []
+	selector: 'app-visu-demande-absence',
+	templateUrl: './visu-demande-absence.component.html',
 })
-export class SuppressionDemandeAbsenceComponent implements OnInit {
+export class VisuDemandeAbsenceComponent implements OnInit {
 	edition = false;
-	tabDemandes: DemandeAbsence[] = [];
-	observableDemandes: Observable<DemandeAbsence[]>;
 	collegueConnecte: Collegue;
 	messageErreur: string;
+
 
 	// création de la demande pour mettre dans le formulaire, qui sera récupérée après
 
 	demande: DemandeAbsence = new DemandeAbsence(undefined, undefined, undefined);
+	id: number;
 
 	closeResult: string;
 	constructor(private modalService: NgbModal, private _gestionAbsencesSrv:
@@ -32,7 +31,9 @@ export class SuppressionDemandeAbsenceComponent implements OnInit {
 	}
 
 	open(content, demande) {
-		this.demande = demande;
+		console.log(demande);
+		console.log("coucou");
+		this.id = demande;
 		this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' }).result.then((result) => {
 			this.closeResult = ` `; // Affiche la phrase si résultat ok. On peut récupérer le result en le mettant dans la phrase
 		}, (reason) => {
@@ -64,8 +65,11 @@ export class SuppressionDemandeAbsenceComponent implements OnInit {
 		);
 
 		// Ensuite on récupère les absences associées
-		this.observableDemandes = this._gestionAbsencesSrv.getListeAbsences(this.collegueConnecte.email);
-		this.observableDemandes.subscribe(demande => this.tabDemandes = demande,
+		this._gestionAbsencesSrv.getListeAbsences(this.collegueConnecte.email)
+			.subscribe(tabDemande => {
+				const tab = tabDemande.filter(demande => demande.id = this.id);
+				this.demande = tab[0];
+			},
 			error => {
 				console.log(error.message);
 			});

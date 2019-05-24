@@ -37,6 +37,7 @@ import { MatMenuModule, MatMenuTrigger } from '@angular/material';
 import { NgbModalBackdrop } from '@ng-bootstrap/ng-bootstrap/modal/modal-backdrop';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { SuppressionDemandeAbsenceComponent } from './suppression-demande-absence/suppression-demande-absence.component';
+import { VisuDemandeAbsenceComponent } from './visu-demande-absence/visu-demande-absence.component';
 
 @NgModule({
 	declarations: [
@@ -57,6 +58,7 @@ import { SuppressionDemandeAbsenceComponent } from './suppression-demande-absenc
 		ModifDemandeAbsenceComponent,
 		GestionAbsencesComponent,
 		SuppressionDemandeAbsenceComponent,
+		VisuDemandeAbsenceComponent,
 	],
 	imports: [
 		BrowserModule,
@@ -78,7 +80,7 @@ import { SuppressionDemandeAbsenceComponent } from './suppression-demande-absenc
 		multi: true
 	}],
 	bootstrap: [AppComponent],
-	entryComponents: [ModifDemandeAbsenceComponent, SuppressionDemandeAbsenceComponent]
+
 
 })
 export class AppModule { }

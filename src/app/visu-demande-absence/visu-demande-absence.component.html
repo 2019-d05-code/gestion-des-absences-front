@@ -1,15 +1,17 @@
+<!--Modal qui apparaît si le bouton "basculer en mode edition" est cliqué-->
 <div class="container-fluid">
-	<div class="">
-		<div class="modal-header">
-				<h4 class="modal-title">Supression de la demande</h4>
-			</div>
+	<div class="modal-header">
+		<h4 class="modal-title">Visualisation  d'absence </h4>
+	</div>
+
 	<div class="modal-body">
-		Voulez-vous vraiment supprimer votre demande ?
+		Voici votre demande :
 		<br />
 		<br />
+
 		<div [hidden]="edition" class="row ">
 			<p class="col-6 card-text">Date de début :</p>
-			<p class="col-6 card-text" >{{demande.dateDebut | date: 'dd/MM/yyyy' | async}}</p>
+			<p class="col-6 card-text">{{demande.dateDebut | date: 'dd/MM/yyyy' | async}}</p>
 
 			<p class="col-6 card-text">Date de fin :</p>
 			<p class="col-6 card-text">{{demande.dateFin | date: 'dd/MM/yyyy' | async}}</p>
@@ -23,12 +25,11 @@
 			<p class="col-6 card-text">Statut :</p>
 			<p class="col-6 card-text">{{demande.status | async}}</p>
 		</div>
-		<div class="row justify-content-center">
-			<div class="center">
-				<button class="btn btn-danger" (click)="quitterModifModal();">Annuler</button>
-				<button class="btn btn-success"(click)="quitterModifModal();submit()">Valider</button>
-			</div>
+
+		<!--Body qui change lorsqu'on clique sur le bouton modifier-->
+		<div class="center">
+			<button class="btn btn-danger" (click)="quitterModifModal();">Quitter</button>
 		</div>
 	</div>
-	</div>
-	</div>
+
+</div>
