@@ -9,21 +9,21 @@
 		<br />
 		<br />
 
-		<div [hidden]="edition" class="row ">
+		<div class="row ">
 			<p class="col-6 card-text">Date de début :</p>
-			<p class="col-6 card-text">{{demande.dateDebut | date: 'dd/MM/yyyy' | async}}</p>
+			<p class="col-6 card-text">{{demandeModal.dateDebut | date: 'dd/MM/yyyy'}}</p>
 
 			<p class="col-6 card-text">Date de fin :</p>
-			<p class="col-6 card-text">{{demande.dateFin | date: 'dd/MM/yyyy' | async}}</p>
+			<p class="col-6 card-text">{{demandeModal.dateFin | date: 'dd/MM/yyyy'}}</p>
 
 			<p class="col-6 card-text">Type d'absence :</p>
-			<p class="col-6 card-text">{{demande.type | async}}</p>
+			<p class="col-6 card-text">{{demandeModal.type}}</p>
 
 			<p class="col-6 card-text">Motif : </p>
-			<p class="col-6 card-text">{{demande.motif | async}}</p>
+			<p class="col-6 card-text">{{demandeModal.motif}}</p>
 
 			<p class="col-6 card-text">Statut :</p>
-			<p class="col-6 card-text">{{demande.status | async}}</p>
+			<p class="col-6 card-text">{{demandeModal.status}}</p>
 		</div>
 
 		<!--Body qui change lorsqu'on clique sur le bouton modifier-->

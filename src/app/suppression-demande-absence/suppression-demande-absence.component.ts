@@ -3,37 +3,28 @@ import { NgbModal, NgbDateStruct, ModalDismissReasons } from '@ng-bootstrap/ng-b
 import { DemandeAbsence } from '../models/DemandeAbsence';
 import { Observable } from 'rxjs';
 import { Collegue } from '../auth/auth.domains';
-import { GestionAbsencesService } from '../gestion-absences/gestion-absences.service';
-import { AuthService } from '../auth/auth.service';
-import { ModifDemandeAbsenceComponent } from '../modif-demande-absence/modif-demande-absence.component';
+import { SuppressionDemandeService } from './suppression-demande.service';
 
 @Component({
-  selector: 'app-suppression-demande-absence',
-  templateUrl: `./suppression-demande-absence.component.html`,
-  styles: []
+	selector: 'app-suppression-demande-absence',
+	templateUrl: `./suppression-demande-absence.component.html`,
+	styles: []
 })
 export class SuppressionDemandeAbsenceComponent implements OnInit {
-	edition = false;
-	tabDemandes: DemandeAbsence[] = [];
-	observableDemandes: Observable<DemandeAbsence[]>;
-	collegueConnecte: Collegue;
-	messageErreur: string;
-
-	// création de la demande pour mettre dans le formulaire, qui sera récupérée après
-
-	demande: DemandeAbsence = new DemandeAbsence(undefined, undefined, undefined);
+	// récupération de la demande passée par la modal
+	demandeModal: DemandeAbsence;
 
 	closeResult: string;
-	constructor(private modalService: NgbModal, private _gestionAbsencesSrv:
-		GestionAbsencesService, private _serviceAuthService: AuthService) { }
+	constructor(private modalService: NgbModal, private _suppressionServ: SuppressionDemandeService) { }
+
+	// Récupérer la date de début du calendrier et la formatter
 	dateDebut: NgbDateStruct;
 	get dateAfficherModal() {
 		return new Date(this.dateDebut.year, this.dateDebut.month, this.dateDebut.day);
 	}
 
-	open(content, demande) {
-		this.demande = demande;
-		this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' }).result.then((result) => {
+	open(content) {
+		this.modalService.open(content, { ariaLabelledBy: 'modal-suppression' }).result.then((result) => {
 			this.closeResult = ` `; // Affiche la phrase si résultat ok. On peut récupérer le result en le mettant dans la phrase
 		}, (reason) => {
 			this.closeResult = `${this.getDismissReason(reason)}`; // Affiche la phrase si la personne a quitté
@@ -46,45 +37,30 @@ export class SuppressionDemandeAbsenceComponent implements OnInit {
 		} else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
 			return 'Touche retour';
 		} else {
-			return ` `; // mettre ${reason} si vous voulez afficher la raison
+			return `C'est OKAAAY `; // mettre ${reason} si vous voulez afficher la raison
 		}
 	}
 
 	ngOnInit() {
 
-		this._serviceAuthService.collegueConnecteObs.subscribe(
-			collegue => this.collegueConnecte = collegue,
-			error => {
-				this.messageErreur = error.error;
-				setTimeout(
-					() => this.messageErreur = undefined,
-					7000
-				);
-			}
-		);
-
-		// Ensuite on récupère les absences associées
-		this.observableDemandes = this._gestionAbsencesSrv.getListeAbsences(this.collegueConnecte.email);
-		this.observableDemandes.subscribe(demande => this.tabDemandes = demande,
-			error => {
-				console.log(error.message);
-			});
 	}
 
-	submit() {
+	// validation du formulaire
+	submit(demande) {
+		if (confirm('Vous êtes sûr, hein ?')) {
+			this._suppressionServ.supprimerDemandeAbsence(demande).subscribe(
+				() => {
+					this.quitterModifModal();
+				},
+				err => {
+					alert('Oops, il y a eu un problème !');
+				}
+			);
+		}
 	}
-
-	// Pour basculer en mode édition
-	afficherModification() {
-		this.edition = true;
-	}
-
-
-	// Fonction pour quand un collègue est demandé
-	submitDemande() { }
 
 	// Fonction pour fermer la modal
 	quitterModifModal() {
-		this.modalService.dismissAll(ModifDemandeAbsenceComponent);
+		this.modalService.dismissAll(SuppressionDemandeAbsenceComponent);
 	}
 }
