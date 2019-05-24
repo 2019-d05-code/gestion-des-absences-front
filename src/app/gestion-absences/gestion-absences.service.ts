@@ -27,6 +27,11 @@ export class GestionAbsencesService {
 
 	}
 
+	modifDemandeAbsence(demande: DemandeAbsence): Observable<String> {
+
+		return this._http.patch<string>(this.URL_BACKEND, demande, { withCredentials: true });
+
+	}
 	// Service pour récupérer la liste de toutes les absences confondues
 	getListeAbsences(email: string): Observable<DemandeAbsence[]> {
 		let url: string = `${environment.baseUrl}/gestion-absences/${environment.apiListeAbsences}${email}`;

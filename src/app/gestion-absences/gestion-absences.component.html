@@ -28,7 +28,7 @@
 
 					<div class="col-4"
 						*ngIf="demande.status.toString() == 'INITIALE' || demande.status.toString() == 'EN_ATTENTE_VALIDATION'">
-						<a (click)="chargerModifModal();"> <i class="fa fa-pencil-square-o" aria-hidden="true">
+						<a (click)="chargerModifModal(demande);"> <i class="fa fa-pencil-square-o" aria-hidden="true">
 							</i></a>
 					</div>
 

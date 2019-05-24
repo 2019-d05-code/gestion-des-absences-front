@@ -23,7 +23,7 @@ export const routes: Routes = [
 	{ path:'jour-feries', component: JourFerieVisuComponent, canActivate:[StatutConnecteService]},
 	{ path:'demande-absence', component: CreerDemandeAbsenceComponent, canActivate:[StatutConnecteService]},
 	{ path:'visu-absence', component: VisuDemandeAbsenceComponent, canActivate:[StatutConnecteService]},
-	{ path:'modif-absence/', component: ModifDemandeAbsenceComponent, canActivate:[StatutConnecteService]},
+	{ path:'modif-absence/:demande.id', component: ModifDemandeAbsenceComponent, canActivate:[StatutConnecteService]},
 	{ path:'suppression-absence', component: SuppressionDemandeAbsenceComponent, canActivate:[StatutConnecteService]},
 
 
