@@ -8,6 +8,7 @@ import { Collegue } from '../auth/auth.domains';
 import { map, tap } from 'rxjs/operators';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { SuppressionDemandeAbsenceComponent } from '../suppression-demande-absence/suppression-demande-absence.component';
+import { TypeDemande } from '../models/TypeDemande';
 
 @Injectable({
 	providedIn: 'root'
@@ -52,6 +53,28 @@ export class GestionAbsencesService {
 						);
 						console.log(uneDemande);
 						return uneDemandeCoteClient;
+					}
+				);
+			})
+		);
+	}
+
+	// Service pour récupérer la liste de toutes les absences confondues
+	getListeMissions(email: string): Observable<DemandeAbsence[]> {
+		let url: string = `${environment.baseUrl}/missions?email=${email}`;
+		console.log(url);
+		return this._http.get<any[]>(url).pipe(
+			map(listDemandesServ => {
+				return listDemandesServ.map(
+					uneMission => {
+						const uneMissionCoteClient = new DemandeAbsence(
+							new Date(uneMission.dateDebut),
+							new Date(uneMission.dateFin),
+							uneMission.nature,
+							uneMission.statut
+						);
+						console.log(uneMission);
+						return uneMissionCoteClient;
 					}
 				);
 			})

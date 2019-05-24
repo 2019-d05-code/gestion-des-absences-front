@@ -1,4 +1,3 @@
-
 <div class="container-fluid">
 
 	<h1 class="text-center col-12">Gestion des absences</h1>
@@ -19,16 +18,20 @@
 				<td>
 					{{ demande.dateFin | date: 'dd/MM/yyyy' }}
 				</td>
-				<td>{{demande.type }}</td>
+				<td>
+					<p *ngIf="demande.type.toString() == 'Formation' || demande.type.toString() == 'Technique'">MISSION
+						- </p>{{demande.type }}
+				</td>
 				<td>{{ demande.status }}</td>
-				<td class="col-8 row">
+				<td class="col-8 row"
+					*ngIf="demande.type.toString() == 'RTT' || demande.type.toString() == 'CONGES_PAYES' || demande.type.toString() == 'CONGES_SANS_SOLDE'">
 					<div class="col-4">
 						<a (click)="chargerVisuModal(demande);"><i class="fa fa-eye" aria-hidden="true"></i></a>
 					</div>
 
 					<div class="col-4"
 						*ngIf="demande.status.toString() == 'INITIALE' || demande.status.toString() == 'EN_ATTENTE_VALIDATION'">
-						<a (click)="chargerModifModal(demande);"> <i class="fa fa-pencil-square-o" aria-hidden="true">
+						<a (click)="chargerModifModal(demande);" > <i class="fa fa-pencil-square-o" aria-hidden="true">
 							</i></a>
 					</div>
 
@@ -40,6 +43,15 @@
 					<div class="col-4">
 						<a (click)="chargerSuppresionModal(demande);"> <i class="fa fa-trash"> </i></a>
 					</div>
+				</td>
+
+				<td class="col-8 row"
+					*ngIf="demande.type.toString() == 'Formation' || demande.type.toString() == 'Technique'">
+					<div class="col-12 text-center">
+						<a href="https://2019-d05-code.github.io/gestion-des-missions-front/"> <i class="fas fa-external-link-alt" aria-hidden="true">
+							</i></a>
+					</div>
+
 				</td>
 			</tr>
 		</tbody>
