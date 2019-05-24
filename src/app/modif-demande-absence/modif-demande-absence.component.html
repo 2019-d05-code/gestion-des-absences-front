@@ -1,51 +1,83 @@
-<div class="container-fluid" *ngIf="demande">
-	<h1 class="display-4 text-center">Modification de demande d'absence</h1>
-	<hr>
-	<div class="container">
-		<form class="form-group" #modifForm="ngForm" (ngSubmit)="modifDemande()">
-			<div class="form-group">
-				<label for="debut">Date de début</label>
-				<input required type="date" name="debut" id="debut" #debut="ngModel" [(ngModel)]="demande.dateDebut"
-					class="form-control">
-				<div class="alert alert-danger" *ngIf="(debut.dirty || debut.touched) && debut.errors">
-					Ce champ est obligatoire
-				</div>
-			</div>
-			<div class="form-group">
-				<label for="fin">Date de fin</label>
-				<input required type="date" name="fin" id="fin" #fin="ngModel" [(ngModel)]="demande.dateFin"
-					class="form-control">
-				<div class="alert alert-danger" *ngIf="(fin.dirty || fin.touched) && fin.errors">
-					Ce champ est obligatoire
-				</div>
-			</div>
-			<div class="form-group">
-				<label for="type">Type de congés</label>
-				<select required name="type" id="type" #type="ngModel" [(ngModel)]="demande.type" class="form-control">
-					<option value="CONGES_PAYES">Congés payés</option>
-					<option value="RTT">RTT</option>
-					<option value="CONGES_SANS_SOLDE">Congés sans solde</option>
-				</select>
-				<div class="alert alert-danger" *ngIf="(type.dirty || type.touched) && type.errors">
-					Ce champ est obligatoire
-				</div>
-			</div>
-			<div class="form-group">
-				<label for="motif">Motif</label>
-				<textarea class="form-control" name="motif" id="motif" rows="5" #motif="ngModel"
-					[(ngModel)]="demande.motif"></textarea>
-			</div>
-			<div class="text-center">
-				<button class="btn btn-danger" routerLink="/gestion-absences">Annuler</button>
-				<button [disabled]="modifForm.invalid" class="btn btn-success" type="submit">Valider</button>
-			</div>
-			<div class="alert alert-danger text-center" *ngIf="messageErreur">
-				<p><strong>{{ messageErreur }}</strong></p>
-			</div>
-			<div class="alert alert-success text-center" *ngIf="messageSucces">
-				<p><strong>{{ messageSucces }}</strong></p>
-			</div>
-			<br>
-		</form>
+<div class="container-fluid">
+	<div class="modal-header">
+		<h4 class="modal-title">Modification d'absence </h4>
 	</div>
-</div>
+
+	<div class="modal-body">
+		Vous souhaitez modifier votre absence avec les paramètres suivants :
+		<br />
+		<br />
+
+		<div [hidden]="edition" class="row ">
+			<p class="col-6 card-text">Date de début :</p>
+			<p class="col-6 card-text">{{demandeModal.dateDebut | date : 'dd/MM/yyyy'}}</p>
+
+			<p class="col-6 card-text">Date de fin :</p>
+			<p class="col-6 card-text">{{demandeModal.dateFin | date : 'dd/MM/yyyy'}}</p>
+
+			<p class="col-6 card-text">Type d'absence :</p>
+			<p class="col-6 card-text">{{demandeModal.type}}</p>
+
+			<p class="col-6 card-text">Motif : </p>
+			<p class="col-6 card-text">{{demandeModal.motif}}</p>
+
+			<p class="col-6 card-text">Statut :</p>
+			<p class="col-6 card-text">{{demandeModal.status}}</p>
+		</div>
+
+		<!--Body qui change lorsuq'on clique sur le bouton modifier-->
+		<div [hidden]="!edition">
+			<form class="col-12 needs-validation" novalidate (ngSubmit)="submit(demandeModal)" #formCtrl="ngForm">
+				<div class="form-group">
+					<label for="debut">Date de début </label>
+					<input required type="date" name="debut" id="debut" #debut="ngModel" [(ngModel)]="demandeModal.dateDebut"
+						class="form-control" >
+					<div class="alert alert-danger" *ngIf="(debut.dirty || debut.touched) && debut.errors">
+						Ce champ est obligatoire
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="fin">Date de fin</label>
+					<input required type="date" name="fin" id="fin" #fin="ngModel" [(ngModel)]="demandeModal.dateFin"
+						class="form-control">
+					<div class="alert alert-danger" *ngIf="(fin.dirty || fin.touched) && fin.errors">
+						Ce champ est obligatoire
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="type">Type de congé</label>
+					<select required name="type" id="type" #type="ngModel" [(ngModel)]="demandeModal.type"
+						class="form-control">
+						<option value="CONGES_PAYES">Congés payés</option>
+						<option value="RTT">RTT</option>
+						<option value="CONGES_SANS_SOLDE">Congés sans solde</option>
+					</select>
+					<div class="alert alert-danger" *ngIf="(type.dirty || type.touched) && type.errors">
+						Ce champ est obligatoire
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="motif">Motif</label>
+					<textarea class="form-control" name="motif" id="motif" rows="5" #motif="ngModel"
+						[(ngModel)]="demandeModal.motif"></textarea>
+				</div>
+			</form>
+		</div>
+
+		<div class="modal-footer">
+			<button class="btn btn-dark" [hidden]="edition" (click)="afficherModification()">Basculer en mode édition</button>
+
+			<!--Ajouter un bouton Valider désactivé tant que le formulaire n'est pas valide-->
+			<!--TODO-->
+
+			<button [hidden]="!edition" type="button" class="btn btn-success" [disabled]="formCtrl.invalid"
+				(click)="submit(demandeModal)">Valider</button>
+
+				<div class="alert alert-danger text-center" *ngIf="messageErreur">
+					<p><strong>{{ messageErreur | json }}</strong></p>
+				</div>
+				<div class="alert alert-success text-center" *ngIf="messageSucces">
+					<p><strong>{{ messageSucces | json }}</strong></p>
+		</div>
+
+	</div>

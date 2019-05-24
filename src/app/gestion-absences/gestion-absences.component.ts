@@ -8,6 +8,7 @@ import { Collegue } from '../auth/auth.domains';
 import { TypeDemande } from '../models/TypeDemande';
 import { SuppressionDemandeAbsenceComponent } from '../suppression-demande-absence/suppression-demande-absence.component';
 import { VisuDemandeAbsenceComponent } from '../visu-demande-absence/visu-demande-absence.component';
+import { ModifDemandeAbsenceComponent } from '../modif-demande-absence/modif-demande-absence.component';
 
 // Création des types pour le tri du tableau
 export type SortDirection = 'asc' | 'desc' | '';
@@ -100,6 +101,22 @@ export class GestionAbsencesComponent implements OnInit {
 	recupDemande(demande: DemandeAbsence): void {
 		this._gestionAbsencesSrv.subject.next(demande);
 	}
+// charger la modal de suppresion au click
+
+chargerModifModal(demande: DemandeAbsence) {
+	console.log(demande);
+	const myModal = this.modal.open(ModifDemandeAbsenceComponent);
+	myModal.componentInstance.demandeModal = demande;
+
+	myModal.result.then((result) => {
+		console.log(result);
+	  }, (reason) => {
+		console.log(reason);
+	  });
+
+
+
+}
 
 	ngOnInit() {
 		// D'abord on récupère le collègue connecté
