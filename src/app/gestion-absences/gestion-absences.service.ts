@@ -61,7 +61,9 @@ export class GestionAbsencesService {
 							new Date(uneDemande.dateDebut),
 							new Date(uneDemande.dateFin),
 							uneDemande.type,
-							uneDemande.motif,
+							uneDemande.status,
+							uneDemande.motif
+
 						);
 
 						return uneDemandeCoteClient;

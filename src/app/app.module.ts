@@ -22,7 +22,7 @@ import { PlanningComponent } from './planning/planning.component';
 import { ValidationDemandesComponent } from './validation-demandes/validation-demandes.component';
 import { RouterModule } from '@angular/router';
 import { routes } from './app.routes';
-import { GestionAbsencesComponent } from './gestion-absences/gestion-absences.component';
+import { GestionAbsencesComponent, NgbdSortableHeader } from './gestion-absences/gestion-absences.component';
 
 /** imports pour le calendrier */
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -33,7 +33,7 @@ import { registerLocaleData } from '@angular/common';
 
 registerLocaleData(localeFr);
 
-import { MatMenuModule, MatMenuTrigger } from '@angular/material';
+import { MatMenuModule, MatMenuTrigger, MatNativeDateModule, MatTableDataSource } from '@angular/material';
 import { NgbModalBackdrop } from '@ng-bootstrap/ng-bootstrap/modal/modal-backdrop';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { SuppressionDemandeAbsenceComponent } from './suppression-demande-absence/suppression-demande-absence.component';
@@ -57,6 +57,7 @@ import { SuppressionDemandeAbsenceComponent } from './suppression-demande-absenc
 		ModifDemandeAbsenceComponent,
 		GestionAbsencesComponent,
 		SuppressionDemandeAbsenceComponent,
+		NgbdSortableHeader
 	],
 	imports: [
 		BrowserModule,

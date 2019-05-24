@@ -1,36 +1,30 @@
 <br />
 <h1 class="text-center">Gestion des absences</h1>
+
+
+<!--Tableau Angular Ng bootstrap-->
 <table class="table table-striped">
 	<thead>
 		<tr>
-			<th scope="col">Date de début</th>
-			<th scope="col">Date de fin</th>
-			<th scope="col">Type</th>
-			<th scope="col">Statut</th>
-			<th scope="col">Action</th>
-
+			<th direction="asc" scope="col" sortable="dateDebut" (sort)="onSort($event)">Date de début</th>
+			<th scope="col" sortable="dateFin" (sort)="onSort($event)">Date de fin</th>
+			<th scope="col" sortable="type" (sort)="onSort($event)">Type</th>
+			<th scope="col" sortable="status" (sort)="onSort($event)">Statut</th>
 		</tr>
 	</thead>
 	<tbody>
-		<tr *ngFor="let demande of tabDemandes">
-			<td>{{demande.dateDebut | date: 'dd/MM/yyyy'}}</td>
-			<td>{{demande.dateFin | date: 'dd/MM/yyyy'}}</td>
-			<td>{{demande.type}}</td>
-			<td>{{demande.status}}</td>
-			<td> <a><i class="fa fa-eye" aria-hidden="true"></i></a>
-				-
-				<!--TODO : a changer par demande.status.toString() == 'VALIDEE' || demande.status.toString() == 'REJETEE'
-					quand on aura récupéré les status des demandes-->
-				<div *ngIf="demande.type.toString() == 'RTT' || demande.type.toString() == 'CONGES_SANS_SOLDE'">
-					<a (click)="chargerModifModal();"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
-				</div>
-				-
-				<a (click)="chargerSuppresionModal();"><i class="fa fa-trash"></i></a>
+		<tr *ngFor="let demande of tableauDemandes">
+			<th scope="row">{{ demande.dateDebut | date: 'dd/MM/yyyy' }}</th>
+			<td>
+				{{ demande.dateFin | date: 'dd/MM/yyyy' }}
 			</td>
+			<td>{{ demande.type }}</td>
+			<td>{{ demande.status }}</td>
 		</tr>
-
 	</tbody>
 </table>
+
+
 <div class="float-right">Demander une absence <a routerLink="/demande-absence"><button type="button"
 			class="btn btn-mdb-color">+</button></a></div>
 <div>Solde des compteurs :</div>
