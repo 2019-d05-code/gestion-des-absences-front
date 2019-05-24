@@ -6,10 +6,8 @@ import { GestionAbsencesService } from './gestion-absences.service';
 import { AuthService } from '../auth/auth.service';
 import { Collegue } from '../auth/auth.domains';
 import { TypeDemande } from '../models/TypeDemande';
-
-
-
-
+import { SuppressionDemandeAbsenceComponent } from '../suppression-demande-absence/suppression-demande-absence.component';
+import { VisuDemandeAbsenceComponent } from '../visu-demande-absence/visu-demande-absence.component';
 
 // Création des types pour le tri du tableau
 export type SortDirection = 'asc' | 'desc' | '';
@@ -52,7 +50,7 @@ export class GestionAbsencesComponent implements OnInit {
 	observableDemandes: Observable<DemandeAbsence[]>;
 	collegueConnecte: Collegue;
 	messageErreur: string;
-	demande = new DemandeAbsence(undefined, undefined, undefined,);
+	demande = new DemandeAbsence(undefined, undefined, undefined);
 
 	typeDde: TypeDemande;
 
@@ -60,7 +58,7 @@ export class GestionAbsencesComponent implements OnInit {
 	tableauDemandes = [];
 	tableauInit = []
 
-	//Création des variables pour les pages
+	// Création des variables pour les pages
 	page = 1;
 	pageSize = 5;
 	longueurTableau = this.tableauInit.length;
@@ -89,7 +87,7 @@ export class GestionAbsencesComponent implements OnInit {
 
 	// paginate
 	get listePaginees() {
-		return  [...this.tableauDemandes]
+		return [...this.tableauDemandes]
 
 			.slice((this.page - 1) * this.pageSize, (this.page - 1) * this.pageSize + this.pageSize);
 
@@ -105,7 +103,6 @@ export class GestionAbsencesComponent implements OnInit {
 
 	ngOnInit() {
 		// D'abord on récupère le collègue connecté
-
 		this._serviceAuthService.collegueConnecteObs.subscribe(
 			collegue => this.collegueConnecte = collegue,
 			error => {
@@ -131,5 +128,33 @@ export class GestionAbsencesComponent implements OnInit {
 
 
 	}
+
+	// charger la modal de suppresion au click
+	chargerSuppresionModal(demande: DemandeAbsence) {
+		console.log(demande);
+		const myModal = this.modal.open(SuppressionDemandeAbsenceComponent);
+		myModal.componentInstance.demandeModal = demande;
+
+		myModal.result.then((result) => {
+			console.log(result);
+		}, (reason) => {
+			console.log(reason);
+		});
+
+	}
+
+	// charger la modal de visualisation au click
+	chargerVisuModal(demande: DemandeAbsence) {
+		console.log(demande);
+		const myModal = this.modal.open(VisuDemandeAbsenceComponent);
+		myModal.componentInstance.demandeModal = demande;
+
+		myModal.result.then((result) => {
+			console.log(result);
+		}, (reason) => {
+			console.log(reason);
+		});
+	}
+
 
 }

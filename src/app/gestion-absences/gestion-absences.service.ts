@@ -6,7 +6,8 @@ import { Observable, Subject } from 'rxjs';
 import { AuthService } from '../auth/auth.service';
 import { Collegue } from '../auth/auth.domains';
 import { map, tap } from 'rxjs/operators';
-import { TypeDemande } from '../models/TypeDemande';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { SuppressionDemandeAbsenceComponent } from '../suppression-demande-absence/suppression-demande-absence.component';
 
 @Injectable({
 	providedIn: 'root'
@@ -19,7 +20,7 @@ export class GestionAbsencesService {
 
 	URL_BACKEND = `${environment.baseUrl}/gestion-absences`;
 
-	constructor(private _http: HttpClient, private _serviceAuthService: AuthService) { }
+	constructor(private _http: HttpClient, private _serviceAuthService: AuthService, private modal: NgbModal) { }
 
 	ajouterDemandeAbsence(demande: DemandeAbsence): Observable<String> {
 
@@ -75,7 +76,7 @@ export class GestionAbsencesService {
 		);
 	}
 
-		ngOnInit() {
+	ngOnInit() {
 		this._serviceAuthService.collegueConnecteObs.subscribe(
 			collegue => this.collegueConnecte = collegue,
 			error => {
@@ -88,5 +89,6 @@ export class GestionAbsencesService {
 		);
 
 	}
+
 
 }
