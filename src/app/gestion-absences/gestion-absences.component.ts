@@ -57,7 +57,8 @@ export class GestionAbsencesComponent implements OnInit {
 
 	// Création de la constante qui représente le tableau
 	tableauDemandes = [];
-	tableauInit = []
+	tableauInit = [];
+	tableauInitMission = [];
 
 	// Création des variables pour les pages
 	page = 1;
@@ -101,22 +102,22 @@ export class GestionAbsencesComponent implements OnInit {
 	recupDemande(demande: DemandeAbsence): void {
 		this._gestionAbsencesSrv.subject.next(demande);
 	}
-// charger la modal de suppresion au click
+	// charger la modal de suppresion au click
 
-chargerModifModal(demande: DemandeAbsence) {
-	console.log(demande);
-	const myModal = this.modal.open(ModifDemandeAbsenceComponent);
-	myModal.componentInstance.demandeModal = demande;
+	chargerModifModal(demande: DemandeAbsence) {
+		console.log(demande);
+		const myModal = this.modal.open(ModifDemandeAbsenceComponent);
+		myModal.componentInstance.demandeModal = demande;
 
-	myModal.result.then((result) => {
-		console.log(result);
-	  }, (reason) => {
-		console.log(reason);
-	  });
+		myModal.result.then((result) => {
+			console.log(result);
+		}, (reason) => {
+			console.log(reason);
+		});
 
 
 
-}
+	}
 
 	ngOnInit() {
 		// D'abord on récupère le collègue connecté
@@ -135,6 +136,16 @@ chargerModifModal(demande: DemandeAbsence) {
 		this.observableDemandes = this._gestionAbsencesSrv.getListeAbsences(this.collegueConnecte.email);
 		this.observableDemandes.subscribe(demandeTab => {
 			this.tableauInit = demandeTab;
+		},
+			error => {
+				console.log(error.message);
+			});
+
+
+		// Ensuite on récupère les missions
+		this.observableDemandes = this._gestionAbsencesSrv.getListeMissions(this.collegueConnecte.email);
+		this.observableDemandes.subscribe(demandeTab => {
+			demandeTab.forEach(mission => this.tableauInit.push(mission));
 			this.longueurTableau = this.tableauInit.length;
 			this.onSort({ column: 'dateDebut', direction: 'asc' });
 		},
