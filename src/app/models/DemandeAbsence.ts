@@ -6,10 +6,12 @@ export class DemandeAbsence {
 
 	public email: string;
 
-	constructor(public dateDebut: Date,
+	constructor(
+		public dateDebut: Date,
 		public dateFin: Date,
 		public type: TypeDemande,
 		public status?: StatusDemande,
-		public motif?: string) { }
+		public motif?: string,
+		public id?: number) { }
 
 }

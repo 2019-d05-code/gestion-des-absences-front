@@ -17,16 +17,24 @@
 			<td>{{demande.dateFin | date: 'dd/MM/yyyy'}}</td>
 			<td>{{demande.type}}</td>
 			<td>{{demande.status}}</td>
-			<td> <a><i class="fa fa-eye" aria-hidden="true"></i></a> - <a (click)="chargerModifModal();"><i class="fa fa-pencil-square-o"
-						aria-hidden="true"></i></a> - <a (click)="chargerSuppresionModal();"><i class="fa fa-trash"></i></a>
+			<td> <a><i class="fa fa-eye" aria-hidden="true"></i></a>
+				-
+				<!--TODO : a changer par demande.status.toString() == 'VALIDEE' || demande.status.toString() == 'REJETEE'
+					quand on aura récupéré les status des demandes-->
+				<div *ngIf="demande.type.toString() == 'RTT' || demande.type.toString() == 'CONGES_SANS_SOLDE'">
+					<a (click)="chargerModifModal();"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
+				</div>
+				-
+				<a (click)="chargerSuppresionModal();"><i class="fa fa-trash"></i></a>
 			</td>
 		</tr>
 
 	</tbody>
 </table>
-<div class="float-right">Demander une absence <a routerLink="/demande-absence"><button type="button" class="btn btn-mdb-color">+</button></a></div>
+<div class="float-right">Demander une absence <a routerLink="/demande-absence"><button type="button"
+			class="btn btn-mdb-color">+</button></a></div>
 <div>Solde des compteurs :</div>
 <ul>
-	<li>Congés Payés : - Variable </li>
-	<li>RTT : - Variable</li>
+	<li>Congés Payés : {{collegueConnecte.soldeCongesPayes}} </li>
+	<li>RTT : {{collegueConnecte.soldeRTT}}</li>
 </ul>
