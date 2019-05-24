@@ -3,7 +3,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ModifDemandeAbsenceComponent } from '../modif-demande-absence/modif-demande-absence.component';
 import { SuppressionDemandeAbsenceComponent } from '../suppression-demande-absence/suppression-demande-absence.component';
 import { DemandeAbsence } from '../models/DemandeAbsence';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { GestionAbsencesService } from './gestion-absences.service';
 import { AuthService } from '../auth/auth.service';
 import { Collegue } from '../auth/auth.domains';
@@ -61,6 +61,11 @@ export class GestionAbsencesComponent implements OnInit {
 	tableauDemandes = [];
 	tableauInit = []
 
+	//Création des variables pour les pages
+	page = 1;
+	pageSize = 4;
+	longueurTableau = this.tableauInit.length;
+
 	@ViewChildren(NgbdSortableHeader) headers: QueryList<NgbdSortableHeader>;
 
 	onSort({ column, direction }: SortEvent) {
@@ -81,6 +86,14 @@ export class GestionAbsencesComponent implements OnInit {
 				return direction === 'asc' ? res : -res;
 			});
 		}
+	}
+
+	// paginate
+	get listePaginees() {
+		return  [...this.tableauDemandes]
+
+			.slice((this.page - 1) * this.pageSize, (this.page - 1) * this.pageSize + this.pageSize);
+
 	}
 
 
@@ -105,6 +118,7 @@ export class GestionAbsencesComponent implements OnInit {
 		this.observableDemandes = this._gestionAbsencesSrv.getListeAbsences(this.collegueConnecte.email);
 		this.observableDemandes.subscribe(demandeTab => {
 			this.tableauInit = demandeTab;
+			this.longueurTableau = this.tableauInit.length;
 			this.onSort({ column: 'dateDebut', direction: 'asc' });
 		},
 			error => {

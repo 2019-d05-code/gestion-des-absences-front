@@ -13,7 +13,7 @@
 		</tr>
 	</thead>
 	<tbody>
-		<tr *ngFor="let demande of tableauDemandes">
+		<tr *ngFor="let demande of listePaginees">
 			<th scope="row">{{ demande.dateDebut | date: 'dd/MM/yyyy' }}</th>
 			<td>
 				{{ demande.dateFin | date: 'dd/MM/yyyy' }}
@@ -23,6 +23,17 @@
 		</tr>
 	</tbody>
 </table>
+
+<div class="d-flex justify-content-between p-2">
+		<ngb-pagination [collectionSize]="longueurTableau" [(page)]="page" [pageSize]="pageSize">
+		</ngb-pagination>
+
+		<select class="custom-select" style="width: auto" [(ngModel)]="pageSize">
+		  <option [ngValue]="2">2 demandes par page</option>
+		  <option [ngValue]="5">5 demandes par page</option>
+		  <option [ngValue]="10">610 demandes par page</option>
+		</select>
+	  </div>
 
 
 <div class="float-right">Demander une absence <a routerLink="/demande-absence"><button type="button"
