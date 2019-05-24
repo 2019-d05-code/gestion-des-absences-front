@@ -1,9 +1,7 @@
-import { Component, OnInit, ViewChild, Directive, Input, Output, EventEmitter, ViewChildren, QueryList } from '@angular/core';
+import { Component, OnInit, Directive, Input, Output, EventEmitter, ViewChildren, QueryList } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { ModifDemandeAbsenceComponent } from '../modif-demande-absence/modif-demande-absence.component';
-import { SuppressionDemandeAbsenceComponent } from '../suppression-demande-absence/suppression-demande-absence.component';
 import { DemandeAbsence } from '../models/DemandeAbsence';
-import { Observable, of } from 'rxjs';
+import { Observable } from 'rxjs';
 import { GestionAbsencesService } from './gestion-absences.service';
 import { AuthService } from '../auth/auth.service';
 import { Collegue } from '../auth/auth.domains';
@@ -54,6 +52,7 @@ export class GestionAbsencesComponent implements OnInit {
 	observableDemandes: Observable<DemandeAbsence[]>;
 	collegueConnecte: Collegue;
 	messageErreur: string;
+	demande = new DemandeAbsence(undefined, undefined, undefined,);
 
 	typeDde: TypeDemande;
 
@@ -100,6 +99,10 @@ export class GestionAbsencesComponent implements OnInit {
 
 	constructor(private modal: NgbModal, private _gestionAbsencesSrv: GestionAbsencesService, private _serviceAuthService: AuthService) { }
 
+	recupDemande(demande: DemandeAbsence): void {
+		this._gestionAbsencesSrv.subject.next(demande);
+	}
+
 	ngOnInit() {
 		// D'abord on récupère le collègue connecté
 
@@ -129,11 +132,4 @@ export class GestionAbsencesComponent implements OnInit {
 
 	}
 
-	chargerModifModal() {
-		this.modal.open(ModifDemandeAbsenceComponent);
-	}
-
-	chargerSuppresionModal() {
-		this.modal.open(SuppressionDemandeAbsenceComponent);
-	}
 }

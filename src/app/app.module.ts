@@ -33,10 +33,10 @@ import { registerLocaleData } from '@angular/common';
 
 registerLocaleData(localeFr);
 
-import { MatMenuModule, MatMenuTrigger, MatNativeDateModule, MatTableDataSource } from '@angular/material';
-import { NgbModalBackdrop } from '@ng-bootstrap/ng-bootstrap/modal/modal-backdrop';
+import { MatMenuModule } from '@angular/material';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { SuppressionDemandeAbsenceComponent } from './suppression-demande-absence/suppression-demande-absence.component';
+import { VisuDemandeAbsenceComponent } from './visu-demande-absence/visu-demande-absence.component';
 
 @NgModule({
 	declarations: [
@@ -57,6 +57,7 @@ import { SuppressionDemandeAbsenceComponent } from './suppression-demande-absenc
 		ModifDemandeAbsenceComponent,
 		GestionAbsencesComponent,
 		SuppressionDemandeAbsenceComponent,
+		VisuDemandeAbsenceComponent,
 		NgbdSortableHeader
 	],
 	imports: [
@@ -79,7 +80,7 @@ import { SuppressionDemandeAbsenceComponent } from './suppression-demande-absenc
 		multi: true
 	}],
 	bootstrap: [AppComponent],
-	entryComponents: [ModifDemandeAbsenceComponent]
+
 
 })
 export class AppModule { }

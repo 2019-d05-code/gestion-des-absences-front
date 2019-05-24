@@ -2,10 +2,10 @@ import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { DemandeAbsence } from '../models/DemandeAbsence';
-import { Observable } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { AuthService } from '../auth/auth.service';
 import { Collegue } from '../auth/auth.domains';
-import { map } from 'rxjs/operators';
+import { map, tap } from 'rxjs/operators';
 import { TypeDemande } from '../models/TypeDemande';
 
 @Injectable({
@@ -15,6 +15,7 @@ export class GestionAbsencesService {
 	messageSucces: string;
 	messageErreur: string;
 	collegueConnecte: Collegue;
+	subject = new Subject<DemandeAbsence>();
 
 	URL_BACKEND = `${environment.baseUrl}/gestion-absences`;
 
@@ -62,9 +63,9 @@ export class GestionAbsencesService {
 							new Date(uneDemande.dateDebut),
 							new Date(uneDemande.dateFin),
 							uneDemande.type,
+							uneDemande.motif,
 							uneDemande.status,
-							uneDemande.motif
-
+							uneDemande.id
 						);
 
 						return uneDemandeCoteClient;
@@ -74,8 +75,7 @@ export class GestionAbsencesService {
 		);
 	}
 
-	ngOnInit() {
-		console.log(this.collegueConnecte);
+		ngOnInit() {
 		this._serviceAuthService.collegueConnecteObs.subscribe(
 			collegue => this.collegueConnecte = collegue,
 			error => {
@@ -87,7 +87,6 @@ export class GestionAbsencesService {
 			}
 		);
 
-		console.log(this.collegueConnecte);
 	}
 
 }
