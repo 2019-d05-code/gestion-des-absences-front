@@ -18,6 +18,7 @@ export class GestionAbsencesService {
 	subject = new Subject<DemandeAbsence>();
 
 	URL_BACKEND = `${environment.baseUrl}/gestion-absences`;
+	URL_BACKENDMODIF = `${environment.baseUrl}/gestion-absences/modifier/`;
 
 	constructor(private _http: HttpClient, private _serviceAuthService: AuthService) { }
 
@@ -27,6 +28,11 @@ export class GestionAbsencesService {
 
 	}
 
+	modifDemandeAbsence(demande: DemandeAbsence): Observable<String> {
+
+		return this._http.patch<string>(`${this.URL_BACKENDMODIF}${demande.id}`, demande, { withCredentials: true });
+
+	}
 	// Service pour récupérer la liste de toutes les absences confondues
 	getListeAbsences(email: string): Observable<DemandeAbsence[]> {
 		let url: string = `${environment.baseUrl}/gestion-absences/${environment.apiListeAbsences}${email}`;
