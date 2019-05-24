@@ -27,7 +27,7 @@
 
 		<!--Body qui change lorsuq'on clique sur le bouton modifier-->
 		<div [hidden]="!edition">
-			<form class="col-12 needs-validation" novalidate (ngSubmit)="submit()" #formCtrl="ngForm">
+			<form class="col-12 needs-validation" novalidate (ngSubmit)="submit(demandeModal)" #formCtrl="ngForm">
 				<div class="form-group">
 					<label for="debut">Date de début </label>
 					<input required type="date" name="debut" id="debut" #debut="ngModel" [(ngModel)]="demandeModal.dateDebut"
