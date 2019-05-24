@@ -72,6 +72,7 @@ export class GestionAbsencesService {
 	}
 
 	ngOnInit() {
+		console.log(this.collegueConnecte);
 		this._serviceAuthService.collegueConnecteObs.subscribe(
 			collegue => this.collegueConnecte = collegue,
 			error => {
@@ -82,6 +83,8 @@ export class GestionAbsencesService {
 				);
 			}
 		);
+
+		console.log(this.collegueConnecte);
 	}
 
 }

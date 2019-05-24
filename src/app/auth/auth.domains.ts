@@ -7,6 +7,9 @@ export class Collegue {
 	email: string;
 	motDePasse: string;
 	roles: string[];
+	soldeCongesPayes: number;
+	soldeRTT: number;
+	soldeCongesSansSolde: number;
 
 	constructor(params: any) {
 		Object.assign(this, params);
