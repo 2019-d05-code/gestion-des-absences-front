@@ -64,6 +64,8 @@ export class GestionAbsencesService {
 							new Date(uneDemande.dateFin),
 							uneDemande.type,
 							uneDemande.motif,
+							uneDemande.status,
+							uneDemande.id
 						);
 
 						return uneDemandeCoteClient;
@@ -73,11 +75,7 @@ export class GestionAbsencesService {
 		);
 	}
 
-	subscribeSubject(): Observable<DemandeAbsence> {
-		return this.subject.asObservable();
-	}
-
-	ngOnInit() {
+		ngOnInit() {
 		this._serviceAuthService.collegueConnecteObs.subscribe(
 			collegue => this.collegueConnecte = collegue,
 			error => {

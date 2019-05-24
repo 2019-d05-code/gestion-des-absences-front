@@ -1,41 +1,97 @@
-<br />
-<h1 class="text-center">Gestion des absences</h1>
-<table class="table table-striped">
-	<thead>
-		<tr>
-			<th scope="col">Date de début</th>
-			<th scope="col">Date de fin</th>
-			<th scope="col">Type</th>
-			<th scope="col">Statut</th>
-			<th scope="col">Action</th>
 
-		</tr>
-	</thead>
-	<tbody>
-		<tr *ngFor="let demande of tabDemandes">
-			<td>{{demande.dateDebut | date: 'dd/MM/yyyy'}}</td>
-			<td>{{demande.dateFin | date: 'dd/MM/yyyy'}}</td>
-			<td>{{demande.type}}</td>
-			<td>{{demande.status}}</td>
-			<td>{{demande.id}} - id</td>
-			<td> <a [routerLink]="['/visu-absence/',(demande.id)]" (click)="recupDemande(demande)"><i class="fa fa-eye" aria-hidden="true"></i></a>
-				-
-				<!--TODO : a changer par demande.status.toString() == 'VALIDEE' || demande.status.toString() == 'REJETEE'
-					quand on aura récupéré les status des demandes-->
-				<div *ngIf="demande.type.toString() == 'RTT' || demande.type.toString() == 'CONGES_SANS_SOLDE'">
-					<a [routerLink]="['/modif-absence/',(demande.id)]" (click)="recupDemande(demande)"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
+<div class="container-fluid">
+
+	<h1 class="text-center col-12">Gestion des absences</h1>
+	<!--Tableau Angular Ng bootstrap-->
+	<table class="col-12 table table-striped">
+		<thead>
+			<tr>
+				<th direction="asc" scope="col" sortable="dateDebut" (sort)="onSort($event)">Date de début</th>
+				<th scope="col" sortable="dateFin" (sort)="onSort($event)">Date de fin</th>
+				<th scope="col" sortable="type" (sort)="onSort($event)">Type</th>
+				<th scope="col" sortable="status" (sort)="onSort($event)">Statut</th>
+				<th scope="col">Actions</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr *ngFor="let demande of listePaginees">
+				<th scope="row">{{ demande.dateDebut | date: 'dd/MM/yyyy' }}</th>
+				<td>
+					{{ demande.dateFin | date: 'dd/MM/yyyy' }}
+				</td>
+				<td>{{ demande.type }}</td>
+				<td>{{ demande.status }}</td>
+				<td class="col-8 row">
+					<div class="col-4">
+						<a><i class="fa fa-eye" aria-hidden="true"></i></a>
+					</div>
+
+					<div class="col-4"
+						*ngIf="demande.status.toString() == 'INITIALE' || demande.status.toString() == 'EN_ATTENTE_VALIDATION'">
+						<a (click)="chargerModifModal();"> <i class="fa fa-pencil-square-o" aria-hidden="true">
+							</i></a>
+					</div>
+
+					<div *ngIf="demande.status.toString() == 'VALIDEE' || demande.status.toString() == 'REJETEE'"
+						class="col-4">
+						&nbsp;
+					</div>
+
+					<div class="col-4">
+						<a (click)="chargerSuppresionModal();"> <i class="fa fa-trash"> </i></a>
+					</div>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+
+	<div class="col-12 d-flex justify-content-between p-2">
+		<ngb-pagination [collectionSize]="longueurTableau" [(page)]="page" [pageSize]="pageSize">
+		</ngb-pagination>
+
+		<select class="custom-select" style="width: auto" [(ngModel)]="pageSize">
+			<option [ngValue]="2">2 demandes par page</option>
+			<option [ngValue]="5">5 demandes par page</option>
+			<option [ngValue]="10">10 demandes par page</option>
+		</select>
+	</div>
+
+	<div class="col-12">
+		<div class="offset-8">Demander une absence <a routerLink="/demande-absence"><button type="button"
+					class="btn btn-mdb-color">+</button></a></div>
+	</div>
+
+
+	<h3 class="row">Solde des compteurs :</h3>
+
+	<div class="col-12 ">
+		<div class="row">
+			<div class="col-lg-4 col-md-12">
+				<div class="row">
+					<div class="col-3">
+						<i class="fas fa-mug-hot"></i>
+					</div>
+					<p class="col-9 mt-3">RTT : {{collegueConnecte.soldeRTT}} </p>
 				</div>
-				-
-				<a [routerLink]="['/suppression-absence/',(demande.id)]" (click)="recupDemande(demande)"><i class="fa fa-trash"></i></a>
-			</td>
-		</tr>
+			</div>
+			<div class="col-lg-4  col-md-12 ">
+				<div class="row">
+					<div class="col-3">
+						<i class="fas fa-cookie-bite"></i>
+					</div>
+					<p class="col-9 mt-3">Congés payés : {{collegueConnecte.soldeCongesPayes}} </p>
+				</div>
+			</div>
+			<div class="col-lg-4 col-md-12">
+				<div class="row">
+					<div class="col-3">
+						<i class="fas fa-plane"></i>
+					</div>
+					<p class="col-9 mt-3">Congés sans solde : {{collegueConnecte.soldeCongesSansSolde}} </p>
 
-	</tbody>
-</table>
-<div class="float-right">Demander une absence <a routerLink="/demande-absence"><button type="button"
-			class="btn btn-mdb-color">+</button></a></div>
-<div>Solde des compteurs :</div>
-<ul>
-	<li>Congés Payés : {{collegueConnecte.soldeCongesPayes}} </li>
-	<li>RTT : {{collegueConnecte.soldeRTT}}</li>
-</ul>
+				</div>
+			</div>
+		</div>
+	</div>
+
+</div>
