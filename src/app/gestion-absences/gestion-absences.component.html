@@ -10,6 +10,7 @@
 			<th scope="col" sortable="dateFin" (sort)="onSort($event)">Date de fin</th>
 			<th scope="col" sortable="type" (sort)="onSort($event)">Type</th>
 			<th scope="col" sortable="status" (sort)="onSort($event)">Statut</th>
+			<th scope="col">Actions</th>
 		</tr>
 	</thead>
 	<tbody>
@@ -20,20 +21,41 @@
 			</td>
 			<td>{{ demande.type }}</td>
 			<td>{{ demande.status }}</td>
+			<td class="col-8 row">
+				<div class="col-4">
+					<a><i class="fa fa-eye" aria-hidden="true"></i></a>
+				</div>
+
+				<div class="col-4"
+					*ngIf="demande.status.toString() == 'INITIALE' || demande.status.toString() == 'EN_ATTENTE_VALIDATION'">
+					<a (click)="chargerModifModal();"> <i class="fa fa-pencil-square-o"
+							aria-hidden="true">
+						</i></a>
+				</div>
+
+				<div *ngIf="demande.status.toString() == 'VALIDEE' || demande.status.toString() == 'REJETEE'"
+					class="col-4">
+					&nbsp;
+				</div>
+
+				<div class="col-4">
+				<a (click)="chargerSuppresionModal();"> <i class="fa fa-trash"> </i></a>
+				</div>
+			</td>
 		</tr>
 	</tbody>
 </table>
 
 <div class="d-flex justify-content-between p-2">
-		<ngb-pagination [collectionSize]="longueurTableau" [(page)]="page" [pageSize]="pageSize">
-		</ngb-pagination>
+	<ngb-pagination [collectionSize]="longueurTableau" [(page)]="page" [pageSize]="pageSize">
+	</ngb-pagination>
 
-		<select class="custom-select" style="width: auto" [(ngModel)]="pageSize">
-		  <option [ngValue]="2">2 demandes par page</option>
-		  <option [ngValue]="5">5 demandes par page</option>
-		  <option [ngValue]="10">610 demandes par page</option>
-		</select>
-	  </div>
+	<select class="custom-select" style="width: auto" [(ngModel)]="pageSize">
+		<option [ngValue]="2">2 demandes par page</option>
+		<option [ngValue]="5">5 demandes par page</option>
+		<option [ngValue]="10">10 demandes par page</option>
+	</select>
+</div>
 
 
 <div class="float-right">Demander une absence <a routerLink="/demande-absence"><button type="button"

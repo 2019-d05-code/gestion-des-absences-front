@@ -63,7 +63,7 @@ export class GestionAbsencesComponent implements OnInit {
 
 	//Création des variables pour les pages
 	page = 1;
-	pageSize = 4;
+	pageSize = 5;
 	longueurTableau = this.tableauInit.length;
 
 	@ViewChildren(NgbdSortableHeader) headers: QueryList<NgbdSortableHeader>;
