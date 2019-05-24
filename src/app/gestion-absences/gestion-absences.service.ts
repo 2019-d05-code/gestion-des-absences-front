@@ -40,6 +40,7 @@ export class GestionAbsencesService {
 							uneDemande.type,
 							uneDemande.status,
 							uneDemande.motif,
+							uneDemande.id
 						);
 						console.log(uneDemande);
 						return uneDemandeCoteClient;
