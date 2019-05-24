@@ -40,6 +40,7 @@ export class GestionAbsencesService {
 							uneDemande.type,
 							uneDemande.status,
 							uneDemande.motif,
+							uneDemande.id
 						);
 						console.log(uneDemande);
 						return uneDemandeCoteClient;
@@ -61,7 +62,9 @@ export class GestionAbsencesService {
 							new Date(uneDemande.dateDebut),
 							new Date(uneDemande.dateFin),
 							uneDemande.type,
-							uneDemande.motif,
+							uneDemande.status,
+							uneDemande.motif
+
 						);
 
 						return uneDemandeCoteClient;

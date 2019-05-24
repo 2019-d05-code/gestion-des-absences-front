@@ -1,23 +1,102 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, Directive, Input, Output, EventEmitter, ViewChildren, QueryList } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ModifDemandeAbsenceComponent } from '../modif-demande-absence/modif-demande-absence.component';
 import { SuppressionDemandeAbsenceComponent } from '../suppression-demande-absence/suppression-demande-absence.component';
 import { DemandeAbsence } from '../models/DemandeAbsence';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { GestionAbsencesService } from './gestion-absences.service';
 import { AuthService } from '../auth/auth.service';
 import { Collegue } from '../auth/auth.domains';
+import { TypeDemande } from '../models/TypeDemande';
+
+
+
+
+
+// Création des types pour le tri du tableau
+export type SortDirection = 'asc' | 'desc' | '';
+const rotate: { [key: string]: SortDirection } = { 'asc': 'desc', 'desc': '', '': 'asc' };
+export const compare = (v1, v2) => v1 < v2 ? -1 : v1 > v2 ? 1 : 0;
+
+export interface SortEvent {
+	column: string;
+	direction: SortDirection;
+}
+
+@Directive({
+	selector: 'th[sortable]',
+	host: {
+		'[class.asc]': 'direction === "asc"',
+		'[class.desc]': 'direction === "desc"',
+		'(click)': 'rotate()'
+	}
+})
+
+export class NgbdSortableHeader {
+
+	@Input() sortable: string;
+	@Input() direction: SortDirection = '';
+	@Output() sort = new EventEmitter<SortEvent>();
+
+	rotate() {
+		this.direction = rotate[this.direction];
+		this.sort.emit({ column: this.sortable, direction: this.direction });
+	}
+}
 
 @Component({
 	selector: 'app-gestion-absences',
 	templateUrl: './gestion-absences.component.html',
-	styles: []
+	styleUrls: ['./gestion-absences.component.css']
 })
 export class GestionAbsencesComponent implements OnInit {
 	tabDemandes: DemandeAbsence[] = [];
 	observableDemandes: Observable<DemandeAbsence[]>;
 	collegueConnecte: Collegue;
 	messageErreur: string;
+
+	typeDde: TypeDemande;
+
+	// Création de la constante qui représente le tableau
+	tableauDemandes = [];
+	tableauInit = []
+
+	//Création des variables pour les pages
+	page = 1;
+	pageSize = 5;
+	longueurTableau = this.tableauInit.length;
+
+	@ViewChildren(NgbdSortableHeader) headers: QueryList<NgbdSortableHeader>;
+
+	onSort({ column, direction }: SortEvent) {
+
+		// resetting other headers
+		this.headers.forEach(header => {
+			if (header.sortable !== column) {
+				header.direction = '';
+			}
+		});
+
+		// sorting demandes
+		if (direction === '') {
+			this.tableauDemandes = [...this.tableauInit];
+		} else {
+			this.tableauDemandes = [...this.tableauInit].sort((a, b) => {
+				const res = compare(a[column], b[column]);
+				return direction === 'asc' ? res : -res;
+			});
+		}
+	}
+
+	// paginate
+	get listePaginees() {
+		return  [...this.tableauDemandes]
+
+			.slice((this.page - 1) * this.pageSize, (this.page - 1) * this.pageSize + this.pageSize);
+
+	}
+
+
 
 	constructor(private modal: NgbModal, private _gestionAbsencesSrv: GestionAbsencesService, private _serviceAuthService: AuthService) { }
 
@@ -37,10 +116,17 @@ export class GestionAbsencesComponent implements OnInit {
 
 		// Ensuite on récupère les absences associées
 		this.observableDemandes = this._gestionAbsencesSrv.getListeAbsences(this.collegueConnecte.email);
-		this.observableDemandes.subscribe(demande => this.tabDemandes = demande,
+		this.observableDemandes.subscribe(demandeTab => {
+			this.tableauInit = demandeTab;
+			this.longueurTableau = this.tableauInit.length;
+			this.onSort({ column: 'dateDebut', direction: 'asc' });
+		},
 			error => {
 				console.log(error.message);
 			});
+
+
+
 	}
 
 	chargerModifModal() {
