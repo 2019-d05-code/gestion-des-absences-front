@@ -41,13 +41,7 @@ export class ModifDemandeAbsenceComponent implements OnInit {
 
 	ngOnInit() {
 
-		this._serviceGestionAbsence.subscribeSubject().subscribe(
-			demande => {
-				console.log(demande)
-				this.demande = demande;
-			}
-		);
 
-	}
 
+}
 }
