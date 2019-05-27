@@ -3,20 +3,17 @@ import { Collegue } from '../auth/auth.domains';
 import { AuthService } from '../auth/auth.service';
 
 @Component({
-  selector: 'app-manager-vue-dpt-collab',
-  templateUrl: './manager-vue-dpt-collab.component.html',
-  styles: []
+	selector: 'app-manager-vue-dpt-collab',
+	templateUrl: './manager-vue-dpt-collab.component.html',
 })
 export class ManagerVueDptCollabComponent implements OnInit {
 	collegueConnecte: Collegue;
 	@Input() connecte: boolean;
 	roleManager: string[];
 
+	constructor(private _authSrv: AuthService) { }
 
-  constructor(private _authSrv: AuthService) { }
-
-
-  verifRoleManager(): boolean {
+	verifRoleManager(): boolean {
 	if (this.connecte) {
 
 		let granted = false;
@@ -31,7 +28,7 @@ export class ManagerVueDptCollabComponent implements OnInit {
 	}
 }
 
-  ngOnInit() {
+	ngOnInit() {
 	this._authSrv.collegueConnecteObs
 	.subscribe(
 		collegue => {
@@ -48,5 +45,5 @@ export class ManagerVueDptCollabComponent implements OnInit {
 		() => this.connecte = false
 
 	);
-  }
+}
 }
