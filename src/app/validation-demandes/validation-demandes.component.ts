@@ -68,7 +68,6 @@ export class ValidationDemandesComponent implements OnInit {
 	}
 
 	constructor(private _authSrv: AuthService,
-		private _gestionAbsencesSrv: GestionAbsencesService,
 		private _validationDdesServ: ValidationDemandeService) { }
 
 
