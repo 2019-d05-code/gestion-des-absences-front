@@ -2,55 +2,90 @@
 </ng-container>
 
 <ng-template #manager>Vous êtes manager
-	<table class="col-12 table table-striped">
-		<thead>
-			<tr>
-				<th direction="asc" scope="col" sortable="nom" (sort)="onSort($event)">Nom</th>
-				<th scope="col">01</th>
+	<div class="table-responsive">
+		<table class="col-12 table table-striped">
+			<thead>
+				<tr>
+					<th direction="asc" scope="col" sortable="nom" (sort)="onSort($event)">Nom</th>
+					<th scope="col">1</th>
+					<th scope="col">2</th>
+					<th scope="col">3</th>
+					<th scope="col">4</th>
+					<th scope="col">5</th>
+					<th scope="col">6</th>
+					<th scope="col">7</th>
+					<th scope="col">8</th>
+					<th scope="col">9</th>
+					<th scope="col">10</th>
+					<th scope="col">11</th>
+					<th scope="col">12</th>
+					<th scope="col">13</th>
+					<th scope="col">14</th>
+					<th scope="col">15</th>
+					<th scope="col">16</th>
+					<th scope="col">17</th>
+					<th scope="col">18</th>
+					<th scope="col">19</th>
+					<th scope="col">20</th>
+					<th scope="col">21</th>
+					<th scope="col">22</th>
+					<th scope="col">23</th>
+					<th scope="col">24</th>
+					<th scope="col">25</th>
+					<th scope="col">26</th>
+					<th scope="col">27</th>
+					<th scope="col">28</th>
+					<th scope="col">29</th>
+					<th scope="col">30</th>
+					<th scope="col">31</th>
 
-			</tr>
-		</thead>
-		<tbody>
-			<tr *ngFor="let collegue of listeCollegue">
-				<th scope="row">{{ demande.dateDebut | date: 'dd/MM/yyyy' }}</th>
-				<td>
-					{{ demande.dateFin | date: 'dd/MM/yyyy' }}
-				</td>
-				<td> {{demande.type }} </td>
-				<td>{{ demande.status }}</td>
-				<td class="col-8 row"
-					*ngIf="demande.type.toString() == 'RTT' || demande.type.toString() == 'CONGES_PAYES' || demande.type.toString() == 'CONGES_SANS_SOLDE'">
-					<div class="col-4">
-						<a (click)="chargerVisuModal(demande);"><i class="fa fa-eye" aria-hidden="true"></i></a>
-					</div>
 
-					<div class="col-4"
-						*ngIf="demande.status.toString() == 'INITIALE' || demande.status.toString() == 'REJETEE'">
-						<a (click)="chargerModifModal(demande);"> <i class="fa fa-pencil-square-o" aria-hidden="true">
-							</i></a>
-					</div>
 
-					<div *ngIf="demande.status.toString() == 'VALIDEE' || demande.status.toString() == 'EN_ATTENTE_VALIDATION'"
-						class="col-4">
-						&nbsp;
-					</div>
+				</tr>
+			</thead>
+			<tbody>
+				<tr *ngFor="let collegue of listeCollegue">
+					<th scope="row">{{ demande.dateDebut | date: 'dd/MM/yyyy' }}</th>
+					<td>
+						{{ demande.dateFin | date: 'dd/MM/yyyy' }}
+					</td>
+					<td> {{demande.type }} </td>
+					<td>{{ demande.status }}</td>
+					<td class="col-8 row"
+						*ngIf="demande.type.toString() == 'RTT' || demande.type.toString() == 'CONGES_PAYES' || demande.type.toString() == 'CONGES_SANS_SOLDE'">
+						<div class="col-4">
+							<a (click)="chargerVisuModal(demande);"><i class="fa fa-eye" aria-hidden="true"></i></a>
+						</div>
 
-					<div class="col-4">
-						<a (click)="chargerSuppresionModal(demande);"> <i class="fa fa-trash"> </i></a>
-					</div>
-				</td>
+						<div class="col-4"
+							*ngIf="demande.status.toString() == 'INITIALE' || demande.status.toString() == 'REJETEE'">
+							<a (click)="chargerModifModal(demande);"> <i class="fa fa-pencil-square-o"
+									aria-hidden="true">
+								</i></a>
+						</div>
 
-				<td class="col-8 row" *ngIf="demande.type.toString() == 'MISSION'">
-					<div class="col-12 text-center">
-						<a href="https://2019-d05-code.github.io/gestion-des-missions-front/"> <i
-								class="fas fa-external-link-alt" aria-hidden="true">
-							</i></a>
-					</div>
+						<div *ngIf="demande.status.toString() == 'VALIDEE' || demande.status.toString() == 'EN_ATTENTE_VALIDATION'"
+							class="col-4">
+							&nbsp;
+						</div>
 
-				</td>
-			</tr>
-		</tbody>
-	</table>
+						<div class="col-4">
+							<a (click)="chargerSuppresionModal(demande);"> <i class="fa fa-trash"> </i></a>
+						</div>
+					</td>
+
+					<td class="col-8 row" *ngIf="demande.type.toString() == 'MISSION'">
+						<div class="col-12 text-center">
+							<a href="https://2019-d05-code.github.io/gestion-des-missions-front/"> <i
+									class="fas fa-external-link-alt" aria-hidden="true">
+								</i></a>
+						</div>
+
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
 </ng-template>
 
 <ng-template #reconnexion>
