@@ -18,10 +18,7 @@
 				<td>
 					{{ demande.dateFin | date: 'dd/MM/yyyy' }}
 				</td>
-				<td>
-					<p *ngIf="demande.type.toString() == 'Formation' || demande.type.toString() == 'Technique'">MISSION
-						- </p>{{demande.type }}
-				</td>
+				<td> {{demande.type }} </td>
 				<td>{{ demande.status }}</td>
 				<td class="col-8 row"
 					*ngIf="demande.type.toString() == 'RTT' || demande.type.toString() == 'CONGES_PAYES' || demande.type.toString() == 'CONGES_SANS_SOLDE'">
@@ -30,12 +27,12 @@
 					</div>
 
 					<div class="col-4"
-						*ngIf="demande.status.toString() == 'INITIALE' || demande.status.toString() == 'EN_ATTENTE_VALIDATION'">
-						<a (click)="chargerModifModal(demande);" > <i class="fa fa-pencil-square-o" aria-hidden="true">
+						*ngIf="demande.status.toString() == 'INITIALE' || demande.status.toString() == 'REJETEE'">
+						<a (click)="chargerModifModal(demande);"> <i class="fa fa-pencil-square-o" aria-hidden="true">
 							</i></a>
 					</div>
 
-					<div *ngIf="demande.status.toString() == 'VALIDEE' || demande.status.toString() == 'REJETEE'"
+					<div *ngIf="demande.status.toString() == 'VALIDEE' || demande.status.toString() == 'EN_ATTENTE_VALIDATION'"
 						class="col-4">
 						&nbsp;
 					</div>
@@ -45,10 +42,10 @@
 					</div>
 				</td>
 
-				<td class="col-8 row"
-					*ngIf="demande.type.toString() == 'Formation' || demande.type.toString() == 'Technique'">
+				<td class="col-8 row" *ngIf="demande.type.toString() == 'MISSION'">
 					<div class="col-12 text-center">
-						<a href="https://2019-d05-code.github.io/gestion-des-missions-front/"> <i class="fas fa-external-link-alt" aria-hidden="true">
+						<a href="https://2019-d05-code.github.io/gestion-des-missions-front/"> <i
+								class="fas fa-external-link-alt" aria-hidden="true">
 							</i></a>
 					</div>
 

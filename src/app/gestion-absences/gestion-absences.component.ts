@@ -136,24 +136,12 @@ export class GestionAbsencesComponent implements OnInit {
 		this.observableDemandes = this._gestionAbsencesSrv.getListeAbsences(this.collegueConnecte.email);
 		this.observableDemandes.subscribe(demandeTab => {
 			this.tableauInit = demandeTab;
-		},
-			error => {
-				console.log(error.message);
-			});
-
-
-		// Ensuite on récupère les missions
-		this.observableDemandes = this._gestionAbsencesSrv.getListeMissions(this.collegueConnecte.email);
-		this.observableDemandes.subscribe(demandeTab => {
-			demandeTab.forEach(mission => this.tableauInit.push(mission));
 			this.longueurTableau = this.tableauInit.length;
 			this.onSort({ column: 'dateDebut', direction: 'asc' });
 		},
 			error => {
 				console.log(error.message);
 			});
-
-
 
 	}
 

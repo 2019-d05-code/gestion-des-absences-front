@@ -59,27 +59,6 @@ export class GestionAbsencesService {
 		);
 	}
 
-	// Service pour récupérer la liste de toutes les absences confondues
-	getListeMissions(email: string): Observable<DemandeAbsence[]> {
-		let url: string = `${environment.baseUrl}/missions?email=${email}`;
-		console.log(url);
-		return this._http.get<any[]>(url).pipe(
-			map(listDemandesServ => {
-				return listDemandesServ.map(
-					uneMission => {
-						const uneMissionCoteClient = new DemandeAbsence(
-							new Date(uneMission.dateDebut),
-							new Date(uneMission.dateFin),
-							uneMission.nature,
-							uneMission.statut
-						);
-						console.log(uneMission);
-						return uneMissionCoteClient;
-					}
-				);
-			})
-		);
-	}
 
 	// Service pour récupérer la liste de toutes les absences validées
 	getListeAbsencesValidees(email: string): Observable<DemandeAbsence[]> {
