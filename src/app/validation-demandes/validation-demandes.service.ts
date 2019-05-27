@@ -30,8 +30,8 @@ export class ValidationDemandeService {
 				return listDemandesServ.map(
 					uneDemande => {
 						const uneDemandeCoteClient = new DemandeAbsenceValidation(
-							uneDemande.prenomCollegue,
-							uneDemande.nomCollegue,
+							uneDemande.prenom,
+							uneDemande.nom,
 							new Date(uneDemande.dateDebut),
 							new Date(uneDemande.dateFin),
 							uneDemande.type,

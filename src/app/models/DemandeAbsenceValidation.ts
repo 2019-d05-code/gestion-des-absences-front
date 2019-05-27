@@ -5,8 +5,8 @@ import { StatusDemande } from './StatusDemande';
 export class DemandeAbsenceValidation extends DemandeAbsence {
 
 	constructor(
-		public nomCollegue: string,
-		public prenomCollegue: string,
+		public nom: string,
+		public prenom: string,
 		dateDebut: Date,
 		dateFin: Date,
 		type: TypeDemande,
