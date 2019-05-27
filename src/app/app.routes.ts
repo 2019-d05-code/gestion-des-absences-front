@@ -11,6 +11,8 @@ import { CreerDemandeAbsenceComponent } from './creer-demande-absence/creer-dema
 import { VisuDemandeAbsenceComponent } from './visu-demande-absence/visu-demande-absence.component';
 import { ModifDemandeAbsenceComponent } from './modif-demande-absence/modif-demande-absence.component';
 import { SuppressionDemandeAbsenceComponent } from './suppression-demande-absence/suppression-demande-absence.component';
+import { ManagerVueHistogrammeComponent } from './manager-vue-histogramme/manager-vue-histogramme.component';
+import { ManagerVueDptCollabComponent } from './manager-vue-dpt-collab/manager-vue-dpt-collab.component';
 
 
 
@@ -25,6 +27,9 @@ export const routes: Routes = [
 	{ path:'visu-absence', component: VisuDemandeAbsenceComponent, canActivate:[StatutConnecteService]},
 	{ path:'modif-absence/:demande.id', component: ModifDemandeAbsenceComponent, canActivate:[StatutConnecteService]},
 	{ path:'suppression-absence', component: SuppressionDemandeAbsenceComponent, canActivate:[StatutConnecteService]},
+	{ path:'histogramme-departement', component: ManagerVueHistogrammeComponent, canActivate:[StatutConnecteService]},
+	{ path:'departement-collaborateurs', component: ManagerVueDptCollabComponent, canActivate:[StatutConnecteService]},
+
 
 
 	{ path:'connexion', component: AuthComponent},
