@@ -1,15 +1,38 @@
-<ng-container
-  *ngIf="verifRoleManager(); then manager; else reconnexion;">
+<ng-container *ngIf="verifRoleManager(); then manager; else reconnexion;">
 </ng-container>
 
 <ng-template #manager>
-  <div>
-	Affiche Vue Synthétique.
-  </div>
+		<h3 class="text-center">Vues synthétiques</h3>
+		<br />
+		<div class="d-flex justify-content-center">
+		<tr>
+			<table class="table table-hover table-bordered table-responsive table-fixed text-nowrap text-center align-middle">
+				<thead>
+				  <tr >
+					<th scope="col" class="col-8 align-middle">Liste des rapports</th>
+					<th scope="col" class="col-4"></th>
+
+				  </tr>
+				</thead>
+				<tbody>
+				  <tr>
+					<th scope="row" class="col-8">Vue par département par jour et par collaborateur</th>
+					<td class="col-4"><a *ngIf="verifRoleManager()" mat-menu-item routerLink="/histogramme-departement"><i class="fa fa-eye" aria-hidden="true"></i></a></td>
+
+				  </tr>
+				  <tr>
+					<th scope="row">Histogramme par département et par jour</th>
+					<td class="col-4"><a *ngIf="verifRoleManager()" mat-menu-item routerLink="/departement-collaborateurs"><i class="fa fa-eye" aria-hidden="true"></i></a></td>
+
+				  </tr>
+
+				</tbody>
+			  </table>
+			</div>
 </ng-template>
 
 <ng-template #reconnexion>
-  <div>
-   Merci de vous connecter en tant que Manager.
-  </div>
+	<div>
+		Merci de vous connecter en tant que Manager.
+	</div>
 </ng-template>
