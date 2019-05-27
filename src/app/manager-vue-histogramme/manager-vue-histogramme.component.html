@@ -1,3 +1,62 @@
-<p>
-	manager-vue-histogramme works!
-  </p>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+<ng-container *ngIf="verifRoleManager(); then manager; else reconnexion;">
+</ng-container>
+
+<ng-template #manager>
+		<h3 class="text-center">Histogramme par département et par jour</h3>
+		Département :
+		<select required name="type" id="type"  class="form-control"> <!-- Notion objet, recevoir liste département, le mettre en value, afficher département.nom mais que le value soit = departement.id -->
+				<option value="">DSI</option>
+				<option value="">Marketing</option>
+				<option value="">Communication</option>
+			</select>
+		Mois :
+		<select required name="type" id="type"  class="form-control">
+				<option value="janvier">Janvier</option>
+				<option value="février">Février</option>
+				<option value="mars">Mars</option>
+				<option value="avril">Avril</option>
+				<option value="mai">Mai</option>
+				<option value="juin">Juin</option>
+				<option value="juillet">Juillet</option>
+				<option value="août">Août</option>
+				<option value="septembre">Septembre</option>
+				<option value="octobre">Octobre</option>
+				<option value="novembre">Novembre</option>
+				<option value="décembre">Décembre</option>
+		</select>
+		Années :
+		<select required name="type" id="type"  class="form-control">
+				<option value="2019">2019</option>
+				<option value="2018">2018</option>
+				<option value="2017">2017</option>
+		</select>
+		<a class="btn btn-primary"><i class="fa fa-search" aria-hidden="true"></i></a>
+		<a class="btn btn-primary"><i class="fa fa-file-excel-o" aria-hidden="true"></i></a>
+		<script>var ctx = document.getElementById('myChart').getContext('2d');
+		var chart = new Chart(ctx, {
+			// The type of chart we want to create
+			type: 'line',
+
+			// The data for our dataset
+			data: {
+				labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+				datasets: [{
+					label: 'My First dataset',
+					backgroundColor: 'rgb(255, 99, 132)',
+					borderColor: 'rgb(255, 99, 132)',
+					data: [0, 10, 5, 2, 20, 30, 45]
+				}]
+			},
+
+			// Configuration options go here
+			options: {}
+		});</script>
+		<canvas id="myChart"></canvas>
+	</ng-template>
+
+	<ng-template #reconnexion>
+			<div>
+				Merci de vous connecter en tant que Manager.
+			</div>
+		</ng-template>
