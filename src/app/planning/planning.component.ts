@@ -8,7 +8,8 @@ import {
 	CalendarDateFormatter,
 	CalendarEvent,
 	CalendarView,
-	DAYS_OF_WEEK
+	DAYS_OF_WEEK,
+	CalendarMonthViewDay
 } from 'angular-calendar';
 import { CustomDateFormatter } from './custom-date-formatter.provider';
 import { addYears, subYears, startOfDay, addDays, endOfDay } from 'date-fns';
@@ -70,7 +71,7 @@ export class PlanningComponent {
 		title: `Evenememnt bateau au cas où il y a zéro évènements :p`,
 	};
 
-	events: Observable<CalendarEvent[]>;
+	events: Observable<Array<CalendarEvent<{ incrementsBadgeTotal: boolean }>>>;
 	collegue: Collegue = new Collegue({});
 
 
@@ -88,6 +89,8 @@ export class PlanningComponent {
 	messageSucces: string;
 	messageErreur: string;
 
+
+
 	// A l'initialisation, on récupère la liste des absences depuis le back
 	ngOnInit(): void {
 
@@ -103,11 +106,14 @@ export class PlanningComponent {
 							couleur = colors.blue;
 						}
 
-						return <CalendarEvent>{
+						return <CalendarEvent<{ incrementsBadgeTotal: boolean }>>{
 							start: startOfDay(demande.dateDebut),
 							end: endOfDay(demande.dateFin),
 							title: `${demande.type} - motif : ${demande.motif}`,
 							color: couleur,
+							meta: {
+								incrementsBadgeTotal: false
+							}
 						};
 
 					})
@@ -125,42 +131,23 @@ export class PlanningComponent {
 					);
 					return of([]);
 				})
-			)
-		/*
-				this._srv.getListeAbsences(this.collegue.email).subscribe(
-					demTab => {
+			);
 
 
-						demTab.forEach(demande => {
-							let evenement2 = {
-								start: startOfDay(demande.dateDebut),
-								end: addDays(demande.dateDebut, 2),
-								title: `evenement indépendant`
-							};
-							this.events.push(evenement2);
-							console.log(this.events);
 
+	}
 
-						});
-
-						//this._changeRef.detectChanges();
-
-					},
-					error => {
-						console.log(error.error);
-						if (error.message === 'Http failure response for http://localhost:8080/listeAbsences: 404 OK') {
-							this.messageErreur = `Pas d'absences disponible`;
-						} else {
-							this.messageErreur = error.message;
-						}
-						this._changeRef.detectChanges();
-						setTimeout(
-							() => this.messageErreur = undefined,
-							7000
-						);
-					}
-				);
-		*/
+	beforeMonthViewRender({ body }: { body: CalendarMonthViewDay[] }): void {
+		body.forEach(day => {
+			const jourWeekEnd = day.date.getDay();
+			if (jourWeekEnd === 6 || jourWeekEnd === 0) {
+				day.backgroundColor = 'lightgray';
+				this._changeRef.detectChanges();
+			}
+			day.badgeTotal = day.events.filter(
+				event => event.meta.incrementsBadgeTotal
+			).length;
+		});
 	}
 
 	setView(view: CalendarView) {
