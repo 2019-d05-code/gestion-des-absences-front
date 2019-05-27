@@ -10,6 +10,6 @@ export const config = {
 	apiAuthMe: 'me',
 	apiListeAbsences: 'listeAbsences?email=',
 	apiListeAbsencesValidees: 'listeAbsencesValidees?email=',
-	apiListeAbsencesValidation: 'listeAbsencesAttenteValidation',
+	apiListeAbsencesValidation: 'listeAbsencesAttenteValidation?email=',
 
 };

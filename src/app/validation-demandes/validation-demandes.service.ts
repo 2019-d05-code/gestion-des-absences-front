@@ -23,7 +23,7 @@ export class ValidationDemandeService {
 
 	// récupérer liste demandes en attente validation pour tout les collègues
 	getListeAbsencesAttenteValidation(email: string): Observable<DemandeAbsence[]> {
-		let url: string = `${environment.baseUrl}/manager/${environment.apiListeAbsencesValidation}`;
+		let url: string = `${environment.baseUrl}/manager/${environment.apiListeAbsencesValidation}${this.collegueConnecte.email}`;
 		console.log(url);
 		return this._http.get<any[]>(url).pipe(
 			map(listDemandesServ => {
@@ -59,4 +59,18 @@ export class ValidationDemandeService {
 
 	}
 
+	// récupérer le collegue connecté à l'initialisation
+	ngOnInit() {
+		this._serviceAuthService.collegueConnecteObs.subscribe(
+			collegue => this.collegueConnecte = collegue,
+			error => {
+				this.messageErreur = error.error;
+				setTimeout(
+					() => this.messageErreur = undefined,
+					7000
+				);
+			}
+		);
+
+	}
 }
