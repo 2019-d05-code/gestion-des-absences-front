@@ -77,7 +77,7 @@ export class PlanningComponent {
 
 	locale = 'fr';
 	weekStartsOn: number = DAYS_OF_WEEK.MONDAY;
-	weekendDays: number[] = [DAYS_OF_WEEK.FRIDAY, DAYS_OF_WEEK.SATURDAY];
+	weekendDays: number[] = [DAYS_OF_WEEK.SATURDAY, DAYS_OF_WEEK.SUNDAY];
 	CalendarView = CalendarView;
 
 	// Création des tableaux de demande
