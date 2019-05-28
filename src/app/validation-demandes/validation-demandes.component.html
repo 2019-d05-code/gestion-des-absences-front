@@ -23,15 +23,17 @@
 						{{ demande.dateFin | date: 'dd/MM/yyyy' }}
 					</td>
 					<td> {{demande.type }} </td>
-					<td>{{ demande.nomCollegue }} {{ demande.prenomsCollegue}}</td>
-					<td class="col-8 row">
-						<div class="col-4">
-							<a (click)="validerDemande(demande)"> <i class="fa fa-pencil-square-o" aria-hidden="true">
-								</i></a>
-						</div>
+					<td>{{ demande.nom }} {{ demande.prenom}}</td>
+					<td >
+						<div class="row">
+							<div class="col-6">
+								<a (click)="validerDemande(demande)"> <i class="fas fa-check" aria-hidden="true">
+									</i></a>
+							</div>
 
-						<div class="col-4">
-							<a (click)="invaliderDemande(demande);"> <i class="fas fa-times"> </i></a>
+							<div class="col-6">
+								<a (click)="invaliderDemande(demande);"> <i class="fas fa-times"> </i></a>
+							</div>
 						</div>
 					</td>
 

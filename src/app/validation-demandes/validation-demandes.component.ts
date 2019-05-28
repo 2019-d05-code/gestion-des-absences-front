@@ -73,11 +73,8 @@ export class ValidationDemandesComponent implements OnInit {
 
 	verifRoleManager(): boolean {
 		if (this.connecte) {
-
 			let granted = false;
-
 			const roleManager = this.collegueConnecte.roles.filter(role => role === 'ROLE_MANAGER');
-
 			if (roleManager.length > 0) {
 				granted = true;
 

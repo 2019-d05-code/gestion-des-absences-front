@@ -23,7 +23,7 @@ export class ValidationDemandeService {
 
 	// récupérer liste demandes en attente validation pour tout les collègues
 	getListeAbsencesAttenteValidation(email: string): Observable<DemandeAbsence[]> {
-		let url: string = `${environment.baseUrl}/manager/${environment.apiListeAbsencesValidation}${this.collegueConnecte.email}`;
+		let url: string = `${environment.baseUrl}/manager/${environment.apiListeAbsencesValidation}${email}`;
 		console.log(url);
 		return this._http.get<any[]>(url).pipe(
 			map(listDemandesServ => {
