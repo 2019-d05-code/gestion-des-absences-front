@@ -119,6 +119,7 @@ export class ValidationDemandesComponent implements OnInit {
 		this._validationDdesServ.envoieValiderDemande(demande).subscribe(
 			() => {
 				this.messageSucces = 'La demande d\'absence a bien été validée';
+				location.reload();
 				alert(this.messageSucces);
 				setTimeout(
 					() => this.messageSucces = undefined,
@@ -142,6 +143,7 @@ export class ValidationDemandesComponent implements OnInit {
 			() => {
 				this.messageSucces = 'La demande d\'absence a bien été déclinée';
 				alert(this.messageSucces);
+				location.reload();
 				setTimeout(
 					() => this.messageSucces = undefined,
 					7000

@@ -49,13 +49,13 @@ export class ValidationDemandeService {
 
 	envoieValiderDemande(demande: DemandeAbsenceValidation): Observable<String> {
 
-		return this._http.patch<string>(`${this.URL_BACKEND}${demande.id}`, {}, { withCredentials: true });
+		return this._http.patch<string>(`${this.URL_BACKEND}/${demande.id}/valider`, {}, { withCredentials: true });
 
 	}
 
 	envoieInvaliderDemande(demande: DemandeAbsenceValidation): Observable<String> {
 
-		return this._http.patch<string>(`${this.URL_BACKEND}${demande.id}`, {}, { withCredentials: true });
+		return this._http.patch<string>(`${this.URL_BACKEND}/${demande.id}/rejeter`, {}, { withCredentials: true });
 
 	}
 
