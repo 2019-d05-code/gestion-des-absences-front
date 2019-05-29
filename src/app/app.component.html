@@ -9,7 +9,7 @@
 	<div *ngIf="connecte" class="container-fluid">
 		<div class="float-right">
 			<p><strong>Bonjour, {{ user.prenom }} {{ user.nom }}</strong></p>
-			<button type="button" (click)="deconnexion()" class="btn btn-danger">Deconnexion</button>
+			<p (click)="deconnexion()" class="text-capitalize link-deco">Se déconnecter</p>
 			<br>
 		</div>
 	</div>
@@ -17,8 +17,7 @@
 		<app-menu [connecte]="connecte"></app-menu>
 	</div>
 	<br>
-
-
 </div>
 <div class="container-fluid">
-<router-outlet></router-outlet></div>
+	<router-outlet></router-outlet>
+</div>

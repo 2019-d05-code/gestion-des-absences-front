@@ -3,6 +3,19 @@
 /* angular-cli file: src/styles.css */
 @import "../node_modules/angular-calendar/css/angular-calendar.css";
 
+
+.link-deco {
+	color: deepskyblue;
+	text-decoration: none;
+}
+
+.link-deco:hover {
+	text-decoration: underline;
+	text-decoration-color: red;
+	color: red;
+	cursor: pointer;
+}
+
 /* Allez un peu de charte graphique hein ;) */
 // body,h1,h2,h3,h4,h5,h6 {font-family: "Raleway", sans-serif;}
 // body, html {
