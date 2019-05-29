@@ -1,6 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Collegue } from '../auth/auth.domains';
 import { AuthService } from '../auth/auth.service';
+import { SelectionManager } from '../models/SelectionManager';
 
 @Component({
 	selector: 'app-manager-vue-dpt-collab',
@@ -11,6 +12,8 @@ export class ManagerVueDptCollabComponent implements OnInit {
 	collegueConnecte: Collegue;
 	@Input() connecte: boolean;
 	roleManager: string[];
+
+	selection: SelectionManager = new SelectionManager();
 
 	// récupérer dernier jour du mois - a implémenter en fonction du mois sélectionné
 	date = new Date(2019, 5, 0);
