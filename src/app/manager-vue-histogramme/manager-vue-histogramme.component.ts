@@ -6,6 +6,7 @@ import { HistoManagerService } from './histo-manager.service';
 import { Departement } from '../models/Departement';
 import { ManagerVueDptCollabService } from '../manager-vue-dpt-collab/manager-vue-dpt-collab.service';
 import { Rapport } from '../models/Rapport';
+import { detectChanges } from '@angular/core/src/render3';
 
 @Component({
 	selector: 'app-manager-vue-histogramme',
@@ -22,7 +23,7 @@ export class ManagerVueHistogrammeComponent implements OnInit {
 	public chartType = 'bar';
 
 	// Jeu de données
-	public chartDatasets: Array<any> = [{data:[], label:[]}];
+	public chartDatasets: Array<any> = [{data: [], label: '', backgroundColor: '', borderColor: ''}];
 
 	// Pour mettre les 31 colonnes des jours, utiliser CalculJourParMois() à faire
 	public chartLabels = [];
@@ -49,8 +50,8 @@ export class ManagerVueHistogrammeComponent implements OnInit {
 
 	calculJourParMois() {
 
-		const date: Date = new Date(this.selection.annee, parseInt( this.selection.mois.valueOf(), 10 ), 0);
-		const nbJoursMois =  date.getDate();
+		const date: Date = new Date(this.selection.annee, parseInt(this.selection.mois.valueOf(), 10), 0);
+		const nbJoursMois = date.getDate();
 
 		const tab: string[] = [];
 
@@ -66,51 +67,25 @@ export class ManagerVueHistogrammeComponent implements OnInit {
 
 		this._serviceData.postRapport(this.selection).subscribe(
 			rapport => {
-				console.log(rapport)
 				const tab = [];
-
-				if (rapport.listeAbsences.length === 0) {
-					tab.push([{data: [], label: []}]);
-				} else {
-
-					for (const absence of rapport.listeAbsences) {
-						const datas = { data: [], label: `${absence.prenomCollegue} ${absence.nomCollegue}`, backgroundColor: 'rgba(80, 80, 100, 0.3)', borderColor: 'rgba(80, 80, 100, 0.8)' };
-
-						if (absence.joursCP) {
-							for(let i = 0; i < 32; i++) {
-								if (absence.joursCP[i] === (i + 1)) {
-									datas.data.push(1);
-								} else {
-									datas.data.push(0);
-								}
-							}
+				let primary = 80;
+				for (const absence of rapport.listeAbsences) {
+					const datas = {
+						data: [],
+						label: `${absence.prenomCollegue} ${absence.nomCollegue}`,
+						backgroundColor: `rgba(${primary}, ${primary}, 100, 0.3)`,
+						borderColor: `rgba(${primary}, ${primary}, 100, 0.8)`
+					};
+					primary++;
+					for (let i = 1; i < 32; i++) {
+						if (absence.joursCP.includes(i) || absence.joursRTT.includes(i) || absence.joursCSS.includes(i)) {
+							datas.data.push(1);
+						} else {
+							datas.data.push(0);
 						}
-
-						if (absence.joursCSS) {
-							for(let i = 0; i < 32; i++) {
-								if (absence.joursCSS[i] === (i + 1)) {
-									datas.data.push(1);
-								} else {
-									datas.data.push(0);
-								}
-							}
-						}
-
-						if (absence.joursRTT) {
-							console.log(absence.joursRTT)
-							for(let i = 0; i < 32; i++) {
-								if (absence.joursRTT[i] === (i + 1)) {
-									datas.data.push(1);
-								} else {
-									datas.data.push(0);
-								}
-							}
-						}
-
-						tab.push(datas);
 					}
+					tab.push(datas);
 				}
-
 				this.chartDatasets = tab;
 			}
 		);
@@ -158,7 +133,7 @@ export class ManagerVueHistogrammeComponent implements OnInit {
 			departements => this.departements = departements
 		);
 
-		this.calculJourParMois();
+		// this.calculJourParMois();
 	}
 
 }
