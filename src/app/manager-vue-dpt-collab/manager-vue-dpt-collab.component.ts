@@ -2,6 +2,9 @@ import { Component, OnInit, Input } from '@angular/core';
 import { Collegue } from '../auth/auth.domains';
 import { AuthService } from '../auth/auth.service';
 import { SelectionManager } from '../models/SelectionManager';
+import { ManagerVueDptCollabService } from './manager-vue-dpt-collab.service';
+import { map } from 'rxjs/operators';
+import { Absences } from '../models/Absences';
 
 @Component({
 	selector: 'app-manager-vue-dpt-collab',
@@ -21,7 +24,11 @@ export class ManagerVueDptCollabComponent implements OnInit {
 
 	listeJoursMois: number[] = [];
 
-	constructor(private _authSrv: AuthService) { }
+	// récupérer la liste des jours du week-end et la liste des absences
+	joursWeekend: number[] = [];
+	listeDesAbsences: Absences[] = [];
+
+	constructor(private _authSrv: AuthService, private _managerSrv: ManagerVueDptCollabService) { }
 
 
 	verifRoleManager(): boolean {
@@ -61,6 +68,19 @@ export class ManagerVueDptCollabComponent implements OnInit {
 		for (let i = 1; i <= this.dernierJour; i++) {
 			this.listeJoursMois.push(i);
 		}
+
+	}
+
+	// appelle le get pour pouvoir afficher la nouvelle liste des absences
+	rechercher(selection) {
+		this._managerSrv.postRapport(selection).subscribe(
+			rapport => {
+				this.joursWeekend = rapport.joursWeekEnd;
+				this.listeDesAbsences = rapport.listeAbsences;
+			}
+		);
+
+
 
 	}
 }

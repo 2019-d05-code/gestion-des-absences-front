@@ -1,7 +1,10 @@
+import { Absences } from './Absences';
+
 export class Rapport {
 
 	constructor(
-		public joursWeekEnd: listeJoursWeekEnd,
+		public joursWeekEnd: number[],
+		public listeAbsences: Absences[]
 		) { }
 
 }
