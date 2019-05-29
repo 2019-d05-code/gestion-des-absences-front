@@ -23,15 +23,15 @@ export class ValidationDemandeService {
 
 	// récupérer liste demandes en attente validation pour tout les collègues
 	getListeAbsencesAttenteValidation(email: string): Observable<DemandeAbsence[]> {
-		let url: string = `${environment.baseUrl}/manager/${environment.apiListeAbsencesValidation}`;
+		let url: string = `${environment.baseUrl}/manager/${environment.apiListeAbsencesValidation}${email}`;
 		console.log(url);
 		return this._http.get<any[]>(url).pipe(
 			map(listDemandesServ => {
 				return listDemandesServ.map(
 					uneDemande => {
 						const uneDemandeCoteClient = new DemandeAbsenceValidation(
-							uneDemande.prenomCollegue,
-							uneDemande.nomCollegue,
+							uneDemande.prenom,
+							uneDemande.nom,
 							new Date(uneDemande.dateDebut),
 							new Date(uneDemande.dateFin),
 							uneDemande.type,
@@ -49,14 +49,28 @@ export class ValidationDemandeService {
 
 	envoieValiderDemande(demande: DemandeAbsenceValidation): Observable<String> {
 
-		return this._http.patch<string>(`${this.URL_BACKEND}${demande.id}`, {}, { withCredentials: true });
+		return this._http.patch<string>(`${this.URL_BACKEND}/${demande.id}/valider`, {}, { withCredentials: true });
 
 	}
 
 	envoieInvaliderDemande(demande: DemandeAbsenceValidation): Observable<String> {
 
-		return this._http.patch<string>(`${this.URL_BACKEND}${demande.id}`, {}, { withCredentials: true });
+		return this._http.patch<string>(`${this.URL_BACKEND}/${demande.id}/rejeter`, {}, { withCredentials: true });
 
 	}
 
+	// récupérer le collegue connecté à l'initialisation
+	ngOnInit() {
+		this._serviceAuthService.collegueConnecteObs.subscribe(
+			collegue => this.collegueConnecte = collegue,
+			error => {
+				this.messageErreur = error.error;
+				setTimeout(
+					() => this.messageErreur = undefined,
+					7000
+				);
+			}
+		);
+
+	}
 }
