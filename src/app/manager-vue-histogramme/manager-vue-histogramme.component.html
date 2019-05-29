@@ -9,10 +9,7 @@
 	<div class="input-group">
 		<p>Département :</p>
 		<select required name="type" id="type" class="form-control" [(ngModel)]="selection.departement" #departement="ngModel">
-			<!-- Notion objet, recevoir liste département, le mettre en value, afficher département.nom mais que le value soit = departement.id -->
-			<option value="1">DSI</option>
-			<option value="2">Marketing</option>
-			<option value="3">Communication</option>
+			<option *ngFor="let departement of departements" value="{{ departement.id }}">{{ departement.nom }}</option>
 		</select>
 		<p>Mois :</p>
 		<select required name="type" id="type" class="form-control" [(ngModel)]="selection.mois" #mois="ngModel">

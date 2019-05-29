@@ -1,15 +1,69 @@
-<ng-container
-  *ngIf="verifRoleManager(); then manager; else reconnexion;">
+<ng-container *ngIf="verifRoleManager(); then manager; else reconnexion;">
 </ng-container>
 
 <ng-template #manager>
-  <div>
-	Affiche Validations demandes.
-  </div>
+	<div class="container-fluid">
+
+		<h1 class="text-center col-12">Validation des demandes</h1>
+		<!--Tableau Angular Ng bootstrap-->
+		<table class="col-12 table table-striped">
+			<thead>
+				<tr>
+					<th direction="asc" scope="col" sortable="dateDebut" (sort)="onSort($event)">Date de début</th>
+					<th scope="col" sortable="dateFin" (sort)="onSort($event)">Date de fin</th>
+					<th scope="col" sortable="type" (sort)="onSort($event)">Type</th>
+					<th scope="col" sortable="status" (sort)="onSort($event)">Nom</th>
+					<th scope="col">Actions</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr *ngFor="let demande of listePaginees">
+					<th scope="row">{{ demande.dateDebut | date: 'dd/MM/yyyy' }}</th>
+					<td>
+						{{ demande.dateFin | date: 'dd/MM/yyyy' }}
+					</td>
+					<td> {{demande.type }} </td>
+					<td>{{ demande.nom }} {{ demande.prenom}}</td>
+					<td >
+						<div class="row">
+							<div class="col-6">
+								<a (click)="validerDemande(demande)"> <i class="fas fa-check" aria-hidden="true">
+									</i></a>
+							</div>
+
+							<div class="col-6">
+								<a (click)="invaliderDemande(demande);"> <i class="fas fa-times"> </i></a>
+							</div>
+						</div>
+					</td>
+
+					<td class="col-8 row" *ngIf="demande.type.toString() == 'MISSION'">
+						<div class="col-12 text-center">
+							<a href="https://2019-d05-code.github.io/gestion-des-missions-front/"> <i
+									class="fas fa-external-link-alt" aria-hidden="true">
+								</i></a>
+						</div>
+
+					</td>
+				</tr>
+			</tbody>
+		</table>
+
+		<div class="col-12 d-flex justify-content-between p-2">
+			<ngb-pagination [collectionSize]="longueurTableau" [(page)]="page" [pageSize]="pageSize">
+			</ngb-pagination>
+
+			<select class="custom-select" style="width: auto" [(ngModel)]="pageSize">
+				<option [ngValue]="2">2 demandes par page</option>
+				<option [ngValue]="5">5 demandes par page</option>
+				<option [ngValue]="10">10 demandes par page</option>
+			</select>
+		</div>
+	</div>
 </ng-template>
 
 <ng-template #reconnexion>
-  <div>
-   Merci de vous connecter en tant que Manager.
-  </div>
+	<div>
+		Merci de vous connecter en tant que Manager.
+	</div>
 </ng-template>
