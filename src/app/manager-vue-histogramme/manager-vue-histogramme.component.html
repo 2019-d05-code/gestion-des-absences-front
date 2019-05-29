@@ -1,60 +1,57 @@
 <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+
 <ng-container *ngIf="verifRoleManager(); then manager; else reconnexion;">
 </ng-container>
 
 <ng-template #manager>
-		<h3 class="text-center">Histogramme par département et par jour</h3>
-		<br />
-		<div class="input-group">
+	<h3 class="text-center">Histogramme par département et par jour</h3>
+	<br />
+	<div class="input-group">
 		<p>Département :</p>
-		<select required name="type" id="type"  class="form-control"> <!-- Notion objet, recevoir liste département, le mettre en value, afficher département.nom mais que le value soit = departement.id -->
-				<option value="">DSI</option>
-				<option value="">Marketing</option>
-				<option value="">Communication</option>
-			</select>
-			<p>Mois :</p>
-		<select required name="type" id="type"  class="form-control">
-				<option value="janvier">Janvier</option>
-				<option value="février">Février</option>
-				<option value="mars">Mars</option>
-				<option value="avril">Avril</option>
-				<option value="mai">Mai</option>
-				<option value="juin">Juin</option>
-				<option value="juillet">Juillet</option>
-				<option value="août">Août</option>
-				<option value="septembre">Septembre</option>
-				<option value="octobre">Octobre</option>
-				<option value="novembre">Novembre</option>
-				<option value="décembre">Décembre</option>
+		<select required name="type" id="type" class="form-control" [(ngModel)]="selection.departement" #departement="ngModel">
+			<!-- Notion objet, recevoir liste département, le mettre en value, afficher département.nom mais que le value soit = departement.id -->
+			<option value="1">DSI</option>
+			<option value="2">Marketing</option>
+			<option value="3">Communication</option>
+		</select>
+		<p>Mois :</p>
+		<select required name="type" id="type" class="form-control" [(ngModel)]="selection.mois" #mois="ngModel">
+			<option value="01">Janvier</option>
+			<option value="02">Février</option>
+			<option value="03">Mars</option>
+			<option value="04">Avril</option>
+			<option value="05">Mai</option>
+			<option value="06">Juin</option>
+			<option value="07">Juillet</option>
+			<option value="08">Août</option>
+			<option value="09">Septembre</option>
+			<option value="10">Octobre</option>
+			<option value="11">Novembre</option>
+			<option value="12">Décembre</option>
 		</select>
 		<p>Années :</p>
-		<select required name="type" id="type"  class="form-control">
-				<option value="2019">2019</option>
-				<option value="2018">2018</option>
-				<option value="2017">2017</option>
+		<select required name="type" id="type" class="form-control" [(ngModel)]="selection.annee" #annee="ngModel">
+			<option value="2019">2019</option>
+			<option value="2020">2020</option>
+			<option value="2021">2021</option>
+			<option value="2022">2022</option>
 		</select>
 
-		<a class="btn btn-primary"><i class="fa fa-search" aria-hidden="true"></i></a>
+		<a class="btn btn-primary" (click)="calculJourParMois(); calculWeekendParMois()"><i class="fa fa-search" aria-hidden="true"></i></a>
 		<a class="btn btn-primary"><i class="fa fa-file-excel-o" aria-hidden="true"></i></a>
 	</div>
 	<br />
-		<div style="display: block">
-				<canvas mdbChart
-						[chartType]="chartType"
-						[datasets]="chartDatasets"
-						[labels]="chartLabels"
-						[colors]="chartColors"
-						[options]="chartOptions"
-						[legend]="true"
-						(chartHover)="chartHovered($event)"
-						(chartClick)="chartClicked($event)">
-				</canvas>
-			  </div>
-		<canvas id="myChart"></canvas>
-	</ng-template>
+	<div style="display: block">
+		<canvas mdbChart [chartType]="chartType" [datasets]="chartDatasets" [labels]="chartLabels"
+			[colors]="chartColors" [options]="chartOptions" [legend]="true" (chartHover)="chartHovered($event)"
+			(chartClick)="chartClicked($event)">
+		</canvas>
+	</div>
+	<canvas id="myChart"></canvas>
+</ng-template>
 
-	<ng-template #reconnexion>
-			<div>
-				Merci de vous connecter en tant que Manager.
-			</div>
-		</ng-template>
+<ng-template #reconnexion>
+	<div>
+		Merci de vous connecter en tant que Manager.
+	</div>
+</ng-template>

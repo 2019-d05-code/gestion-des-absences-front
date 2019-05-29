@@ -17,25 +17,25 @@ import { ManagerVueDptCollabComponent } from './manager-vue-dpt-collab/manager-v
 
 
 export const routes: Routes = [
-	{ path:'accueil', component: AccueilComponent, canActivate:[StatutConnecteService] },
-	{ path:'gestion-absences', component: GestionAbsencesComponent, canActivate:[StatutConnecteService]},
-	{ path:'planning-absences', component: PlanningComponent, canActivate:[StatutConnecteService]},
-	{ path:'validation-demandes', component: ValidationDemandesComponent, canActivate:[StatutConnecteService]},
-	{ path:'vues-synthetiques', component: ManagerVueSynthetiqueComponent, canActivate:[StatutConnecteService]},
-	{ path:'jour-feries', component: JourFerieVisuComponent, canActivate:[StatutConnecteService]},
-	{ path:'demande-absence', component: CreerDemandeAbsenceComponent, canActivate:[StatutConnecteService]},
-	{ path:'visu-absence', component: VisuDemandeAbsenceComponent, canActivate:[StatutConnecteService]},
-	{ path:'modif-absence/:demande.id', component: ModifDemandeAbsenceComponent, canActivate:[StatutConnecteService]},
-	{ path:'suppression-absence', component: SuppressionDemandeAbsenceComponent, canActivate:[StatutConnecteService]},
-	{ path:'histogramme-departement', component: ManagerVueHistogrammeComponent, canActivate:[StatutConnecteService]},
-	{ path:'departement-collaborateurs', component: ManagerVueDptCollabComponent, canActivate:[StatutConnecteService]},
+	{ path: 'accueil', component: AccueilComponent, canActivate: [StatutConnecteService] },
+	{ path: 'gestion-absences', component: GestionAbsencesComponent, canActivate: [StatutConnecteService]},
+	{ path: 'planning-absences', component: PlanningComponent, canActivate: [StatutConnecteService]},
+	{ path: 'validation-demandes', component: ValidationDemandesComponent, canActivate: [StatutConnecteService]},
+	{ path: 'vues-synthetiques', component: ManagerVueSynthetiqueComponent, canActivate: [StatutConnecteService]},
+	{ path: 'jour-feries', component: JourFerieVisuComponent, canActivate: [StatutConnecteService]},
+	{ path: 'demande-absence', component: CreerDemandeAbsenceComponent, canActivate: [StatutConnecteService]},
+	{ path: 'visu-absence', component: VisuDemandeAbsenceComponent, canActivate: [StatutConnecteService]},
+	{ path: 'modif-absence/:demande.id', component: ModifDemandeAbsenceComponent, canActivate: [StatutConnecteService]},
+	{ path: 'suppression-absence', component: SuppressionDemandeAbsenceComponent, canActivate: [StatutConnecteService]},
+	{ path: 'histogramme-departement', component: ManagerVueHistogrammeComponent, canActivate: [StatutConnecteService]},
+	{ path: 'departement-collaborateurs', component: ManagerVueDptCollabComponent, canActivate: [StatutConnecteService]},
 
 
 
-	{ path:'connexion', component: AuthComponent},
+	{ path: 'connexion', component: AuthComponent},
 
 
 	{ path: '', redirectTo: '/accueil', pathMatch: 'full'}
-  ];
+	];
 
 
