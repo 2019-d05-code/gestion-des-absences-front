@@ -18,7 +18,7 @@
 			</thead>
 			<tbody>
 				<tr *ngFor="let demande of listePaginees">
-					<th scope="row">{{ demande.dateDebut | date: 'dd/MM/yyyy' }}</th>
+					<td scope="row">{{ demande.dateDebut | date: 'dd/MM/yyyy' }}</td>
 					<td>
 						{{ demande.dateFin | date: 'dd/MM/yyyy' }}
 					</td>
