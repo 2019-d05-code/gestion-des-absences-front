@@ -95,37 +95,12 @@ export class ManagerVueHistogrammeComponent implements OnInit {
 
 	calculJourParMois() {
 
-		const date: Date = new Date(`${this.selection.annee}-${this.selection.mois}-01`);
-		const mois = date.getMonth();
-		const nbJoursMois = { jours: 0 };
-
-		if (mois % 2 > 0) {
-
-			if (mois === 7) {
-				nbJoursMois.jours = 31;
-			} else if (mois === 1) {
-				nbJoursMois.jours = 28;
-			} else if (mois === 9) {
-				nbJoursMois.jours = 31;
-			} else if (mois === 12) {
-				nbJoursMois.jours = 31;
-			} else {
-				nbJoursMois.jours = 30;
-			}
-
-		} else {
-			if (mois === 8) {
-				nbJoursMois.jours = 30;
-			} else if (mois === 10) {
-				nbJoursMois.jours = 30;
-			} else {
-				nbJoursMois.jours = 31;
-			}
-		}
+		const date: Date = new Date(this.selection.annee, this.selection.mois.valueOf(), 0);
+		const nbJoursMois =  date.getDate();
 
 		const tab: string[] = [];
 
-		for (let i = 1; i <= nbJoursMois.jours; i++) {
+		for (let i = 1; i <= nbJoursMois; i++) {
 			if (i < 10) {
 				tab.push(`0${i}/${this.selection.mois}/${this.selection.annee}`);
 			} else {
