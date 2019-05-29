@@ -3,9 +3,8 @@ import { Collegue } from '../auth/auth.domains';
 import { AuthService } from '../auth/auth.service';
 
 @Component({
-  selector: 'app-manager-vue-synthetique',
-  templateUrl: './manager-vue-synthetique.component.html',
-  styles: []
+selector: 'app-manager-vue-synthetique',
+templateUrl: './manager-vue-synthetique.component.html',
 })
 export class ManagerVueSynthetiqueComponent implements OnInit {
 	collegueConnecte: Collegue;
@@ -13,10 +12,10 @@ export class ManagerVueSynthetiqueComponent implements OnInit {
 	roleManager: string[];
 
 
-  constructor(private _authSrv: AuthService) { }
+	constructor(private _authSrv: AuthService) { }
 
 
-  verifRoleManager(): boolean {
+	verifRoleManager(): boolean {
 	if (this.connecte) {
 
 		let granted = false;
@@ -31,7 +30,7 @@ export class ManagerVueSynthetiqueComponent implements OnInit {
 	}
 }
 
-  ngOnInit() {
+	ngOnInit() {
 	this._authSrv.collegueConnecteObs
 	.subscribe(
 		collegue => {
@@ -48,6 +47,6 @@ export class ManagerVueSynthetiqueComponent implements OnInit {
 		() => this.connecte = false
 
 	);
-  }
+}
 
 }
