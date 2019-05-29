@@ -96,8 +96,8 @@ export class ManagerVueHistogrammeComponent implements OnInit {
 	calculJourParMois() {
 
 		const date: Date = new Date(`${this.selection.annee}-${this.selection.mois}-01`);
-		let mois = date.getMonth();
-		let nbJoursMois = { jours: 0 };
+		const mois = date.getMonth();
+		const nbJoursMois = { jours: 0 };
 
 		if (mois % 2 > 0) {
 
@@ -123,7 +123,7 @@ export class ManagerVueHistogrammeComponent implements OnInit {
 			}
 		}
 
-		let tab: string[] = [];
+		const tab: string[] = [];
 
 		for (let i = 1; i <= nbJoursMois.jours; i++) {
 			if (i < 10) {
