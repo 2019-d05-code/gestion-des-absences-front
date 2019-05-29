@@ -4,6 +4,8 @@ import { AuthService } from '../auth/auth.service';
 import { SelectionManager } from '../models/SelectionManager';
 import { HistoManagerService } from './histo-manager.service';
 import { Departement } from '../models/Departement';
+import { ManagerVueDptCollabService } from '../manager-vue-dpt-collab/manager-vue-dpt-collab.service';
+import { Rapport } from '../models/Rapport';
 
 @Component({
 	selector: 'app-manager-vue-histogramme',
@@ -20,61 +22,10 @@ export class ManagerVueHistogrammeComponent implements OnInit {
 	public chartType = 'bar';
 
 	// Jeu de données
-	public chartDatasets: Array<any> = [
-		{ data: [0, 1, 1, 1, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0], label: 'this.Absence.nomCollegue1' },
-		{ data: [0, 1, 1, 1, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0], label: 'this.Absence.nomCollegue2' },
-
-	];
+	public chartDatasets: Array<any> = [{data:[], label:[]}];
 
 	// Pour mettre les 31 colonnes des jours, utiliser CalculJourParMois() à faire
 	public chartLabels = [];
-
-	public chartColors: Array<any> = [
-		{
-			backgroundColor: [
-				'rgba(255, 99, 132, 0.2)',
-				'rgba(54, 162, 235, 0.2)',
-				'rgba(255, 206, 86, 0.2)',
-				'rgba(75, 192, 192, 0.2)',
-				'rgba(153, 102, 255, 0.2)',
-				'rgba(255, 159, 64, 0.2)',
-				'rgba(255, 159, 64, 0.2)'
-			],
-			borderColor: [
-				'rgba(255,99,132,1)',
-				'rgba(54, 162, 235, 1)',
-				'rgba(255, 206, 86, 1)',
-				'rgba(75, 192, 192, 1)',
-				'rgba(153, 102, 255, 1)',
-				'rgba(255, 159, 64, 1)',
-				'rgba(255, 159, 64, 1)'
-
-			],
-			borderWidth: 2,
-		},
-		{
-			backgroundColor: [
-				'rgba(255, 125, 158, 0.2)',
-				'rgba(3, 111, 184, 0.2)',
-				'rgba(255, 255, 137, 0.2)',
-				'rgba(75, 192, 192, 0.2)',
-				'rgba(126, 243, 243, 0.2)',
-				'rgba(255, 210, 115, 0.2)',
-				'rgba(255, 210, 115, 0.2)'
-			],
-			borderColor: [
-				'rgba(255, 125, 158, 1)',
-				'rgba(3, 111, 184, 1)',
-				'rgba(255, 255, 137, 1)',
-				'rgba(75, 192, 192, 1)',
-				'rgba(126, 243, 243, 1)',
-				'rgba(255, 210, 115, 1)',
-				'rgba(255, 210, 115, 1)'
-
-			],
-			borderWidth: 2,
-		},
-	];
 
 	public chartOptions: any = {
 		responsive: true,
@@ -112,17 +63,63 @@ export class ManagerVueHistogrammeComponent implements OnInit {
 		}
 
 		this.chartLabels = tab;
-	}
 
-	calculWeekendParMois() {
+		this._serviceData.postRapport(this.selection).subscribe(
+			rapport => {
+				console.log(rapport)
+				const tab = [];
 
+				if (rapport.listeAbsences.length === 0) {
+					tab.push([{data: [], label: []}]);
+				} else {
+
+					for (const absence of rapport.listeAbsences) {
+						const datas = { data: [], label: `${absence.prenomCollegue} ${absence.nomCollegue}`, backgroundColor: 'rgba(80, 80, 100, 0.3)', borderColor: 'rgba(80, 80, 100, 0.8)' };
+
+						if (absence.joursCP) {
+							for(let i = 0; i < 32; i++) {
+								if (absence.joursCP[i] === (i + 1)) {
+									datas.data.push(1);
+								} else {
+									datas.data.push(0);
+								}
+							}
+						}
+
+						if (absence.joursCSS) {
+							for(let i = 0; i < 32; i++) {
+								if (absence.joursCSS[i] === (i + 1)) {
+									datas.data.push(1);
+								} else {
+									datas.data.push(0);
+								}
+							}
+						}
+
+						if (absence.joursRTT) {
+							console.log(absence.joursRTT)
+							for(let i = 0; i < 32; i++) {
+								if (absence.joursRTT[i] === (i + 1)) {
+									datas.data.push(1);
+								} else {
+									datas.data.push(0);
+								}
+							}
+						}
+
+						tab.push(datas);
+					}
+				}
+
+				this.chartDatasets = tab;
+			}
+		);
 	}
 
 	public chartClicked(e: any): void { }
 	public chartHovered(e: any): void { }
 
-
-	constructor(private _authSrv: AuthService, private _service: HistoManagerService) { }
+	constructor(private _authSrv: AuthService, private _service: HistoManagerService, private _serviceData: ManagerVueDptCollabService) { }
 
 	verifRoleManager(): boolean {
 		if (this.connecte) {
