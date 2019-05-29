@@ -53,14 +53,32 @@
 
 	</div>
 	<div class="table-responsive">
-		<table class="col-12 mat-table table-striped">
+		<table class="col-12 table table-striped">
+			<thead>
+				<tr>
+					<th direction="asc" scope="col" sortable="nom" (sort)="onSort($event)" >Nom</th>
+					<th *ngFor="let jour of listeJoursMois" scope="col">{{jour}}</th>
 
-			<ng-container matColumnDef="name" sticky>
-				<th direction="asc" mat-header-cell *matHeaderCellDef>Nom</th>
-				<td mat-cell *matCellDef="let absences">{{ absences.nomCollegue }}</td>
-			</ng-container>
-			<th *ngFor="let jour of listeJoursMois" scope="col">{{jour}}</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr *ngFor="let absences of listeDesAbsences">
+					<td scope="row">{{ absences.nomCollegue }}</td>
+					<td *ngFor="let jour of listeJoursMois" scope="row">
+						<!--Affichage du congé-->
+						<div *ngIf="absences.joursCP.includes(jour) ">C</div>
+						<!--Affichage du RTT-->
+						<div *ngIf="absences.joursRTT.includes(jour) ">R</div>
+						<!--Affichage du congé sans solde-->
+						<div *ngIf="absences.joursCSS.includes(jour) ">S</div>
 
+					</td>
+
+
+
+
+				</tr>
+			</tbody>
 		</table>
 	</div>
 </ng-template>
