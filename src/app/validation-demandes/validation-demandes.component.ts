@@ -4,51 +4,51 @@ import { Router } from '@angular/router';
 import { Collegue } from '../auth/auth.domains';
 
 @Component({
-  selector: 'app-validation-demandes',
-  templateUrl: './validation-demandes.component.html',
-  styles: []
+	selector: 'app-validation-demandes',
+	templateUrl: './validation-demandes.component.html',
+	styles: []
 })
 export class ValidationDemandesComponent implements OnInit {
 	collegueConnecte: Collegue;
 	@Input() connecte: boolean;
 	roleManager: string[];
 
-  constructor(private _authSrv: AuthService) { }
+	constructor(private _authSrv: AuthService) { }
 
 
-  verifRoleManager(): boolean {
-	if (this.connecte) {
+	verifRoleManager(): boolean {
+		if (this.connecte) {
 
-		let granted = false;
+			let granted = false;
 
-		const roleManager = this.collegueConnecte.roles.filter(role => role === 'ROLE_MANAGER');
+			const roleManager = this.collegueConnecte.roles.filter(role => role === 'ROLE_MANAGER');
 
-		if (roleManager.length > 0) {
-			granted = true;
-
-		}
-		return granted;
-	}
-}
-
-  ngOnInit() {
-	this._authSrv.collegueConnecteObs
-	.subscribe(
-		collegue => {
-			this.collegueConnecte = collegue;
-
-			if (this.collegueConnecte.estAnonyme()) {
-				this.connecte = false;
-
-			} else {
-				this.connecte = true;
+			if (roleManager.length > 0) {
+				granted = true;
 
 			}
-		},
-		() => this.connecte = false
+			return granted;
+		}
+	}
 
-	);
-  }
+	ngOnInit() {
+		this._authSrv.collegueConnecteObs
+			.subscribe(
+				collegue => {
+					this.collegueConnecte = collegue;
+
+					if (this.collegueConnecte.estAnonyme()) {
+						this.connecte = false;
+
+					} else {
+						this.connecte = true;
+
+					}
+				},
+				() => this.connecte = false
+
+			);
+	}
 
 
 

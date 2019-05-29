@@ -154,6 +154,8 @@ export class ManagerVueHistogrammeComponent implements OnInit {
 				() => this.connecte = false
 
 			);
+
+		this.calculJourParMois();
 	}
 
 }
