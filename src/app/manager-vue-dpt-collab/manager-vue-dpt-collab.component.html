@@ -52,11 +52,17 @@
 		</div>
 
 	</div>
+
+	<br>
+	<br>
+
+
+
 	<div class="table-responsive">
 		<table class="col-12 table table-striped">
 			<thead>
 				<tr>
-					<th direction="asc" scope="col" sortable="nom" (sort)="onSort($event)" >Nom</th>
+					<th direction="asc" scope="col" sortable="nom" (sort)="onSort($event)">Nom</th>
 					<th *ngFor="let jour of listeJoursMois" scope="col">{{jour}}</th>
 
 				</tr>
@@ -64,7 +70,8 @@
 			<tbody>
 				<tr *ngFor="let absences of listeDesAbsences">
 					<td scope="row">{{ absences.nomCollegue }}</td>
-					<td *ngFor="let jour of listeJoursMois" scope="row">
+					<td *ngFor="let jour of listeJoursMois" scope="row"
+						[ngClass]="{'jourwee': joursWeekend.includes(jour)}">
 						<!--Affichage du congé-->
 						<div *ngIf="absences.joursCP.includes(jour) ">C</div>
 						<!--Affichage du RTT-->
@@ -81,6 +88,8 @@
 			</tbody>
 		</table>
 	</div>
+	<br>
+	<br>
 </ng-template>
 
 <ng-template #reconnexion>

@@ -9,7 +9,7 @@ import { Absences } from '../models/Absences';
 @Component({
 	selector: 'app-manager-vue-dpt-collab',
 	templateUrl: './manager-vue-dpt-collab.component.html',
-	styles: []
+	styleUrls: ['./manager-vue-dpt-collab.css']
 })
 export class ManagerVueDptCollabComponent implements OnInit {
 	collegueConnecte: Collegue;
