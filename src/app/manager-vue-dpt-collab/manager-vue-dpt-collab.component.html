@@ -1,11 +1,72 @@
 <ng-container *ngIf="verifRoleManager(); then manager; else reconnexion;">
-	</ng-container>
+</ng-container>
 
-	<ng-template #manager>Vous êtes manager
-		</ng-template>
+<ng-template #manager>
+	<h3 class="text-center">Vue par département par jour et par collaborateur</h3>
+	<br />
+	<div class="input-group row">
+		<div class="col-lg-3 col-md-4 col-sm-5 col-6">
+			<p>Département : &nbsp;</p>
+			<select required name="type" id="type" class="form-control" [(ngModel)]="selection.departement"
+				#departement="ngModel">
+				<!-- Notion objet, recevoir liste département, le mettre en value, afficher département.nom mais que le value soit = departement.id -->
+				<option value="1">DSI</option>
+				<option value="2">Marketing</option>
+				<option value="3">Communication</option>
+			</select>
+		</div>
+		<div class="col-lg-3 col-md-4 col-sm-5 col-6">
+			<p>Mois : &nbsp;</p>
+			<select required name="type" id="type" class="form-control" [(ngModel)]="selection.mois" #mois="ngModel">
+				<option value="01">Janvier</option>
+				<option value="02">Février</option>
+				<option value="03">Mars</option>
+				<option value="04">Avril</option>
+				<option value="05">Mai</option>
+				<option value="06">Juin</option>
+				<option value="07">Juillet</option>
+				<option value="08">Août</option>
+				<option value="09">Septembre</option>
+				<option value="10">Octobre</option>
+				<option value="11">Novembre</option>
+				<option value="12">Décembre</option>
+			</select>
+		</div>
+		<div class="col-lg-3 col-md-4 col-sm-5 col-6">
+			<p>Années : &nbsp;</p>
+			<select required name="type" id="type" class="form-control" [(ngModel)]="selection.annee" #annee="ngModel">
+				<option value="2019">2019</option>
+				<option value="2020">2020</option>
+				<option value="2021">2021</option>
+				<option value="2022">2022</option>
+			</select>
+		</div>
+		<div class="col-lg-3 col-md-4 col-sm-5 col-6 row">
+			<div class=" col-6 mt-4">
+				<a class="btn btn-primary" (click)="rechercher(selection)"><i class="fa fa-search"
+						aria-hidden="true"></i></a>
+			</div>
+			<div class=" col-6 mt-4">
+				<a class="btn btn-primary"><i class="fa fa-file-excel-o" aria-hidden="true"></i></a>
+			</div>
+		</div>
 
-		<ng-template #reconnexion>
-				<div>
-					Merci de vous connecter en tant que Manager.
-				</div>
-			</ng-template>
+	</div>
+	<div class="table-responsive">
+		<table class="col-12 mat-table table-striped">
+
+			<ng-container matColumnDef="name" sticky>
+				<th direction="asc" mat-header-cell *matHeaderCellDef>Nom</th>
+				<td mat-cell *matCellDef="let absences">{{ absences.nomCollegue }}</td>
+			</ng-container>
+			<th *ngFor="let jour of listeJoursMois" scope="col">{{jour}}</th>
+
+		</table>
+	</div>
+</ng-template>
+
+<ng-template #reconnexion>
+	<div>
+		Merci de vous connecter en tant que Manager.
+	</div>
+</ng-template>
