@@ -47,7 +47,7 @@
 						aria-hidden="true"></i></a>
 			</div>
 			<div class=" col-6 mt-4">
-				<a class="btn btn-primary"><i class="fa fa-file-excel-o" aria-hidden="true"></i></a>
+				<a class="btn btn-primary" (click)="export()"><i class="fa fa-file-excel-o" aria-hidden="true"></i></a>
 			</div>
 		</div>
 
@@ -62,7 +62,7 @@
 		<table class="col-12 table table-striped">
 			<thead>
 				<tr>
-					<th direction="asc" scope="col" sortable="nom" (sort)="onSort($event)">Nom</th>
+					<th scope="col" >Nom</th>
 					<th *ngFor="let jour of listeJoursMois" scope="col">{{jour}}</th>
 
 				</tr>
@@ -80,16 +80,14 @@
 						<div *ngIf="absences.joursCSS.includes(jour) ">S</div>
 
 					</td>
-
-
-
-
 				</tr>
 			</tbody>
 		</table>
 	</div>
 	<br>
-	<br>
+
+	<p>C : congés, F : Ferié, M : Mission, R : RTT, S : Sans solde</p>
+		<br>
 </ng-template>
 
 <ng-template #reconnexion>

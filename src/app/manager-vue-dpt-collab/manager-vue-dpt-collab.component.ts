@@ -1,10 +1,13 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, ViewChildren, QueryList } from '@angular/core';
 import { Collegue } from '../auth/auth.domains';
 import { AuthService } from '../auth/auth.service';
 import { SelectionManager } from '../models/SelectionManager';
 import { ManagerVueDptCollabService } from './manager-vue-dpt-collab.service';
-import { map } from 'rxjs/operators';
+
 import { Absences } from '../models/Absences';
+
+import { CsvDataService } from './Csv-Data.Service'
+
 
 @Component({
 	selector: 'app-manager-vue-dpt-collab',
@@ -18,12 +21,8 @@ export class ManagerVueDptCollabComponent implements OnInit {
 
 	selection: SelectionManager = new SelectionManager();
 
-	// récupérer dernier jour du mois - a implémenter en fonction du mois sélectionné
-	date = new Date(2019, 5, 0);
-	dernierJour = this.date.getDate();
-
+	// implémentation du nombre de jours dans le mois
 	listeJoursMois: number[] = [];
-
 	// récupérer la liste des jours du week-end et la liste des absences
 	joursWeekend: number[] = [];
 	listeDesAbsences: Absences[] = [];
@@ -51,24 +50,33 @@ export class ManagerVueDptCollabComponent implements OnInit {
 			.subscribe(
 				collegue => {
 					this.collegueConnecte = collegue;
-
 					if (this.collegueConnecte.estAnonyme()) {
 						this.connecte = false;
-
 					} else {
 						this.connecte = true;
-
 					}
 				},
 				() => this.connecte = false
 
 			);
 
+		this.nbJours(this.selection);
+
+
+
+		this.rechercher(this.selection);
+
+	}
+
+	// trouver nb jour du mois
+	nbJours(selectionFaite) {
 		// implémentation du tableau en fonction du nombre de jours dans le mois
-		for (let i = 1; i <= this.dernierJour; i++) {
+		// récupérer dernier jour du mois - a implémenter en fonction du mois sélectionné
+		let date = new Date(selectionFaite.annee, Number(selectionFaite.mois), 0);
+		let dernierJour = date.getDate();
+		for (let i = 1; i <= dernierJour; i++) {
 			this.listeJoursMois.push(i);
 		}
-
 	}
 
 	// appelle le get pour pouvoir afficher la nouvelle liste des absences
@@ -79,8 +87,44 @@ export class ManagerVueDptCollabComponent implements OnInit {
 				this.listeDesAbsences = rapport.listeAbsences;
 			}
 		);
-
-
-
+		this.nbJours(this.selection);
 	}
+
+	export() {
+		let tableauExport: any[] = [];
+		let enTete: string[] = [];
+		enTete.push("Nom");
+		for (let i = 0; i <= 31; i++) {
+			enTete.push(i.toString());
+		}
+		tableauExport.push(enTete);
+
+
+		for (let absences of this.listeDesAbsences) {
+			let corps: string[] = [];
+			corps.push(`${absences.nomCollegue.toString()} ${absences.prenomCollegue.toString()}`);
+			for (let i = 1; i <= 31; i++) {
+				if (absences.joursCP.includes(i)) {
+					corps.push('C');
+
+				} else if (absences.joursRTT.includes(i)) {
+					corps.push('R');
+
+				} else if (absences.joursCSS.includes(i)) {
+					corps.push('S');
+
+				} else {
+					corps.push(' ');
+
+				}
+
+			}
+			tableauExport.push(corps);
+
+		}
+
+
+		CsvDataService.exportToCsv('test.csv', tableauExport);
+	}
+
 }
