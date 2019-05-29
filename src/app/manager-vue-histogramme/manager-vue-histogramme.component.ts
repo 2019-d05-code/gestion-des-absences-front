@@ -2,6 +2,8 @@ import { Component, OnInit, Input } from '@angular/core';
 import { Collegue } from '../auth/auth.domains';
 import { AuthService } from '../auth/auth.service';
 import { SelectionManager } from '../models/SelectionManager';
+import { HistoManagerService } from './histo-manager.service';
+import { Departement } from '../models/Departement';
 
 @Component({
 	selector: 'app-manager-vue-histogramme',
@@ -12,6 +14,7 @@ export class ManagerVueHistogrammeComponent implements OnInit {
 	@Input() connecte: boolean;
 	roleManager: string[];
 	selection: SelectionManager = new SelectionManager();
+	departements: Departement[];
 
 	// Type du graphique
 	public chartType = 'bar';
@@ -95,7 +98,7 @@ export class ManagerVueHistogrammeComponent implements OnInit {
 
 	calculJourParMois() {
 
-		const date: Date = new Date(this.selection.annee, this.selection.mois.valueOf(), 0);
+		const date: Date = new Date(this.selection.annee, parseInt( this.selection.mois.valueOf(), 10 ), 0);
 		const nbJoursMois =  date.getDate();
 
 		const tab: string[] = [];
@@ -119,7 +122,7 @@ export class ManagerVueHistogrammeComponent implements OnInit {
 	public chartHovered(e: any): void { }
 
 
-	constructor(private _authSrv: AuthService) { }
+	constructor(private _authSrv: AuthService, private _service: HistoManagerService) { }
 
 	verifRoleManager(): boolean {
 		if (this.connecte) {
@@ -148,12 +151,17 @@ export class ManagerVueHistogrammeComponent implements OnInit {
 
 					} else {
 						this.connecte = true;
-
 					}
 				},
 				() => this.connecte = false
 
 			);
+
+		this._service.recupDepartements().subscribe(
+			departements => this.departements = departements
+		);
+
+		this.calculJourParMois();
 	}
 
 }

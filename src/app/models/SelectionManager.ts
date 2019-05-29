@@ -10,7 +10,7 @@ export class SelectionManager {
 
 		const mois = date.getMonth() + 1;
 
-		if (mois < 10) {
+		if(mois < 10) {
 			this.mois = `0${mois}`;
 		} else {
 			this.mois = `${mois}`;
