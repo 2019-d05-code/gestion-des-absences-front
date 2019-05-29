@@ -1,6 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Collegue } from '../auth/auth.domains';
 import { AuthService } from '../auth/auth.service';
+import { SelectionManager } from '../models/SelectionManager';
 
 @Component({
 	selector: 'app-manager-vue-histogramme',
@@ -10,14 +11,7 @@ export class ManagerVueHistogrammeComponent implements OnInit {
 	collegueConnecte: Collegue;
 	@Input() connecte: boolean;
 	roleManager: string[];
-
-	// Absence: Absence;
-
-	joursWE: number[];
-	joursMOIS: number[];
-	i: number;
-
-
+	selection: SelectionManager = new SelectionManager();
 
 	// Type du graphique
 	public chartType = 'bar';
@@ -25,12 +19,12 @@ export class ManagerVueHistogrammeComponent implements OnInit {
 	// Jeu de données
 	public chartDatasets: Array<any> = [
 		{ data: [0, 1, 1, 1, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0], label: 'this.Absence.nomCollegue1' },
+		{ data: [0, 1, 1, 1, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0], label: 'this.Absence.nomCollegue2' },
+
 	];
 
 	// Pour mettre les 31 colonnes des jours, utiliser CalculJourParMois() à faire
-	public chartLabels: Array<any> = [0, 1, 2, 3, 4, 5, 6];
-
-
+	public chartLabels = [];
 
 	public chartColors: Array<any> = [
 		{
@@ -90,21 +84,60 @@ export class ManagerVueHistogrammeComponent implements OnInit {
 
 			yAxes: [{
 				stacked: true,
+				ticks: {
+					precision: 0
+				}
 
-			}
-			]
+			}]
 		}
 
 	};
 
-	CalculJourParMois() {
-		for (this.i = 0; this.i < 32; this.i++) {
-			this.joursMOIS.push(this.i);
-			return this.i;
+	calculJourParMois() {
+
+		const date: Date = new Date(`${this.selection.annee}-${this.selection.mois}-01`);
+		let mois = date.getMonth();
+		let nbJoursMois = { jours: 0 };
+
+		if (mois % 2 > 0) {
+
+			if (mois === 7) {
+				nbJoursMois.jours = 31;
+			} else if (mois === 1) {
+				nbJoursMois.jours = 28;
+			} else if (mois === 9) {
+				nbJoursMois.jours = 31;
+			} else if (mois === 12) {
+				nbJoursMois.jours = 31;
+			} else {
+				nbJoursMois.jours = 30;
+			}
+
+		} else {
+			if (mois === 8) {
+				nbJoursMois.jours = 30;
+			} else if (mois === 10) {
+				nbJoursMois.jours = 30;
+			} else {
+				nbJoursMois.jours = 31;
+			}
 		}
+
+		let tab: string[] = [];
+
+		for (let i = 1; i <= nbJoursMois.jours; i++) {
+			if (i < 10) {
+				tab.push(`0${i}/${this.selection.mois}/${this.selection.annee}`);
+			} else {
+				tab.push(`${i}/${this.selection.mois}/${this.selection.annee}`);
+			}
+		}
+
+		this.chartLabels = tab;
 	}
 
-	CalculWeekendParMois() {
+	calculWeekendParMois() {
+
 	}
 
 	public chartClicked(e: any): void { }

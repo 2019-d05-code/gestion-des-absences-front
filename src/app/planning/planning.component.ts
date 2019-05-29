@@ -125,42 +125,8 @@ export class PlanningComponent {
 					);
 					return of([]);
 				})
-			)
-		/*
-				this._srv.getListeAbsences(this.collegue.email).subscribe(
-					demTab => {
+			);
 
-
-						demTab.forEach(demande => {
-							let evenement2 = {
-								start: startOfDay(demande.dateDebut),
-								end: addDays(demande.dateDebut, 2),
-								title: `evenement indépendant`
-							};
-							this.events.push(evenement2);
-							console.log(this.events);
-
-
-						});
-
-						//this._changeRef.detectChanges();
-
-					},
-					error => {
-						console.log(error.error);
-						if (error.message === 'Http failure response for http://localhost:8080/listeAbsences: 404 OK') {
-							this.messageErreur = `Pas d'absences disponible`;
-						} else {
-							this.messageErreur = error.message;
-						}
-						this._changeRef.detectChanges();
-						setTimeout(
-							() => this.messageErreur = undefined,
-							7000
-						);
-					}
-				);
-		*/
 	}
 
 	setView(view: CalendarView) {
