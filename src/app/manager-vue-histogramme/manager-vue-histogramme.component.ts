@@ -133,7 +133,7 @@ export class ManagerVueHistogrammeComponent implements OnInit {
 			departements => this.departements = departements
 		);
 
-		// this.calculJourParMois();
+		this.calculJourParMois();
 	}
 
 }

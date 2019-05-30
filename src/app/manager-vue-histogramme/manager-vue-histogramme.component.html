@@ -5,7 +5,7 @@
 
 <ng-template #manager>
     <h3 class="text-center">Histogramme par département et par jour</h3>
-    <br />
+    <br>
     <form class="form-group">
         <div class="row">
             <div class="col-lg-3 col-sm-12">
@@ -50,10 +50,14 @@
             </div>
         </div>
     </form>
-    <br />
+    <br>
     <div *ngIf="chartDatasets" style="display: block">
         <canvas mdbChart [chartType]="chartType" [datasets]="chartDatasets" [labels]="chartLabels" [options]="chartOptions" [legend]="true" (chartHover)="chartHovered($event)" (chartClick)="chartClicked($event)">
 		</canvas>
+    </div>
+    <br>
+    <div class="container-fluid">
+        <button routerLink="/vues-synthetiques" class="btn btn-primary float-right">Retour</button>
     </div>
 </ng-template>
 
