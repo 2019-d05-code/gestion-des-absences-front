@@ -9,10 +9,8 @@
 			<p>Département : &nbsp;</p>
 			<select required name="type" id="type" class="form-control" [(ngModel)]="selection.departement"
 				#departement="ngModel">
-				<!-- Notion objet, recevoir liste département, le mettre en value, afficher département.nom mais que le value soit = departement.id -->
-				<option value="1">DSI</option>
-				<option value="2">Marketing</option>
-				<option value="3">Communication</option>
+				<option *ngFor="let departement of departements" value="{{ departement.id }}">{{ departement.nom }}
+				</option>
 			</select>
 		</div>
 		<div class="col-lg-3 col-md-4 col-sm-5 col-6">
@@ -62,7 +60,7 @@
 		<table class="col-12 table table-striped">
 			<thead>
 				<tr>
-					<th scope="col" >Nom</th>
+					<th scope="col">Nom</th>
 					<th *ngFor="let jour of listeJoursMois" scope="col">{{jour}}</th>
 
 				</tr>
@@ -87,7 +85,7 @@
 	<br>
 
 	<p>C : congés, F : Ferié, M : Mission, R : RTT, S : Sans solde</p>
-		<br>
+	<br>
 </ng-template>
 
 <ng-template #reconnexion>
