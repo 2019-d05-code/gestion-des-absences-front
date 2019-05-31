@@ -6,6 +6,7 @@ import { HistoManagerService } from './histo-manager.service';
 import { Departement } from '../models/Departement';
 import { ManagerVueDptCollabService } from '../manager-vue-dpt-collab/manager-vue-dpt-collab.service';
 import { BaseChartDirective } from 'angular-bootstrap-md';
+import { Rapport } from '../models/Rapport';
 
 @Component({
 	selector: 'app-manager-vue-histogramme',
@@ -18,6 +19,7 @@ export class ManagerVueHistogrammeComponent implements OnInit {
 	selection: SelectionManager = new SelectionManager();
 	departements: Departement[];
 	@ViewChild(BaseChartDirective) childCmpBaseChartRef: any;
+	rapport: Rapport;
 
 	// Type du graphique
 	public chartType = 'bar';
@@ -75,6 +77,8 @@ export class ManagerVueHistogrammeComponent implements OnInit {
 						borderColor: ``
 					}];
 				} else {
+					this.rapport = rapport;
+
 					let primary = 80;
 
 					this.chartDatasets = rapport.listeAbsences
@@ -122,6 +126,31 @@ export class ManagerVueHistogrammeComponent implements OnInit {
 	public chartHovered(e: any): void { }
 
 	genererCSV(): void {
+
+		const tableauExport: any[] = [];
+		const enTete: string[] = [];
+
+		enTete.push('Département');
+		enTete.push('Nom');
+		this.chartLabels.forEach(
+			label => enTete.push(label)
+		);
+
+		tableauExport.push(enTete);
+
+		this.chartDatasets.forEach(
+			set => {
+				const corps: string[] = [];
+				corps.push(this.selection.departement.toString());
+				corps.push(set.label);
+				set.data.array.forEach(element => {
+					corps.push(element);
+				});
+				tableauExport.push(corps);
+			}
+		);
+
+		CsvDataService.exportToCsv(`donnees_${this.selection.departement}_${this.selection.mois}_${this.selection.annee}.csv`, tableauExport);
 
 	}
 
