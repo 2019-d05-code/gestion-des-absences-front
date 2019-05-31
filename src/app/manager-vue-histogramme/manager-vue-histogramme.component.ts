@@ -5,8 +5,6 @@ import { SelectionManager } from '../models/SelectionManager';
 import { HistoManagerService } from './histo-manager.service';
 import { Departement } from '../models/Departement';
 import { ManagerVueDptCollabService } from '../manager-vue-dpt-collab/manager-vue-dpt-collab.service';
-import { Rapport } from '../models/Rapport';
-import { detectChanges } from '@angular/core/src/render3';
 
 @Component({
 	selector: 'app-manager-vue-histogramme',
@@ -23,7 +21,7 @@ export class ManagerVueHistogrammeComponent implements OnInit {
 	public chartType = 'bar';
 
 	// Jeu de données
-	public chartDatasets: Array<any> = [{data: [], label: '', backgroundColor: '', borderColor: ''}];
+	public chartDatasets: Array<any>;
 
 	// Pour mettre les 31 colonnes des jours, utiliser CalculJourParMois() à faire
 	public chartLabels = [];
@@ -67,26 +65,38 @@ export class ManagerVueHistogrammeComponent implements OnInit {
 
 		this._serviceData.postRapport(this.selection).subscribe(
 			rapport => {
-				const tab = [];
-				let primary = 80;
-				for (const absence of rapport.listeAbsences) {
-					const datas = {
+				if (rapport.listeAbsences.length === 0) {
+					this.chartDatasets = [{
 						data: [],
-						label: `${absence.prenomCollegue} ${absence.nomCollegue}`,
-						backgroundColor: `rgba(${primary}, ${primary}, 100, 0.3)`,
-						borderColor: `rgba(${primary}, ${primary}, 100, 0.8)`
-					};
-					primary++;
-					for (let i = 1; i < 32; i++) {
-						if (absence.joursCP.includes(i) || absence.joursRTT.includes(i) || absence.joursCSS.includes(i)) {
-							datas.data.push(1);
-						} else {
-							datas.data.push(0);
-						}
-					}
-					tab.push(datas);
+						label: ``,
+						backgroundColor: ``,
+						borderColor: ``
+					}];
+				} else {
+					let primary = 80;
+
+					this.chartDatasets = rapport.listeAbsences
+						.map(
+							absence => {
+								const datas = {
+									data: [],
+									label: `${absence.prenomCollegue} ${absence.nomCollegue}`,
+									backgroundColor: `rgba(${primary}, ${primary}, 100, 0.3)`,
+									borderColor: `rgba(${primary}, ${primary}, 100, 0.8)`
+								};
+								primary++;
+								for (let i = 1; i < 32; i++) {
+									if (absence.joursCP.includes(i) || absence.joursRTT.includes(i) || absence.joursCSS.includes(i)) {
+										datas.data.push(1);
+									} else {
+										datas.data.push(0);
+									}
+								}
+								return datas;
+							}
+						);
 				}
-				this.chartDatasets = tab;
+
 			}
 		);
 	}

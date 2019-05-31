@@ -37,6 +37,7 @@ import { MatMenuModule } from '@angular/material';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { SuppressionDemandeAbsenceComponent } from './suppression-demande-absence/suppression-demande-absence.component';
 import { VisuDemandeAbsenceComponent } from './visu-demande-absence/visu-demande-absence.component';
+import { ChartsModule, WavesModule } from 'angular-bootstrap-md'
 
 @NgModule({
 	declarations: [
@@ -72,7 +73,9 @@ import { VisuDemandeAbsenceComponent } from './visu-demande-absence/visu-demande
 			useFactory: adapterFactory
 		}),
 		MatMenuModule,
-		NgbModule
+		NgbModule,
+		ChartsModule,
+		WavesModule
 	],
 	providers: [{
 		provide: HTTP_INTERCEPTORS,
