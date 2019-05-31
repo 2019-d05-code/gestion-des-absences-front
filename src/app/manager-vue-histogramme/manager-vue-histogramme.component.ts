@@ -7,6 +7,7 @@ import { Departement } from '../models/Departement';
 import { ManagerVueDptCollabService } from '../manager-vue-dpt-collab/manager-vue-dpt-collab.service';
 import { BaseChartDirective } from 'angular-bootstrap-md';
 import { Rapport } from '../models/Rapport';
+import { CsvDataService } from '../manager-vue-dpt-collab/Csv-Data.Service';
 
 @Component({
 	selector: 'app-manager-vue-histogramme',
@@ -86,7 +87,7 @@ export class ManagerVueHistogrammeComponent implements OnInit {
 							absence => {
 								const datas = {
 									data: [],
-									label: `${absence.prenomCollegue} ${absence.nomCollegue}`,
+									label: `${absence.prenomCollegue}-${absence.nomCollegue}`,
 									backgroundColor: `rgba(${primary}, ${primary}, 100, 0.3)`,
 									borderColor: `rgba(${primary}, ${primary}, 100, 0.8)`
 								};
@@ -130,7 +131,7 @@ export class ManagerVueHistogrammeComponent implements OnInit {
 		const tableauExport: any[] = [];
 		const enTete: string[] = [];
 
-		enTete.push('Département');
+		enTete.push('Departement');
 		enTete.push('Nom');
 		this.chartLabels.forEach(
 			label => enTete.push(label)
@@ -143,7 +144,7 @@ export class ManagerVueHistogrammeComponent implements OnInit {
 				const corps: string[] = [];
 				corps.push(this.selection.departement.toString());
 				corps.push(set.label);
-				set.data.array.forEach(element => {
+				set.data.forEach(element => {
 					corps.push(element);
 				});
 				tableauExport.push(corps);
