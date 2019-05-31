@@ -4,50 +4,68 @@
 </ng-container>
 
 <ng-template #manager>
-	<h3 class="text-center">Histogramme par département et par jour</h3>
-	<br />
-	<div class="input-group">
-		<p>Département :</p>
-		<select required name="type" id="type" class="form-control" [(ngModel)]="selection.departement" #departement="ngModel">
-			<option *ngFor="let departement of departements" value="{{ departement.id }}">{{ departement.nom }}</option>
-		</select>
-		<p>Mois :</p>
-		<select required name="type" id="type" class="form-control" [(ngModel)]="selection.mois" #mois="ngModel">
-			<option value="01">Janvier</option>
-			<option value="02">Février</option>
-			<option value="03">Mars</option>
-			<option value="04">Avril</option>
-			<option value="05">Mai</option>
-			<option value="06">Juin</option>
-			<option value="07">Juillet</option>
-			<option value="08">Août</option>
-			<option value="09">Septembre</option>
-			<option value="10">Octobre</option>
-			<option value="11">Novembre</option>
-			<option value="12">Décembre</option>
-		</select>
-		<p>Années :</p>
-		<select required name="type" id="type" class="form-control" [(ngModel)]="selection.annee" #annee="ngModel">
-			<option value="2019">2019</option>
-			<option value="2020">2020</option>
-			<option value="2021">2021</option>
-			<option value="2022">2022</option>
-		</select>
-
-		<a class="btn btn-primary" (click)="calculJourParMois(); calculWeekendParMois()"><i class="fa fa-search" aria-hidden="true"></i></a>
-		<a class="btn btn-primary"><i class="fa fa-file-excel-o" aria-hidden="true"></i></a>
-	</div>
-	<br />
-	<div style="display: block">
-		<canvas mdbChart [chartType]="chartType" [datasets]="chartDatasets" [labels]="chartLabels"
-			[colors]="chartColors" [options]="chartOptions" [legend]="true" (chartHover)="chartHovered($event)"
-			(chartClick)="chartClicked($event)">
-		</canvas>
+	<div class="container">
+		<h3 class="text-center">Synthèse par jour</h3>
+		<br>
+		<form class="form-group">
+			<div class="row ml-2">
+				<div class="col-lg-3 col-sm-12">
+					<label for="dep">Département :</label>
+					<select required name="dep" id="dep" class="form-control" [(ngModel)]="selection.departement" #departement="ngModel">
+						<option *ngFor="let departement of departements" value="{{ departement.id }}">{{ departement.nom }}
+						</option>
+					</select>
+				</div>
+				<div class="col-lg-3 col-sm-12">
+					<label for="mois">Mois :</label>
+					<select required name="mois" id="mois" class="form-control" [(ngModel)]="selection.mois" #mois="ngModel">
+						<option value="01">Janvier</option>
+						<option value="02">Février</option>
+						<option value="03">Mars</option>
+						<option value="04">Avril</option>
+						<option value="05">Mai</option>
+						<option value="06">Juin</option>
+						<option value="07">Juillet</option>
+						<option value="08">Août</option>
+						<option value="09">Septembre</option>
+						<option value="10">Octobre</option>
+						<option value="11">Novembre</option>
+						<option value="12">Décembre</option>
+					</select>
+				</div>
+				<div class="col-lg-3 col-sm-12">
+					<label for="annee">Années :</label>
+					<select required name="annee" id="annee" class="form-control" [(ngModel)]="selection.annee" #annee="ngModel">
+						<option value="2019">2019</option>
+						<option value="2020">2020</option>
+						<option value="2021">2021</option>
+						<option value="2022">2022</option>
+					</select>
+				</div>
+				<div class="col-lg-3 col-sm-12">
+					<div class="mt-4">
+						<a class="btn btn-primary" (click)="calculJourParMois()"><i class="fa fa-search"
+								aria-hidden="true"></i></a>
+						<a class="btn btn-primary" (click)="genererCSV()"><i class="fa fa-file-excel-o" aria-hidden="true"></i></a>
+					</div>
+				</div>
+			</div>
+		</form>
+		<br>
+		<div *ngIf="chartDatasets">
+			<canvas id="myChart" mdbChart [chartType]="chartType" [datasets]="chartDatasets" [labels]="chartLabels" [options]="chartOptions" [legend]="true" (chartHover)="chartHovered($event)" (chartClick)="chartClicked($event)">
+			</canvas>
+		</div>
+		<br>
+		<div class="mb-5">
+			<button routerLink="/vues-synthetiques" class="btn btn-primary float-right">Retour</button>
+		</div>
+		<br>
 	</div>
 </ng-template>
 
 <ng-template #reconnexion>
-	<div>
-		Merci de vous connecter en tant que Manager.
-	</div>
+    <div>
+        Merci de vous connecter en tant que Manager.
+    </div>
 </ng-template>

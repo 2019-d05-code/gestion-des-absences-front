@@ -7,6 +7,8 @@ import { ManagerVueDptCollabService } from './manager-vue-dpt-collab.service';
 import { Absences } from '../models/Absences';
 
 import { CsvDataService } from './Csv-Data.Service'
+import { Departement } from '../models/Departement';
+import { HistoManagerService } from '../manager-vue-histogramme/histo-manager.service';
 
 
 @Component({
@@ -18,6 +20,7 @@ export class ManagerVueDptCollabComponent implements OnInit {
 	collegueConnecte: Collegue;
 	@Input() connecte: boolean;
 	roleManager: string[];
+	departements: Departement[];
 
 	selection: SelectionManager = new SelectionManager();
 
@@ -27,7 +30,8 @@ export class ManagerVueDptCollabComponent implements OnInit {
 	joursWeekend: number[] = [];
 	listeDesAbsences: Absences[] = [];
 
-	constructor(private _authSrv: AuthService, private _managerSrv: ManagerVueDptCollabService) { }
+	constructor(private _authSrv: AuthService, private _managerSrv: ManagerVueDptCollabService,
+		private _histoServ: HistoManagerService) { }
 
 
 	verifRoleManager(): boolean {
@@ -60,8 +64,10 @@ export class ManagerVueDptCollabComponent implements OnInit {
 
 			);
 
-		this.nbJours(this.selection);
 
+		this._histoServ.recupDepartements().subscribe(
+			departements => this.departements = departements
+		);
 
 
 		this.rechercher(this.selection);
@@ -72,8 +78,8 @@ export class ManagerVueDptCollabComponent implements OnInit {
 	nbJours(selectionFaite) {
 		// implémentation du tableau en fonction du nombre de jours dans le mois
 		// récupérer dernier jour du mois - a implémenter en fonction du mois sélectionné
-		let date = new Date(selectionFaite.annee, Number(selectionFaite.mois), 0);
-		let dernierJour = date.getDate();
+		const date = new Date(selectionFaite.annee, Number(selectionFaite.mois), 0);
+		const dernierJour = date.getDate();
 		for (let i = 1; i <= dernierJour; i++) {
 			this.listeJoursMois.push(i);
 		}
@@ -81,6 +87,8 @@ export class ManagerVueDptCollabComponent implements OnInit {
 
 	// appelle le get pour pouvoir afficher la nouvelle liste des absences
 	rechercher(selection) {
+		// remise à zéro du tableau du nb de jours par mois pour pas qu'il s'affiche plusieurs fois
+		this.listeJoursMois = [];
 		this._managerSrv.postRapport(selection).subscribe(
 			rapport => {
 				this.joursWeekend = rapport.joursWeekEnd;
