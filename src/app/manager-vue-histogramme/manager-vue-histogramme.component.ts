@@ -88,7 +88,12 @@ export class ManagerVueHistogrammeComponent implements OnInit {
 								};
 								primary++;
 								for (let i = 1; i < 32; i++) {
-									if (absence.joursCP.includes(i) || absence.joursRTT.includes(i) || absence.joursCSS.includes(i)) {
+									if (
+										!rapport.joursWeekEnd.includes(i) &&
+										(absence.joursCP.includes(i) ||
+										absence.joursRTT.includes(i) ||
+										absence.joursCSS.includes(i))
+									) {
 										datas.data.push(1);
 									} else {
 										datas.data.push(0);
@@ -99,7 +104,11 @@ export class ManagerVueHistogrammeComponent implements OnInit {
 						);
 
 					// Force le dataCharset à prendre en compte les données reçues
-					if (this.childCmpBaseChartRef.datasets && this.childCmpBaseChartRef.datasets.length !== this.chartDatasets.length) {
+					if (
+						this.childCmpBaseChartRef &&
+						this.childCmpBaseChartRef.datasets &&
+						this.childCmpBaseChartRef.datasets.length !== this.chartDatasets.length
+					) {
 						this.childCmpBaseChartRef.datasets = this.chartDatasets;
 						this.childCmpBaseChartRef.ngOnInit();
 					}
