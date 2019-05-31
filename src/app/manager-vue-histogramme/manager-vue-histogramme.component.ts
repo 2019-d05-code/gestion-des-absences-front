@@ -1,9 +1,13 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, ViewChild } from '@angular/core';
 import { Collegue } from '../auth/auth.domains';
 import { AuthService } from '../auth/auth.service';
 import { SelectionManager } from '../models/SelectionManager';
 import { HistoManagerService } from './histo-manager.service';
 import { Departement } from '../models/Departement';
+import { ManagerVueDptCollabService } from '../manager-vue-dpt-collab/manager-vue-dpt-collab.service';
+import { BaseChartDirective } from 'angular-bootstrap-md';
+import { Rapport } from '../models/Rapport';
+import { CsvDataService } from '../manager-vue-dpt-collab/Csv-Data.Service';
 
 @Component({
 	selector: 'app-manager-vue-histogramme',
@@ -15,66 +19,17 @@ export class ManagerVueHistogrammeComponent implements OnInit {
 	roleManager: string[];
 	selection: SelectionManager = new SelectionManager();
 	departements: Departement[];
+	@ViewChild(BaseChartDirective) childCmpBaseChartRef: any;
+	rapport: Rapport;
 
 	// Type du graphique
 	public chartType = 'bar';
 
 	// Jeu de données
-	public chartDatasets: Array<any> = [
-		{ data: [0, 1, 1, 1, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0], label: 'this.Absence.nomCollegue1' },
-		{ data: [0, 1, 1, 1, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0], label: 'this.Absence.nomCollegue2' },
-
-	];
+	public chartDatasets: Array<any>;
 
 	// Pour mettre les 31 colonnes des jours, utiliser CalculJourParMois() à faire
 	public chartLabels = [];
-
-	public chartColors: Array<any> = [
-		{
-			backgroundColor: [
-				'rgba(255, 99, 132, 0.2)',
-				'rgba(54, 162, 235, 0.2)',
-				'rgba(255, 206, 86, 0.2)',
-				'rgba(75, 192, 192, 0.2)',
-				'rgba(153, 102, 255, 0.2)',
-				'rgba(255, 159, 64, 0.2)',
-				'rgba(255, 159, 64, 0.2)'
-			],
-			borderColor: [
-				'rgba(255,99,132,1)',
-				'rgba(54, 162, 235, 1)',
-				'rgba(255, 206, 86, 1)',
-				'rgba(75, 192, 192, 1)',
-				'rgba(153, 102, 255, 1)',
-				'rgba(255, 159, 64, 1)',
-				'rgba(255, 159, 64, 1)'
-
-			],
-			borderWidth: 2,
-		},
-		{
-			backgroundColor: [
-				'rgba(255, 125, 158, 0.2)',
-				'rgba(3, 111, 184, 0.2)',
-				'rgba(255, 255, 137, 0.2)',
-				'rgba(75, 192, 192, 0.2)',
-				'rgba(126, 243, 243, 0.2)',
-				'rgba(255, 210, 115, 0.2)',
-				'rgba(255, 210, 115, 0.2)'
-			],
-			borderColor: [
-				'rgba(255, 125, 158, 1)',
-				'rgba(3, 111, 184, 1)',
-				'rgba(255, 255, 137, 1)',
-				'rgba(75, 192, 192, 1)',
-				'rgba(126, 243, 243, 1)',
-				'rgba(255, 210, 115, 1)',
-				'rgba(255, 210, 115, 1)'
-
-			],
-			borderWidth: 2,
-		},
-	];
 
 	public chartOptions: any = {
 		responsive: true,
@@ -86,6 +41,7 @@ export class ManagerVueHistogrammeComponent implements OnInit {
 			}],
 
 			yAxes: [{
+				scaleLabel: { labelString: 'Nombre d\'absences par jour', display: true },
 				stacked: true,
 				ticks: {
 					precision: 0
@@ -98,8 +54,8 @@ export class ManagerVueHistogrammeComponent implements OnInit {
 
 	calculJourParMois() {
 
-		const date: Date = new Date(this.selection.annee, parseInt( this.selection.mois.valueOf(), 10 ), 0);
-		const nbJoursMois =  date.getDate();
+		const date: Date = new Date(this.selection.annee, parseInt(this.selection.mois.valueOf(), 10), 0);
+		const nbJoursMois = date.getDate();
 
 		const tab: string[] = [];
 
@@ -112,17 +68,95 @@ export class ManagerVueHistogrammeComponent implements OnInit {
 		}
 
 		this.chartLabels = tab;
-	}
 
-	calculWeekendParMois() {
+		this._serviceData.postRapport(this.selection).subscribe(
+			rapport => {
+				if (rapport.listeAbsences.length === 0) {
+					this.chartDatasets = [{
+						data: [],
+						label: ``,
+						backgroundColor: ``,
+						borderColor: ``
+					}];
+				} else {
+					this.rapport = rapport;
 
+					let primary = 80;
+
+					this.chartDatasets = rapport.listeAbsences
+						.map(
+							absence => {
+								const datas = {
+									data: [],
+									label: `${absence.prenomCollegue}-${absence.nomCollegue}`,
+									backgroundColor: `rgba(${primary}, ${primary}, 100, 0.3)`,
+									borderColor: `rgba(${primary}, ${primary}, 100, 0.8)`
+								};
+								primary++;
+								for (let i = 1; i < 32; i++) {
+									if (
+										!rapport.joursWeekEnd.includes(i) &&
+										(absence.joursCP.includes(i) ||
+										absence.joursRTT.includes(i) ||
+										absence.joursCSS.includes(i))
+									) {
+										datas.data.push(1);
+									} else {
+										datas.data.push(0);
+									}
+								}
+								return datas;
+							}
+						);
+
+					// Force le dataCharset à prendre en compte les données reçues
+					if (
+						this.childCmpBaseChartRef &&
+						this.childCmpBaseChartRef.datasets &&
+						this.childCmpBaseChartRef.datasets.length !== this.chartDatasets.length
+					) {
+						this.childCmpBaseChartRef.datasets = this.chartDatasets;
+						this.childCmpBaseChartRef.ngOnInit();
+					}
+				}
+
+			}
+		);
 	}
 
 	public chartClicked(e: any): void { }
 	public chartHovered(e: any): void { }
 
+	genererCSV(): void {
 
-	constructor(private _authSrv: AuthService, private _service: HistoManagerService) { }
+		const tableauExport: any[] = [];
+		const enTete: string[] = [];
+
+		enTete.push('Departement');
+		enTete.push('Nom');
+		this.chartLabels.forEach(
+			label => enTete.push(label)
+		);
+
+		tableauExport.push(enTete);
+
+		this.chartDatasets.forEach(
+			set => {
+				const corps: string[] = [];
+				corps.push(this.selection.departement.toString());
+				corps.push(set.label);
+				set.data.forEach(element => {
+					corps.push(element);
+				});
+				tableauExport.push(corps);
+			}
+		);
+
+		CsvDataService.exportToCsv(`donnees_${this.selection.departement}_${this.selection.mois}_${this.selection.annee}.csv`, tableauExport);
+
+	}
+
+	constructor(private _authSrv: AuthService, private _service: HistoManagerService, private _serviceData: ManagerVueDptCollabService) { }
 
 	verifRoleManager(): boolean {
 		if (this.connecte) {
