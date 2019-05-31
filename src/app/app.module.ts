@@ -59,7 +59,7 @@ import { ChartsModule, WavesModule } from 'angular-bootstrap-md'
 		GestionAbsencesComponent,
 		SuppressionDemandeAbsenceComponent,
 		VisuDemandeAbsenceComponent,
-		NgbdSortableHeader
+		NgbdSortableHeader,
 	],
 	imports: [
 		BrowserModule,
