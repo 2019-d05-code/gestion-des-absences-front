@@ -121,6 +121,10 @@ export class ManagerVueHistogrammeComponent implements OnInit {
 	public chartClicked(e: any): void { }
 	public chartHovered(e: any): void { }
 
+	genererCSV(): void {
+
+	}
+
 	constructor(private _authSrv: AuthService, private _service: HistoManagerService, private _serviceData: ManagerVueDptCollabService) { }
 
 	verifRoleManager(): boolean {
