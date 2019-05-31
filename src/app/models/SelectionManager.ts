@@ -7,10 +7,8 @@ export class SelectionManager {
 		this.departement = 1;
 		const date = new Date();
 		this.annee = date.getFullYear();
-
-		const mois = date.getMonth() + 1;
-
-		if(mois < 10) {
+		const mois = (date.getMonth() + 1);
+		if (mois < 10) {
 			this.mois = `0${mois}`;
 		} else {
 			this.mois = `${mois}`;
