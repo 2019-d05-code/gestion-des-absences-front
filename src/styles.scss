@@ -16,92 +16,16 @@
 	cursor: pointer;
 }
 
-/* Allez un peu de charte graphique hein ;) */
-// body,h1,h2,h3,h4,h5,h6 {font-family: "Raleway", sans-serif;}
-// body, html {
-//   height: 100%;
-//   color: #275D8C;
-//   line-height: 1.8;
-//   border-radius: 10px;
-// }
+    /* Datepicker popup icon */
 
-// div {
-// 	border-radius: 10px;
-// }
+	button.calendar, button.calendar:active {
+		width: 2.75rem;
+		background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACIAAAAcCAYAAAAEN20fAAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAAOxAAADsQBlSsOGwAAABl0RVh0U29mdHdhcmUAd3d3Lmlua3NjYXBlLm9yZ5vuPBoAAAEUSURBVEiJ7ZQxToVAEIY/YCHGxN6XGOIpnpaEsBSeQC9ArZbm9TZ6ADyBNzAhQGGl8Riv4BLAWAgmkpBYkH1b8FWT2WK/zJ8ZJ4qiI6XUI3ANnGKWBnht2/ZBDRK3hgVGNsCd7/ui+JkEIrKtqurLpEWaphd933+IyI3LEIdpCYCiKD6HcuOa/nwOa0ScJEnk0BJg0UTUWJRl6RxCYEzEmomsIlPU3IPW+grIAbquy+q6fluy/28RIBeRMwDXdXMgXLj/B2uimRXpui4D9sBeRLKl+1N+L+t6RwbWrZliTTTr1oxYtzVWiTQAcRxvTX+eJMnlUDaO1vpZRO5NS0x48sIwfPc87xg4B04MCzQi8hIEwe4bl1DnFMCN2zsAAAAASUVORK5CYII=') !important;
+		background-repeat: no-repeat;
+		background-size: 23px;
+		background-position: center;
+	  }
 
-// .navbar {
-// 	border-radius: 10px;
-// }
-
-// .primary-color {
-//     background-color: #023059 !important;
-// }
-
-// .btn-primary {
-//     background-color: #023059 !important;
-// 	color: #F2E9D8 !important;
-// 	border-radius: 10px;
-// }
-
-// /* Create a Parallax Effect */
-// .bgimg-1, .bgimg-2, .bgimg-3 {
-// background-attachment: fixed;
-//   background-position: center;
-//   background-repeat: no-repeat;
-//   background-size: cover;
-//  }
-
-// /* First image (Logo. Full height) */
-// .bgimg-1 {
-// background-image: url('https://i.pinimg.com/originals/0e/0f/9a/0e0f9a113ab39082226e71fbbcab3a31.jpg');
-//  background-position: top;
-//   max-height: 40%;
-//   min-height: 40%;
-//  }}
-
-// .w3-wide {letter-spacing: 10px;}
-// .w3-hover-opacity {cursor: pointer;}
-
-// button {
-//   border-radius: 4px;
-//   background-color: #5ca1e1;
-//   border: none;
-//   color: #fff;
-//   text-align: center;
-//   font-size: 20px;
-//   padding: 16px;
-//   width: 220px;
-//   transition: all 0.5s;
-//   cursor: pointer;
-//   margin: 36px;
-//   box-shadow: 0 10px 20px -8px rgba(0, 0, 0,.7);
-// }
-
-// button{
-//   cursor: pointer;
-//   display: inline-block;
-//   position: relative;
-//   transition: 0.5s;
-// }
-
-// button:after {
-//   content: '>';
-//     position: absolute;
-//   opacity: 0;
-//   top: 8px;
-//   right: -20px;
-//   transition: 0.5s;
-// }
-
-// button:hover{
-//   padding-right: 24px;
-//   padding-left:8px;
-// }
-
-// button:hover:after {
-//   opacity: 1;
-//   right: 10px;
-// }
 
 // CSS des bouton congés
 .fa-mug-hot {
@@ -143,6 +67,8 @@
 	border-radius: 50%;
 
 }
+
+
 
 
 
