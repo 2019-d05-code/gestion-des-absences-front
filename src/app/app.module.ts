@@ -58,7 +58,7 @@ import { VisuDemandeAbsenceComponent } from './visu-demande-absence/visu-demande
 		GestionAbsencesComponent,
 		SuppressionDemandeAbsenceComponent,
 		VisuDemandeAbsenceComponent,
-		NgbdSortableHeader
+		NgbdSortableHeader,
 	],
 	imports: [
 		BrowserModule,
