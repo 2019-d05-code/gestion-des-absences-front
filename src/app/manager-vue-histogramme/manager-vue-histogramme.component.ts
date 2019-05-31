@@ -41,6 +41,7 @@ export class ManagerVueHistogrammeComponent implements OnInit {
 			}],
 
 			yAxes: [{
+				scaleLabel: { labelString: 'Nombre d\'absences par jour', display: true },
 				stacked: true,
 				ticks: {
 					precision: 0
