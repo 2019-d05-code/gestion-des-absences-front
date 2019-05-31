@@ -1,43 +1,48 @@
-<mdb-card class="animated zoomIn">
+<div class="col-8 offset-2">
+	<mdb-card class="animated zoomIn">
 
-    <mdb-card-body>
-        <mdb-card>
-            <mdb-card-body>
-                <mdb-card-title>
-                    <h4>Utilisateurs</h4>
-                </mdb-card-title>
-                <mdb-card-text>
-                    Deux utilisateurs sont créés par défaut :
-                    <ul>
-                        <li>admin@dev.fr / superpass / ROLE_ADMINISTRATEUR, ROLE_UTILISATEUR</li>
-						<li>user@dev.fr / superpass / ROLE_UTILISATEUR</li>
-						<li>manager@dev.fr / superpass / ROLE_MANAGER</li>
-                    </ul>
+		<mdb-card-body style="background-color: whitesmoke">
 
-                </mdb-card-text>
 
-            </mdb-card-body>
-        </mdb-card>
-        <form>
-            <div class="md-form">
-                <i class="fa fa-envelope prefix grey-text"></i>
-                <input type="text" [validateSuccess]="false" data-error="Une adresse email est requise et doit être au format mail@mail.fr" id="defaultForm-email" class="form-control" name="email" mdbInputDirective [(ngModel)]="collegue.email" required pattern="[a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+.[a-zA-Z.]{2,15}">
-                <label for="defaultForm-email">Email</label>
-            </div>
+			<div class="text-center">
+				<img src="https://i.skyrock.net/0338/11740338/pics/418776793.gif" />
+			</div>
+			<h3 class=" text-center">GDA <span class="w3-hide-small">- GESTION DES ABSENCES</span></h3>
 
-            <div class="md-form">
-                <i class="fa fa-lock prefix grey-text"></i>
-                <input type="password" id="defaultForm-pass" [validateSuccess]="false" data-error="Un mot de passe est requis" name="motDePasse" class="form-control" mdbInputDirective [(ngModel)]="collegue.motDePasse" required>
-                <label for="defaultForm-pass">Mot de passe</label>
-            </div>
+			<form>
+				<div class="md-form">
+					<i class="fa fa-envelope prefix grey-text"></i>
+					<input type="text" [validateSuccess]="false"
+						data-error="Une adresse email est requise et doit être au format mail@mail.fr"
+						id="defaultForm-email" class="form-control" name="email" mdbInputDirective
+						[(ngModel)]="collegue.email" required pattern="[a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+.[a-zA-Z.]{2,15}">
+					<label for="defaultForm-email">Email</label>
+				</div>
 
-            <div class="text-center">
-                <input type="submit" mdbBtn color="primary" sclass="waves-light" mdbWavesEffect value="Se connecter" (click)="connecter()">
-            </div>
-            <div *ngIf="err" class="text-danger">
-                Vos informations d'authentification sont invalides.
-            </div>
-        </form>
-    </mdb-card-body>
-</mdb-card>
-<br>
+				<div class="md-form">
+					<i class="fa fa-lock prefix grey-text"></i>
+					<input type="password" id="defaultForm-pass" [validateSuccess]="false"
+						data-error="Un mot de passe est requis" name="motDePasse" class="form-control" mdbInputDirective
+						[(ngModel)]="collegue.motDePasse" required>
+					<label for="defaultForm-pass">Mot de passe</label>
+				</div>
+
+				<div class="text-center">
+					<input type="submit" mdbBtn color="primary" sclass="waves-light" mdbWavesEffect value="Se connecter"
+						(click)="connecter()">
+				</div>
+				<div *ngIf="err" class="text-danger">
+					Vos informations d'authentification sont invalides.
+				</div>
+			</form>
+		</mdb-card-body>
+	</mdb-card>
+	<br>
+
+	<h3>Trois utilisateurs sont créés par défaut : </h3>
+	<ul>
+		<li>admin@dev.fr / superpass / ROLE_ADMINISTRATEUR, ROLE_UTILISATEUR</li>
+		<li>user@dev.fr / superpass / ROLE_UTILISATEUR</li>
+		<li>manager@dev.fr / superpass / ROLE_MANAGER</li>
+	</ul>
+</div>
