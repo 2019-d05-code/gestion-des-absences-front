@@ -1,10 +1,11 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, ViewChild } from '@angular/core';
 import { Collegue } from '../auth/auth.domains';
 import { AuthService } from '../auth/auth.service';
 import { SelectionManager } from '../models/SelectionManager';
 import { HistoManagerService } from './histo-manager.service';
 import { Departement } from '../models/Departement';
 import { ManagerVueDptCollabService } from '../manager-vue-dpt-collab/manager-vue-dpt-collab.service';
+import { BaseChartDirective } from 'angular-bootstrap-md';
 
 @Component({
 	selector: 'app-manager-vue-histogramme',
@@ -16,6 +17,7 @@ export class ManagerVueHistogrammeComponent implements OnInit {
 	roleManager: string[];
 	selection: SelectionManager = new SelectionManager();
 	departements: Departement[];
+	@ViewChild(BaseChartDirective) childCmpBaseChartRef: any;
 
 	// Type du graphique
 	public chartType = 'bar';
@@ -95,6 +97,12 @@ export class ManagerVueHistogrammeComponent implements OnInit {
 								return datas;
 							}
 						);
+
+					// Force le dataCharset à prendre en compte les données reçues
+					if (this.childCmpBaseChartRef.datasets && this.childCmpBaseChartRef.datasets.length !== this.chartDatasets.length) {
+						this.childCmpBaseChartRef.datasets = this.chartDatasets;
+						this.childCmpBaseChartRef.ngOnInit();
+					}
 				}
 
 			}
