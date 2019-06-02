@@ -10,10 +10,6 @@ import { VisuDemandeAbsenceComponent } from '../visu-demande-absence/visu-demand
 import { NgbdSortableHeader } from '../gestion-absences/gestion-absences.component';
 import { JourFerie } from '../models/JourFerie';
 
-// import fr from '@angular/common/locales/fr';
-// import { registerLocaleData } from '@angular/common';
-// registerLocaleData(fr);
-
 // Création des types pour le tri du tableau
 export type SortDirection = 'asc' | 'desc' | '';
 const rotate: { [key: string]: SortDirection } = { 'asc': 'desc', 'desc': '', '': 'asc' };
@@ -92,10 +88,9 @@ export class JourFerieVisuComponent implements OnInit {
 	}
 	// charger la modal de suppresion au click
 
-	chargerModifModal(demande: DemandeAbsence) {
-		console.log(demande);
+	chargerModifModal(absenceCollective: JourFerie) {
 		const myModal = this.modal.open(ModifDemandeAbsenceComponent);
-		myModal.componentInstance.demandeModal = demande;
+		myModal.componentInstance.demandeModal = absenceCollective;
 
 		myModal.result.then((result) => {
 			console.log(result);
@@ -112,10 +107,9 @@ export class JourFerieVisuComponent implements OnInit {
 	}
 
 	// charger la modal de suppresion au click
-	chargerSuppresionModal(demande: DemandeAbsence) {
-		console.log(demande);
+	chargerSuppresionModal(absenceCollective: JourFerie) {
 		const myModal = this.modal.open(SuppressionDemandeAbsenceComponent);
-		myModal.componentInstance.demandeModal = demande;
+		myModal.componentInstance.demandeModal = absenceCollective;
 
 		myModal.result.then((result) => {
 			console.log(result);
@@ -126,10 +120,9 @@ export class JourFerieVisuComponent implements OnInit {
 	}
 
 	// charger la modal de visualisation au click
-	chargerVisuModal(demande: DemandeAbsence) {
-		console.log(demande);
+	chargerVisuModal(absenceCollective: JourFerie) {
 		const myModal = this.modal.open(VisuDemandeAbsenceComponent);
-		myModal.componentInstance.demandeModal = demande;
+		myModal.componentInstance.demandeModal = absenceCollective;
 
 		myModal.result.then((result) => {
 			console.log(result);
