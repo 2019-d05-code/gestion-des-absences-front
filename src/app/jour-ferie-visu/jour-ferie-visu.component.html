@@ -1,13 +1,77 @@
 <div class="col-8 offset-2">
-	<p style="text-align: center"> Page en construction
-		<br>
-		<br>
-		<ngb-progressbar type="info" [value]="50" [showValue]="true" [striped]="true"></ngb-progressbar>
-	</p>
+	<img class="col-10 offset-1" src="http://www.studioprompter.com/images/Under-construction.png">
 	<br>
+</div>
 
-	<img class="col-10 offset-1"
-		src="http://www.studioprompter.com/images/Under-construction.png"
-		>
-	<br>
+<div class="container-fluid">
+
+	<h1 class="text-center col-12">Jours feriés et RTT employeurs</h1>
+
+	<form class="form-group">
+		<div class="row ml-2">
+			<div class="col-lg-4 offset-lg-4 col-sm-12 row">
+				<label for="annee" class="col-lg-5 col-sm-12 mt-2">Années :</label>
+				<select required name="annee" id="annee" class="form-control col-lg-7 col-sm-12"
+					[(ngModel)]="anneeSelect" #annee="ngModel">
+					<option value="2019">2019</option>
+					<option value="2020">2020</option>
+					<option value="2021">2021</option>
+					<option value="2022">2022</option>
+				</select>
+			</div>
+		</div>
+	</form>
+
+	<!--Tableau Angular Ng bootstrap-->
+	<table class="col-12 table table-striped">
+		<thead>
+			<tr>
+				<th direction="asc" scope="col" sortable="dateDebut" (sort)="onSort($event)">Date</th>
+				<th scope="col" sortable="type" (sort)="onSort($event)">Type</th>
+				<th scope="col" sortable="status" (sort)="onSort($event)">Jour</th>
+				<th scope="col" sortable="status" (sort)="onSort($event)">Commentaire</th>
+				<th scope="col">Actions</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr *ngFor="let demande of listePaginees">
+				<td scope="row">{{ demande.dateDebut | date: 'dd/MM/yyyy' }}</td>
+				<td> {{demande.type }} </td>
+				<td>
+					{{ demande.dateDebut | date: 'EEEE'  }}
+				</td>
+
+				<td>{{ demande.motif }}</td>
+				<td class="col-8 row">
+					<div class="col-4"
+						*ngIf="demande.status.toString() == 'INITIALE' || demande.status.toString() == 'REJETEE'">
+						<a (click)="chargerModifModal(demande);"> <i class="fa fa-pencil-square-o" aria-hidden="true">
+							</i></a>
+					</div>
+					<div class="col-4">
+						<a (click)="chargerSuppresionModal(demande);"> <i class="fa fa-trash"> </i></a>
+					</div>
+				</td>
+
+			</tr>
+		</tbody>
+	</table>
+
+	<div class="col-12 d-flex justify-content-between p-2">
+		<ngb-pagination [collectionSize]="longueurTableau" [(page)]="page" [pageSize]="pageSize">
+		</ngb-pagination>
+
+		<select class="custom-select" style="width: auto" [(ngModel)]="pageSize">
+			<option [ngValue]="2">2 demandes par page</option>
+			<option [ngValue]="5">5 demandes par page</option>
+			<option [ngValue]="10">10 demandes par page</option>
+		</select>
+	</div>
+
+	<div class="col-12">
+		<div class="offset-7">Ajouter un Jour ferié ou un RTT emp. <a routerLink="/jours-feries-creation"><button
+					type="button" class="btn btn-mdb-color">+</button></a></div>
+	</div>
+
+
 </div>

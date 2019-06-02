@@ -13,6 +13,7 @@ import { ModifDemandeAbsenceComponent } from './modif-demande-absence/modif-dema
 import { SuppressionDemandeAbsenceComponent } from './suppression-demande-absence/suppression-demande-absence.component';
 import { ManagerVueHistogrammeComponent } from './manager-vue-histogramme/manager-vue-histogramme.component';
 import { ManagerVueDptCollabComponent } from './manager-vue-dpt-collab/manager-vue-dpt-collab.component';
+import { JourFerieCreationComponent } from './jour-ferie-creation/jour-ferie-creation.component';
 
 
 
@@ -23,6 +24,7 @@ export const routes: Routes = [
 	{ path: 'validation-demandes', component: ValidationDemandesComponent, canActivate: [StatutConnecteService]},
 	{ path: 'vues-synthetiques', component: ManagerVueSynthetiqueComponent, canActivate: [StatutConnecteService]},
 	{ path: 'jour-feries', component: JourFerieVisuComponent, canActivate: [StatutConnecteService]},
+	{ path: 'jours-feries-creation', component: JourFerieCreationComponent, canActivate: [StatutConnecteService]},
 	{ path: 'demande-absence', component: CreerDemandeAbsenceComponent, canActivate: [StatutConnecteService]},
 	{ path: 'visu-absence', component: VisuDemandeAbsenceComponent, canActivate: [StatutConnecteService]},
 	{ path: 'modif-absence/:demande.id', component: ModifDemandeAbsenceComponent, canActivate: [StatutConnecteService]},
