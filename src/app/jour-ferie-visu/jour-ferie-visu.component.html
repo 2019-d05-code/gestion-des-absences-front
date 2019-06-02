@@ -1,77 +1,71 @@
-<div class="col-8 offset-2">
-	<img class="col-10 offset-1" src="http://www.studioprompter.com/images/Under-construction.png">
-	<br>
-</div>
+<div class="container">
 
-<div class="container-fluid">
+    <h1 class="text-center col-12">Jours feriés et RTT employeurs</h1>
+    <br>
+    <div class="container-fluid">
+        <form class="form-group">
+            <div class="row ml-2">
+                <div class="col-lg-4 offset-lg-4 col-sm-12 row">
+                    <label for="annee" class="col-lg-5 col-sm-12 mt-2">Années :</label>
+                    <select required name="annee" id="annee" class="form-control col-lg-7 col-sm-12" [(ngModel)]="anneeSelect" #annee="ngModel" (change)="recupAbsencesCollectives()">
+						<option value="2019">2019</option>
+						<option value="2020">2020</option>
+						<option value="2021">2021</option>
+						<option value="2022">2022</option>
+					</select>
+                </div>
+            </div>
+        </form>
+        <br>
+        <!--Tableau Angular Ng bootstrap-->
+        <table class="col-12 table table-striped">
+            <thead>
+                <tr>
+                    <th direction="asc" scope="col" sortable="date" (sort)="onSort($event)">Date</th>
+                    <th scope="col" sortable="type" (sort)="onSort($event)">Type</th>
+                    <th scope="col" sortable="date" (sort)="onSort($event)">Jour</th>
+                    <th scope="col" sortable="commentaire" (sort)="onSort($event)">Commentaires</th>
+                    <th scope="col">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let absenceCollective of listePaginees">
+                    <td scope="row">{{ absenceCollective.date | date: 'dd/MM/yyyy' }}</td>
+                    <td> {{absenceCollective.type }} </td>
+                    <td>
+                        {{ absenceCollective.date | date: 'EEEE' | titlecase }}
+                    </td>
 
-	<h1 class="text-center col-12">Jours feriés et RTT employeurs</h1>
+                    <td>{{ absenceCollective.commentaire }}</td>
+                    <td class="col-8 row">
+                        <div class="col-4">
+                            <a (click)="chargerModifModal(absenceCollective);"> <i class="fa fa-pencil-square-o" aria-hidden="true">
+								</i></a>
+                        </div>
+                        <div class="col-4">
+                            <a (click)="chargerSuppresionModal(absenceCollective);"> <i class="fa fa-trash"> </i></a>
+                        </div>
+                    </td>
 
-	<form class="form-group">
-		<div class="row ml-2">
-			<div class="col-lg-4 offset-lg-4 col-sm-12 row">
-				<label for="annee" class="col-lg-5 col-sm-12 mt-2">Années :</label>
-				<select required name="annee" id="annee" class="form-control col-lg-7 col-sm-12"
-					[(ngModel)]="anneeSelect" #annee="ngModel">
-					<option value="2019">2019</option>
-					<option value="2020">2020</option>
-					<option value="2021">2021</option>
-					<option value="2022">2022</option>
-				</select>
-			</div>
-		</div>
-	</form>
+                </tr>
+            </tbody>
+        </table>
 
-	<!--Tableau Angular Ng bootstrap-->
-	<table class="col-12 table table-striped">
-		<thead>
-			<tr>
-				<th direction="asc" scope="col" sortable="dateDebut" (sort)="onSort($event)">Date</th>
-				<th scope="col" sortable="type" (sort)="onSort($event)">Type</th>
-				<th scope="col" sortable="status" (sort)="onSort($event)">Jour</th>
-				<th scope="col" sortable="status" (sort)="onSort($event)">Commentaire</th>
-				<th scope="col">Actions</th>
-			</tr>
-		</thead>
-		<tbody>
-			<tr *ngFor="let demande of listePaginees">
-				<td scope="row">{{ demande.dateDebut | date: 'dd/MM/yyyy' }}</td>
-				<td> {{demande.type }} </td>
-				<td>
-					{{ demande.dateDebut | date: 'EEEE'  }}
-				</td>
+        <div class="col-12 d-flex justify-content-between p-2">
+            <ngb-pagination [collectionSize]="longueurTableau" [(page)]="page" [pageSize]="pageSize">
+            </ngb-pagination>
 
-				<td>{{ demande.motif }}</td>
-				<td class="col-8 row">
-					<div class="col-4"
-						*ngIf="demande.status.toString() == 'INITIALE' || demande.status.toString() == 'REJETEE'">
-						<a (click)="chargerModifModal(demande);"> <i class="fa fa-pencil-square-o" aria-hidden="true">
-							</i></a>
-					</div>
-					<div class="col-4">
-						<a (click)="chargerSuppresionModal(demande);"> <i class="fa fa-trash"> </i></a>
-					</div>
-				</td>
-
-			</tr>
-		</tbody>
-	</table>
-
-	<div class="col-12 d-flex justify-content-between p-2">
-		<ngb-pagination [collectionSize]="longueurTableau" [(page)]="page" [pageSize]="pageSize">
-		</ngb-pagination>
-
-		<select class="custom-select" style="width: auto" [(ngModel)]="pageSize">
-			<option [ngValue]="2">2 demandes par page</option>
-			<option [ngValue]="5">5 demandes par page</option>
-			<option [ngValue]="10">10 demandes par page</option>
-		</select>
-	</div>
-
-	<div class="col-12">
-		<div class="offset-7">Ajouter un Jour ferié ou un RTT emp. <a routerLink="/jours-feries-creation"><button
+            <select class="custom-select" style="width: auto" [(ngModel)]="pageSize">
+				<option [ngValue]="2">2 demandes par page</option>
+				<option [ngValue]="5">5 demandes par page</option>
+				<option [ngValue]="10">10 demandes par page</option>
+			</select>
+        </div>
+    </div>
+    <br>
+    <div class="col-12">
+        <div class="offset-7">Ajouter un Jour ferié ou un RTT employeur. <a routerLink="/jours-feries-creation"><button
 					type="button" class="btn btn-mdb-color">+</button></a></div>
-	</div>
-
-
+    </div>
+    <br>
 </div>

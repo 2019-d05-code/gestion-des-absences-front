@@ -2,21 +2,17 @@ import { Component, OnInit, Input, Directive, EventEmitter, Output, ViewChildren
 
 import { JourFerieService } from './jour-ferie.service';
 import { DemandeAbsence } from '../models/DemandeAbsence';
-import { Observable } from 'rxjs';
-import { Collegue } from '../auth/auth.domains';
 import { TypeDemande } from '../models/TypeDemande';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { GestionAbsencesService } from '../gestion-absences/gestion-absences.service';
-import { AuthService } from '../auth/auth.service';
 import { ModifDemandeAbsenceComponent } from '../modif-demande-absence/modif-demande-absence.component';
 import { SuppressionDemandeAbsenceComponent } from '../suppression-demande-absence/suppression-demande-absence.component';
 import { VisuDemandeAbsenceComponent } from '../visu-demande-absence/visu-demande-absence.component';
 import { NgbdSortableHeader } from '../gestion-absences/gestion-absences.component';
+import { JourFerie } from '../models/JourFerie';
 
-import fr from '@angular/common/locales/fr';
-import { registerLocaleData } from '@angular/common';
-registerLocaleData(fr);
-
+// import fr from '@angular/common/locales/fr';
+// import { registerLocaleData } from '@angular/common';
+// registerLocaleData(fr);
 
 // Création des types pour le tri du tableau
 export type SortDirection = 'asc' | 'desc' | '';
@@ -28,26 +24,18 @@ export interface SortEvent {
 	direction: SortDirection;
 }
 
-
 @Component({
 	selector: 'app-jour-ferie-visu',
 	templateUrl: './jour-ferie-visu.component.html',
 	styles: ['./jour-ferie.css'],
 	providers: [
-		{ provide: LOCALE_ID, useValue: "fr-FR" }, //your locale
-	]
+		{ provide: LOCALE_ID, useValue: 'fr-FR' }
+]
 })
 export class JourFerieVisuComponent implements OnInit {
-	tabDemandes: DemandeAbsence[] = [];
-	observableDemandes: Observable<DemandeAbsence[]>;
-	collegueConnecte: Collegue;
-	messageErreur: string;
-	demande = new DemandeAbsence(undefined, undefined, undefined);
-
-	typeDde: TypeDemande;
 
 	// rcupération de l'année sélectionnée
-	anneeSelect: number = 2019;
+	anneeSelect = 2019;
 
 	// Création de la constante qui représente le tableau
 	tableauRTT = [];
@@ -90,10 +78,17 @@ export class JourFerieVisuComponent implements OnInit {
 
 
 
-	constructor(private modal: NgbModal, private _gestionAbsencesSrv: GestionAbsencesService, private _serviceAuthService: AuthService) { }
+	constructor(private modal: NgbModal, private _service: JourFerieService) { }
 
-	recupDemande(demande: DemandeAbsence): void {
-		this._gestionAbsencesSrv.subject.next(demande);
+	recupAbsencesCollectives(): void {
+		this._service.recupListeAbsenceCollectives(this.anneeSelect)
+			.subscribe(
+				absencesCollec => {
+					this.tableauInit = absencesCollec;
+					this.longueurTableau = this.tableauInit.length;
+					this.onSort({ column: 'date', direction: 'asc' });
+				}
+			);
 	}
 	// charger la modal de suppresion au click
 
@@ -113,29 +108,7 @@ export class JourFerieVisuComponent implements OnInit {
 	}
 
 	ngOnInit() {
-		// D'abord on récupère le collègue connecté
-		this._serviceAuthService.collegueConnecteObs.subscribe(
-			collegue => this.collegueConnecte = collegue,
-			error => {
-				this.messageErreur = error.error;
-				setTimeout(
-					() => this.messageErreur = undefined,
-					7000
-				);
-			}
-		);
-
-		// Ensuite on récupère les absences associées
-		this.observableDemandes = this._gestionAbsencesSrv.getListeAbsences(this.collegueConnecte.email);
-		this.observableDemandes.subscribe(demandeTab => {
-			this.tableauInit = demandeTab;
-			this.longueurTableau = this.tableauInit.length;
-			this.onSort({ column: 'dateDebut', direction: 'asc' });
-		},
-			error => {
-				console.log(error.message);
-			});
-
+		this.recupAbsencesCollectives();
 	}
 
 	// charger la modal de suppresion au click
