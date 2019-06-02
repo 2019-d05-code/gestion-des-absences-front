@@ -2,20 +2,19 @@
 </ng-container>
 
 <ng-template #manager>
-	<h3 class="text-center">Vue par département par jour et par collaborateur</h3>
-	<br />
-	<div class="input-group row">
-		<div class="col-lg-3 col-md-4 col-sm-5 col-6">
-			<p>Département : &nbsp;</p>
-			<select required name="type" id="type" class="form-control" [(ngModel)]="selection.departement"
-				#departement="ngModel">
+    <h3 class="text-center">Vue par département par jour et par collaborateur</h3>
+    <br />
+    <div class="input-group row">
+        <div class="col-lg-3 col-md-4 col-sm-5 col-6">
+            <p>Département : &nbsp;</p>
+            <select required name="type" id="type" class="form-control" [(ngModel)]="selection.departement" #departement="ngModel">
 				<option *ngFor="let departement of departements" value="{{ departement.id }}">{{ departement.nom }}
 				</option>
 			</select>
-		</div>
-		<div class="col-lg-3 col-md-4 col-sm-5 col-6">
-			<p>Mois : &nbsp;</p>
-			<select required name="type" id="type" class="form-control" [(ngModel)]="selection.mois" #mois="ngModel">
+        </div>
+        <div class="col-lg-3 col-md-4 col-sm-5 col-6">
+            <p>Mois : &nbsp;</p>
+            <select required name="type" id="type" class="form-control" [(ngModel)]="selection.mois" #mois="ngModel">
 				<option value="01">Janvier</option>
 				<option value="02">Février</option>
 				<option value="03">Mars</option>
@@ -29,67 +28,67 @@
 				<option value="11">Novembre</option>
 				<option value="12">Décembre</option>
 			</select>
-		</div>
-		<div class="col-lg-3 col-md-4 col-sm-5 col-6">
-			<p>Années : &nbsp;</p>
-			<select required name="type" id="type" class="form-control" [(ngModel)]="selection.annee" #annee="ngModel">
+        </div>
+        <div class="col-lg-3 col-md-4 col-sm-5 col-6">
+            <p>Années : &nbsp;</p>
+            <select required name="type" id="type" class="form-control" [(ngModel)]="selection.annee" #annee="ngModel">
 				<option value="2019">2019</option>
 				<option value="2020">2020</option>
 				<option value="2021">2021</option>
 				<option value="2022">2022</option>
 			</select>
-		</div>
-		<div class="col-lg-3 col-md-4 col-sm-5 col-6 row">
-			<div class=" col-6 mt-4">
-				<a class="btn btn-primary" (click)="rechercher(selection)"><i class="fa fa-search"
+        </div>
+        <div class="col-lg-3 col-md-4 col-sm-5 col-6 row">
+            <div class=" col-6 mt-4">
+                <a class="btn btn-primary" (click)="rechercher(selection)"><i class="fa fa-search"
 						aria-hidden="true"></i></a>
-			</div>
-			<div class=" col-6 mt-4">
-				<a class="btn btn-primary" (click)="export()"><i class="fa fa-file-excel-o" aria-hidden="true"></i></a>
-			</div>
-		</div>
+            </div>
+            <div class=" col-6 mt-4">
+                <a class="btn btn-primary" (click)="export()"><i class="fa fa-file-excel-o" aria-hidden="true"></i></a>
+            </div>
+        </div>
 
-	</div>
+    </div>
 
-	<br>
-	<br>
+    <br>
+    <br>
 
 
 
-	<div class="table-responsive">
-		<table class="col-12 table table-striped">
-			<thead>
-				<tr>
-					<th scope="col">Nom</th>
-					<th *ngFor="let jour of listeJoursMois" scope="col">{{jour}}</th>
+    <div class="table-responsive">
+        <table class="col-12 table table-striped">
+            <thead>
+                <tr>
+                    <th scope="col">Nom</th>
+                    <th *ngFor="let jour of listeJoursMois" scope="col">{{jour}}</th>
 
-				</tr>
-			</thead>
-			<tbody>
-				<tr *ngFor="let absences of listeDesAbsences">
-					<td scope="row">{{ absences.nomCollegue }}</td>
-					<td *ngFor="let jour of listeJoursMois" scope="row"
-						[ngClass]="{'jourwee': joursWeekend.includes(jour)}">
-						<!--Affichage du congé-->
-						<div *ngIf="absences.joursCP.includes(jour) ">C</div>
-						<!--Affichage du RTT-->
-						<div *ngIf="absences.joursRTT.includes(jour) ">R</div>
-						<!--Affichage du congé sans solde-->
-						<div *ngIf="absences.joursCSS.includes(jour) ">S</div>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let absences of listeDesAbsences">
+                    <td scope="row">{{ absences.nomCollegue }}</td>
+                    <td *ngFor="let jour of listeJoursMois" scope="row" [ngClass]="{'jourwee': joursWeekend.includes(jour)}">
+                        <!--Affichage du congé-->
+                        <div *ngIf="absences.joursCP && absences.joursCP.includes(jour) ">C</div>
+                        <!--Affichage du RTT-->
+                        <div *ngIf="absences.joursRTT && absences.joursRTT.includes(jour) ">R</div>
+                        <!--Affichage du congé sans solde-->
+                        <div *ngIf="absences.joursCSS && absences.joursCSS.includes(jour) ">S</div>
+                        <!-- Affichage missions -->
+                        <div *ngIf="absences.joursMISSIONS && absences.joursMISSIONS.includes(jour) ">M</div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <br>
 
-					</td>
-				</tr>
-			</tbody>
-		</table>
-	</div>
-	<br>
-
-	<p>C : congés, F : Ferié, M : Mission, R : RTT, S : Sans solde</p>
-	<br>
+    <p>C : congés, F : Ferié, M : Mission, R : RTT, S : Sans solde</p>
+    <br>
 </ng-template>
 
 <ng-template #reconnexion>
-	<div>
-		Merci de vous connecter en tant que Manager.
-	</div>
+    <div>
+        Merci de vous connecter en tant que Manager.
+    </div>
 </ng-template>

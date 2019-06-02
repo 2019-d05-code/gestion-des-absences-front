@@ -18,8 +18,11 @@ export class ManagerVueDptCollabService {
 	// Service pour récupérer la liste de toutes les absences confondues
 	postRapport(selection: SelectionManager): Observable<Rapport> {
 		const url = `${this.URL_BACKEND}/absencesMoisDpt`;
-		console.log(url);
 		return this._http.post<Rapport>(url, selection, { withCredentials: true });
+	}
+
+	recupRapportAvecMissions(selection: SelectionManager): Observable<Rapport> {
+		return this._http.post<Rapport>(`${this.URL_BACKEND}/departements/missions`, selection, { withCredentials: true });
 	}
 
 }

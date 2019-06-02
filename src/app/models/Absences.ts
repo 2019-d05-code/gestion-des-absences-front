@@ -4,10 +4,10 @@ export class Absences {
 		public nomCollegue: string,
 		public prenomCollegue: string,
 
-		public joursRTT: number[],
-		public joursCP: number[],
-		public joursCSS: number[],
-		public joursMISSIONS?: number[],
+		public joursRTT?: number[],
+		public joursCP?: number[],
+		public joursCSS?: number[],
+		public joursMISSIONS?: number[]
 	) { }
 
 
