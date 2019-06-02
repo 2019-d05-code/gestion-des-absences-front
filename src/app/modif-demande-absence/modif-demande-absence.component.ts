@@ -105,7 +105,8 @@ export class ModifDemandeAbsenceComponent implements OnInit {
 	// création de la demande pour mettre dans le formulaire, qui sera récupérée après
 
 	demandeModal: DemandeAbsence;
-
+	dateDebutModif: any;
+	dateFinModif: any;
 	messageErreur: string;
 	messageSucces: string;
 	collegueConnecte: any;
@@ -148,9 +149,10 @@ export class ModifDemandeAbsenceComponent implements OnInit {
 	}
 	// Pour récupérer les informations du form et les basculer vers le back
 	// /!\ au format de date qui sort du calendrier!!
-	submit(demande) {
-
-		this._serviceGestionAbsence.modifDemandeAbsence(demande)
+	submit() {
+		// this.demandeModal.dateDebut = new Date(this.dateDebutModif.year, (this.dateDebutModif.month - 1), (this.dateDebutModif.day + 1));
+		// this.demandeModal.dateFin = new Date(this.dateFinModif.year, (this.dateFinModif.month - 1), (this.dateFinModif.day + 1));
+		this._serviceGestionAbsence.modifDemandeAbsence(this.demandeModal)
 			.subscribe(
 				() => {
 					this.messageSucces = 'Votre Modification d\'absence a été enregistrée avec succès';

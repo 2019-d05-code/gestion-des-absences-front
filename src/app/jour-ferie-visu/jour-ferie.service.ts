@@ -19,11 +19,20 @@ export class JourFerieService {
 	}
 
 	ajoutAbsenceCollective(absence: JourFerie): Observable<string> {
-		return this._http.post<string>(`${this.URL_BACKEND}`, absence, { withCredentials: true });
+		return this._http.post<string>(`${this.URL_BACKEND}`, {
+			date: absence.date,
+			commentaire: absence.commentaire,
+			type: absence.type
+		}, { withCredentials: true });
 	}
 
 	modifierAbsenceCollective(absence: JourFerie): Observable<string> {
-		return this._http.patch<string>(`${this.URL_BACKEND}/${absence.id}`, absence, { withCredentials: true });
+		return this._http.patch<string>(`${this.URL_BACKEND}/${absence.id}`, {
+			id: absence.id,
+			date: absence.date,
+			commentaire: absence.commentaire,
+			type: absence.type
+		}, { withCredentials: true });
 	}
 
 	supprimerAbsenceCollective(id: number): Observable<string> {

@@ -1,61 +1,57 @@
 <div class="container-fluid">
-	<h2 class="text-center">Nouveau jour ferié / RTT employeur</h2>
-	<hr>
-	<div class="container">
-		<form class="form-group" #ajoutForm="ngForm" (ngSubmit)="creerDemande(demande)">
-			<div class="form-group">
-				<label for="debut">Date</label>
-				<div class="input-group">
-					<input class="form-control " ngbDatepicker placeholder="jj/mm/aaaa" name="debut" id="debut" required
-						#debut="ngModel" [(ngModel)]="demande.dateDebut" #d="ngbDatepicker" [dayTemplate]="customDay"
-						[markDisabled]="isDisabled" [minDate]="{year: 2010, month: 1, day: 1}"
-						[maxDate]="{year: 2028, month: 12, day: 31}">
-					<div class="alert alert-danger" *ngIf="(debut.dirty || debut.touched) && debut.errors">
-						Ce champ est obligatoire
-					</div>
+    <h2 class="text-center">Nouveau jour ferié / RTT employeur</h2>
+    <hr>
+    <div class="container">
+        <form class="form-group" #ajoutForm="ngForm" (ngSubmit)="creerAbsenceCollective()">
+            <div class="form-group">
+                <label for="debut">Date</label>
+                <div class="input-group">
+                    <input class="form-control " ngbDatepicker placeholder="jj/mm/aaaa" name="debut" id="debut" required #debut="ngModel" [(ngModel)]="date" #d="ngbDatepicker" [dayTemplate]="customDay" [markDisabled]="isDisabled" [minDate]="{year: 2010, month: 1, day: 1}"
+                        [maxDate]="{year: 2028, month: 12, day: 31}">
 
-					<div class="input-group-append">
-						<button class="btn btn-outline-secondary calendar" (click)="d.toggle()" type="button"></button>
-					</div>
-				</div>
+                    <div class="input-group-append">
+                        <button class="btn btn-outline-secondary calendar" (click)="d.toggle()" type="button"></button>
+                    </div>
+                </div>
+                <div class="container-fluid">
+                    <div class="alert alert-danger" *ngIf="(debut.dirty || debut.touched) && debut.errors">
+                        Ce champ est obligatoire
+                    </div>
+                </div>
 
-				<ng-template #customDay let-date let-currentMonth="currentMonth" let-selected="selected"
-					let-disabled="disabled" let-focused="focused">
-					<span class="custom-day" [class.weekend]="isWeekend(date)" [class.focused]="focused"
-						[class.bg-primary]="selected" [class.hidden]="date.month !== currentMonth"
-						[class.text-muted]="disabled">
+                <ng-template #customDay let-date let-currentMonth="currentMonth" let-selected="selected" let-disabled="disabled" let-focused="focused">
+                    <span class="custom-day" [class.weekend]="isWeekend(date)" [class.focused]="focused" [class.bg-primary]="selected" [class.hidden]="date.month !== currentMonth" [class.text-muted]="disabled">
 						{{ date.day }}
 					</span>
-				</ng-template>
-			</div>
+                </ng-template>
+            </div>
 
 
-			<div class="form-group">
-				<label for="type">Type de jour</label>
-				<select required name="type" id="type" #type="ngModel" [(ngModel)]="demande.type" class="form-control">
-					<option value="JOUR_FERIE">Jour ferié</option>
+            <div class="form-group">
+                <label for="type">Type de jour</label>
+                <select required name="type" id="type" #type="ngModel" [(ngModel)]="absenceCollective.type" class="form-control">
+					<option value="FERIE">Jour ferié</option>
 					<option value="RTT_EMPLOYEUR">RTT employeur</option>
 				</select>
-				<div class="alert alert-danger" *ngIf="(type.dirty || type.touched) && type.errors">
-					Ce champ est obligatoire
-				</div>
-			</div>
-			<div class="form-group">
-				<label for="motif">Commentaire</label>
-				<textarea class="form-control" name="motif" id="motif" rows="1" #motif="ngModel"
-					[(ngModel)]="demande.motif"></textarea>
-			</div>
-			<div class="text-center">
-				<button class="btn btn-danger" routerLink="/jour-feries">Annuler</button>
-				<button [disabled]="ajoutForm.invalid" class="btn btn-success" type="submit">Valider</button>
-			</div>
-			<div class="alert alert-danger text-center" *ngIf="messageErreur">
-				<p><strong>{{ messageErreur }}</strong></p>
-			</div>
-			<div class="alert alert-success text-center" *ngIf="messageSucces">
-				<p><strong>{{ messageSucces }}</strong></p>
-			</div>
-			<br>
-		</form>
-	</div>
+                <div class="alert alert-danger" *ngIf="(type.dirty || type.touched) && type.errors">
+                    Ce champ est obligatoire
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="motif">Commentaire</label>
+                <textarea class="form-control" name="motif" id="motif" rows="1" #motif="ngModel" [(ngModel)]="absenceCollective.commentaire"></textarea>
+            </div>
+            <div class="text-center">
+                <button class="btn btn-danger" routerLink="/jour-feries">Annuler</button>
+                <button [disabled]="ajoutForm.invalid" class="btn btn-success" type="submit">Valider</button>
+            </div>
+            <div class="alert alert-danger text-center" *ngIf="messageErreur">
+                <p><strong>{{ messageErreur }}</strong></p>
+            </div>
+            <div class="alert alert-success text-center" *ngIf="messageSucces">
+                <p><strong>{{ messageSucces }}</strong></p>
+            </div>
+            <br>
+        </form>
+    </div>
 </div>

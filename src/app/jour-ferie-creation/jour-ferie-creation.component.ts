@@ -1,10 +1,8 @@
 import { Component, OnInit, Injectable } from '@angular/core';
 import { NgbDateParserFormatter, NgbDateStruct, NgbDatepickerI18n, NgbDate, NgbCalendar } from '@ng-bootstrap/ng-bootstrap';
-import { Collegue } from '../auth/auth.domains';
-import { GestionAbsencesService } from '../gestion-absences/gestion-absences.service';
 import { AuthService } from '../auth/auth.service';
-import { DemandeAbsence } from '../models/DemandeAbsence';
-import { TypeDemande } from '../models/TypeDemande';
+import { JourFerie } from '../models/JourFerie';
+import { JourFerieService } from '../jour-ferie-visu/jour-ferie.service';
 
 const I18N_VALUES = {
 	'fr': {
@@ -95,44 +93,29 @@ export class NgbDateFRParserFormatter extends NgbDateParserFormatter {
 })
 export class JourFerieCreationComponent implements OnInit {
 	model: NgbDateStruct;
-	demande: DemandeAbsence = new DemandeAbsence(undefined, undefined, undefined);
-
+	absenceCollective: JourFerie = new JourFerie(new Date(), undefined);
+	date: any;
 	messageSucces: string;
 	messageErreur: string;
-	collegueConnecte: Collegue;
 
 	isDisabled = (date: NgbDate, current: { month: number }) => date.month !== current.month;
 	isWeekend = (date: NgbDate) => this.calendar.getWeekday(date) >= 6;
-	constructor(private _serviceGestionAbsence: GestionAbsencesService, private _serviceAuthService: AuthService,
+	constructor(private _service: JourFerieService, private _serviceAuthService: AuthService,
 		private calendar: NgbCalendar) {
 	}
 
-	ngOnInit() {
-
-		this._serviceAuthService.collegueConnecteObs.subscribe(
-			collegue => this.collegueConnecte = collegue,
-			error => {
-				this.messageErreur = error.error;
-				setTimeout(
-					() => this.messageErreur = undefined,
-					7000
-				);
-			}
-		);
-	}
+	ngOnInit() { }
 
 	/*
 	* Transmet la demande d'absence vers le back
 	*/
-	creerDemande(demande) {
-
-		this.demande.email = this.collegueConnecte.email;
-		this.demande.dateFin = demande.dateDebut;
-		this.demande.type = TypeDemande.CONGES_PAYES;
-		this._serviceGestionAbsence.ajouterDemandeAbsence(this.demande)
+	creerAbsenceCollective() {
+		const date = new Date(this.date.year, (this.date.month - 1), (this.date.day + 1));
+		this.absenceCollective.date = date;
+		this._service.ajoutAbsenceCollective(this.absenceCollective)
 			.subscribe(
 				() => {
-					this.messageSucces = 'Votre demande d\'absence a été enregistrée avce succès';
+					this.messageSucces = 'Votre demande d\'absence collective a été enregistrée avce succès';
 					setTimeout(
 						() => this.messageSucces = undefined,
 						7000
