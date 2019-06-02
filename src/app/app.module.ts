@@ -38,6 +38,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { SuppressionDemandeAbsenceComponent } from './suppression-demande-absence/suppression-demande-absence.component';
 import { VisuDemandeAbsenceComponent } from './visu-demande-absence/visu-demande-absence.component';
 import { ChartsModule, WavesModule } from 'angular-bootstrap-md';
+import { ModifJourFerieComponent } from './modif-jour-ferie/modif-jour-ferie.component';
 
 @NgModule({
 	declarations: [
@@ -60,6 +61,7 @@ import { ChartsModule, WavesModule } from 'angular-bootstrap-md';
 		SuppressionDemandeAbsenceComponent,
 		VisuDemandeAbsenceComponent,
 		NgbdSortableHeader,
+		ModifJourFerieComponent,
 	],
 	imports: [
 		BrowserModule,
