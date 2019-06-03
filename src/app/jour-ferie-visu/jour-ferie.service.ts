@@ -36,7 +36,7 @@ export class JourFerieService {
 	}
 
 	supprimerAbsenceCollective(id: number): Observable<string> {
-		return this._http.patch<string>(`${this.URL_BACKEND}/${id}`, { withCredentials: true });
+		return this._http.delete<string>(`${this.URL_BACKEND}/${id}`, { withCredentials: true });
 	}
 
 }

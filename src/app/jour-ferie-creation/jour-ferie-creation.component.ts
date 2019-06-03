@@ -3,6 +3,7 @@ import { NgbDateParserFormatter, NgbDateStruct, NgbDatepickerI18n, NgbDate, NgbC
 import { AuthService } from '../auth/auth.service';
 import { JourFerie } from '../models/JourFerie';
 import { JourFerieService } from '../jour-ferie-visu/jour-ferie.service';
+import { Router } from '@angular/router';
 
 const I18N_VALUES = {
 	'fr': {
@@ -101,7 +102,7 @@ export class JourFerieCreationComponent implements OnInit {
 	isDisabled = (date: NgbDate, current: { month: number }) => date.month !== current.month;
 	isWeekend = (date: NgbDate) => this.calendar.getWeekday(date) >= 6;
 	constructor(private _service: JourFerieService, private _serviceAuthService: AuthService,
-		private calendar: NgbCalendar) {
+		private calendar: NgbCalendar, public router: Router) {
 	}
 
 	ngOnInit() { }
@@ -117,8 +118,11 @@ export class JourFerieCreationComponent implements OnInit {
 				() => {
 					this.messageSucces = 'Votre demande d\'absence collective a été enregistrée avec succès';
 					setTimeout(
-						() => this.messageSucces = undefined,
-						7000
+						() => {
+							this.messageSucces = undefined;
+							this.router.navigate(['jour-feries']);
+						},
+						3000
 					);
 				},
 				error => {

@@ -102,7 +102,7 @@ export class ModifJourFerieComponent implements OnInit {
 	messageSucces: string;
 
 	closeResult: string;
-	constructor(private modalService: NgbModal, private _serviceGestionAbsence: GestionAbsencesService,
+	constructor(private modalService: NgbModal,
 		private calendar: NgbCalendar, private _serviceJourFerie: JourFerieService) { }
 	// Récupérer la date de début du calendrier et la formatter
 

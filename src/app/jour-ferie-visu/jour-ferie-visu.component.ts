@@ -2,11 +2,10 @@ import { Component, OnInit, Input, Directive, EventEmitter, Output, ViewChildren
 
 import { JourFerieService } from './jour-ferie.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { SuppressionDemandeAbsenceComponent } from '../suppression-demande-absence/suppression-demande-absence.component';
-import { VisuDemandeAbsenceComponent } from '../visu-demande-absence/visu-demande-absence.component';
 import { NgbdSortableHeader } from '../gestion-absences/gestion-absences.component';
 import { JourFerie } from '../models/JourFerie';
 import { ModifJourFerieComponent } from '../modif-jour-ferie/modif-jour-ferie.component';
+import { JourFerieSupprComponent } from '../jour-ferie-suppr/jour-ferie-suppr.component';
 
 // Création des types pour le tri du tableau
 export type SortDirection = 'asc' | 'desc' | '';
@@ -24,7 +23,7 @@ export interface SortEvent {
 	styles: ['./jour-ferie.css'],
 	providers: [
 		{ provide: LOCALE_ID, useValue: 'fr-FR' }
-]
+	]
 })
 export class JourFerieVisuComponent implements OnInit {
 
@@ -105,28 +104,19 @@ export class JourFerieVisuComponent implements OnInit {
 
 	// charger la modal de suppresion au click
 	chargerSuppresionModal(absenceCollective: JourFerie) {
-		const myModal = this.modal.open(SuppressionDemandeAbsenceComponent);
-		myModal.componentInstance.demandeModal = absenceCollective;
+		const myModal = this.modal.open(JourFerieSupprComponent);
+		myModal.componentInstance.jourFerieModal = absenceCollective;
 
 		myModal.result.then((result) => {
 			console.log(result);
+			this.recupAbsencesCollectives();
+			location.reload();
 		}, (reason) => {
 			console.log(reason);
 		});
 
 	}
 
-	// charger la modal de visualisation au click
-	chargerVisuModal(absenceCollective: JourFerie) {
-		const myModal = this.modal.open(VisuDemandeAbsenceComponent);
-		myModal.componentInstance.demandeModal = absenceCollective;
-
-		myModal.result.then((result) => {
-			console.log(result);
-		}, (reason) => {
-			console.log(reason);
-		});
-	}
 
 
 }
