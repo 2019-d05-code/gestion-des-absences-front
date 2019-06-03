@@ -93,15 +93,21 @@ export class ManagerVueDptCollabComponent implements OnInit {
 			rapport => {
 				this.joursWeekend = rapport.joursWeekEnd;
 				this.listeDesAbsences = rapport.listeAbsences;
+				this._managerSrv.recupRapportAvecMissions(selection)
+					.subscribe(
+						rapportMissions => {
+							this.listeDesAbsences.concat(rapportMissions.listeAbsences);
+						}
+					);
 			}
 		);
 		this.nbJours(this.selection);
 	}
 
 	export() {
-		let tableauExport: any[] = [];
-		let enTete: string[] = [];
-		enTete.push("Nom");
+		const tableauExport: any[] = [];
+		const enTete: string[] = [];
+		enTete.push('Nom');
 		for (let i = 0; i <= 31; i++) {
 			enTete.push(i.toString());
 		}
@@ -109,17 +115,20 @@ export class ManagerVueDptCollabComponent implements OnInit {
 
 
 		for (let absences of this.listeDesAbsences) {
-			let corps: string[] = [];
+			const corps: string[] = [];
 			corps.push(`${absences.nomCollegue.toString()} ${absences.prenomCollegue.toString()}`);
 			for (let i = 1; i <= 31; i++) {
-				if (absences.joursCP.includes(i)) {
+				if (absences.joursCP && absences.joursCP.includes(i)) {
 					corps.push('C');
 
-				} else if (absences.joursRTT.includes(i)) {
+				} else if (absences.joursRTT && absences.joursRTT.includes(i)) {
 					corps.push('R');
 
-				} else if (absences.joursCSS.includes(i)) {
+				} else if (absences.joursCSS && absences.joursCSS.includes(i)) {
 					corps.push('S');
+
+				} else if (absences.joursMISSIONS && absences.joursMISSIONS.includes(i)) {
+					corps.push('M');
 
 				} else {
 					corps.push(' ');

@@ -12,7 +12,6 @@ import { ModifDemandeAbsenceComponent } from './modif-demande-absence/modif-dema
 import { AccueilComponent } from './accueil/accueil.component';
 import { CreerDemandeAbsenceComponent } from './creer-demande-absence/creer-demande-absence.component';
 import { JourFerieCreationComponent } from './jour-ferie-creation/jour-ferie-creation.component';
-import { JourFerieModifComponent } from './jour-ferie-modif/jour-ferie-modif.component';
 import { JourFerieVisuComponent } from './jour-ferie-visu/jour-ferie-visu.component';
 import { ManagerVueDptCollabComponent } from './manager-vue-dpt-collab/manager-vue-dpt-collab.component';
 import { ManagerVueHistogrammeComponent } from './manager-vue-histogramme/manager-vue-histogramme.component';
@@ -38,6 +37,9 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { SuppressionDemandeAbsenceComponent } from './suppression-demande-absence/suppression-demande-absence.component';
 import { VisuDemandeAbsenceComponent } from './visu-demande-absence/visu-demande-absence.component';
 import { ChartsModule, WavesModule } from 'angular-bootstrap-md';
+import { ModifJourFerieComponent } from './modif-jour-ferie/modif-jour-ferie.component';
+import { JourFerieSupprComponent } from './jour-ferie-suppr/jour-ferie-suppr.component';
+
 
 @NgModule({
 	declarations: [
@@ -47,7 +49,6 @@ import { ChartsModule, WavesModule } from 'angular-bootstrap-md';
 		AccueilComponent,
 		CreerDemandeAbsenceComponent,
 		JourFerieCreationComponent,
-		JourFerieModifComponent,
 		JourFerieVisuComponent,
 		ManagerVueDptCollabComponent,
 		ManagerVueSynthetiqueComponent,
@@ -60,6 +61,8 @@ import { ChartsModule, WavesModule } from 'angular-bootstrap-md';
 		SuppressionDemandeAbsenceComponent,
 		VisuDemandeAbsenceComponent,
 		NgbdSortableHeader,
+		ModifJourFerieComponent,
+		JourFerieSupprComponent,
 	],
 	imports: [
 		BrowserModule,
@@ -83,6 +86,7 @@ import { ChartsModule, WavesModule } from 'angular-bootstrap-md';
 		multi: true,
 	}],
 	bootstrap: [AppComponent],
+	entryComponents: [ModifJourFerieComponent, JourFerieSupprComponent],
 
 
 })

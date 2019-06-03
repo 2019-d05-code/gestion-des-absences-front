@@ -96,6 +96,8 @@ export class CreerDemandeAbsenceComponent implements OnInit {
 	model: NgbDateStruct;
 
 	demande: DemandeAbsence = new DemandeAbsence(undefined, undefined, undefined);
+	debutCreer: any;
+	finCreer: any;
 	messageSucces: string;
 	messageErreur: string;
 	collegueConnecte: Collegue;
@@ -112,7 +114,8 @@ export class CreerDemandeAbsenceComponent implements OnInit {
 	creerDemande() {
 
 		this.demande.email = this.collegueConnecte.email;
-
+		this.demande.dateDebut = new Date(this.debutCreer.year, (this.debutCreer.month - 1), (this.debutCreer.day + 1));
+		this.demande.dateFin = new Date(this.finCreer.year, (this.finCreer.month - 1), (this.finCreer.day + 1));
 		this._serviceGestionAbsence.ajouterDemandeAbsence(this.demande)
 			.subscribe(
 				() => {

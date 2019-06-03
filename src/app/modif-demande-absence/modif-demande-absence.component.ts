@@ -88,7 +88,7 @@ export class NgbDateFRParserFormatter extends NgbDateParserFormatter {
 @Component({
 	selector: 'app-modif-demande-absence',
 	templateUrl: './modif-demande-absence.component.html',
-	styleUrls:['./modif-demande.css'],
+	styleUrls: ['./modif-demande.css'],
 	providers: [I18n, { provide: NgbDatepickerI18n, useClass: CustomDatepickerI18n },
 		{ provide: NgbDateParserFormatter, useClass: NgbDateFRParserFormatter }]
 
@@ -97,7 +97,12 @@ export class NgbDateFRParserFormatter extends NgbDateParserFormatter {
 export class ModifDemandeAbsenceComponent implements OnInit {
 	model: NgbDateStruct;
 
+	closeResult: string;
+	constructor(private modalService: NgbModal, private _serviceGestionAbsence: GestionAbsencesService,
+		private calendar: NgbCalendar) { }
+	// Récupérer la date de début du calendrier et la formatter
 
+	dateDebut: NgbDateStruct;
 
 	// Boolean pour afficher les bouton basculer en mode édition ou valider
 	edition = false;
@@ -105,7 +110,8 @@ export class ModifDemandeAbsenceComponent implements OnInit {
 	// création de la demande pour mettre dans le formulaire, qui sera récupérée après
 
 	demandeModal: DemandeAbsence;
-
+	dateDebutModif: any;
+	dateFinModif: any;
 	messageErreur: string;
 	messageSucces: string;
 	collegueConnecte: any;
@@ -115,15 +121,8 @@ export class ModifDemandeAbsenceComponent implements OnInit {
 	isWeekend = (date: NgbDate) => this.calendar.getWeekday(date) >= 6;
 
 	ngOnInit() {
-
 	}
 
-	closeResult: string;
-	constructor(private modalService: NgbModal, private _serviceGestionAbsence: GestionAbsencesService,
-		private calendar: NgbCalendar) { }
-	// Récupérer la date de début du calendrier et la formatter
-
-	dateDebut: NgbDateStruct;
 
 	get dateAfficherModal() {
 		return new Date(this.dateDebut.year, this.dateDebut.month, this.dateDebut.day);
@@ -148,9 +147,11 @@ export class ModifDemandeAbsenceComponent implements OnInit {
 	}
 	// Pour récupérer les informations du form et les basculer vers le back
 	// /!\ au format de date qui sort du calendrier!!
-	submit(demande) {
-
-		this._serviceGestionAbsence.modifDemandeAbsence(demande)
+	submit() {
+		const erreurModal = this.demandeModal;
+		this.demandeModal.dateDebut = new Date(this.dateDebutModif.year, (this.dateDebutModif.month - 1), (this.dateDebutModif.day + 1));
+		this.demandeModal.dateFin = new Date(this.dateFinModif.year, (this.dateFinModif.month - 1), (this.dateFinModif.day + 1));
+		this._serviceGestionAbsence.modifDemandeAbsence(this.demandeModal)
 			.subscribe(
 				() => {
 					this.messageSucces = 'Votre Modification d\'absence a été enregistrée avec succès';
@@ -161,6 +162,7 @@ export class ModifDemandeAbsenceComponent implements OnInit {
 					this.quitterModifModal();
 				},
 				error => {
+					this.demandeModal = erreurModal;
 					this.messageErreur = error.error;
 					setTimeout(
 						() => this.messageErreur = undefined,
