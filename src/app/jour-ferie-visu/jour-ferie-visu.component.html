@@ -25,7 +25,7 @@
                     <th scope="col" sortable="type" (sort)="onSort($event)">Type</th>
                     <th scope="col" sortable="date" (sort)="onSort($event)">Jour</th>
                     <th scope="col" sortable="commentaire" (sort)="onSort($event)">Commentaires</th>
-                    <th *ngIf="verifRoleAdmin()" scope="col">Actions</th>
+                    <th *ngIf="verifRoleAdmin()"  scope="col">Actions</th>
                 </tr>
             </thead>
             <tbody>
@@ -64,7 +64,7 @@
     </div>
     <br>
     <div class="col-12">
-        <div class="offset-7">Ajouter un Jour ferié ou un RTT employeur. <a routerLink="/jours-feries-creation"><button
+        <div *ngIf="verifRoleAdmin()" class="offset-7">Ajouter un Jour ferié ou un RTT employeur. <a routerLink="/jours-feries-creation"><button
 					type="button" class="btn btn-mdb-color">+</button></a></div>
     </div>
     <br>
