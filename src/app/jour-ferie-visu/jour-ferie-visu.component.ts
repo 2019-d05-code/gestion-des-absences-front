@@ -6,6 +6,8 @@ import { NgbdSortableHeader } from '../gestion-absences/gestion-absences.compone
 import { JourFerie } from '../models/JourFerie';
 import { ModifJourFerieComponent } from '../modif-jour-ferie/modif-jour-ferie.component';
 import { JourFerieSupprComponent } from '../jour-ferie-suppr/jour-ferie-suppr.component';
+import { AuthService } from '../auth/auth.service';
+import { Collegue } from '../auth/auth.domains';
 
 // Création des types pour le tri du tableau
 export type SortDirection = 'asc' | 'desc' | '';
@@ -26,6 +28,8 @@ export interface SortEvent {
 	]
 })
 export class JourFerieVisuComponent implements OnInit {
+	collegueConnecte: Collegue;
+	@Input() connecte: boolean;
 
 	// rcupération de l'année sélectionnée
 	anneeSelect = 2019;
@@ -71,7 +75,8 @@ export class JourFerieVisuComponent implements OnInit {
 
 
 
-	constructor(private modal: NgbModal, private _service: JourFerieService) { }
+	constructor(private modal: NgbModal, private _service: JourFerieService,
+		private _authSrv: AuthService) { }
 
 	recupAbsencesCollectives(): void {
 		this._service.recupListeAbsenceCollectives(this.anneeSelect)
@@ -99,6 +104,20 @@ export class JourFerieVisuComponent implements OnInit {
 	}
 
 	ngOnInit() {
+
+		this._authSrv.collegueConnecteObs
+			.subscribe(
+				collegue => {
+					this.collegueConnecte = collegue;
+					if (this.collegueConnecte.estAnonyme()) {
+						this.connecte = false;
+					} else {
+						this.connecte = true;
+					}
+				},
+				() => this.connecte = false
+
+			);
 		this.recupAbsencesCollectives();
 	}
 
@@ -115,6 +134,21 @@ export class JourFerieVisuComponent implements OnInit {
 			console.log(reason);
 		});
 
+	}
+
+	verifRoleAdmin(): boolean {
+		if (this.connecte) {
+
+			let granted = false;
+
+			const roleManager = this.collegueConnecte.roles.filter(role => role === 'ROLE_ADMIN');
+
+			if (roleManager.length > 0) {
+				granted = true;
+
+			}
+			return granted;
+		}
 	}
 
 

@@ -1,8 +1,10 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation, Input } from '@angular/core';
 import { JourFerie } from '../models/JourFerie';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { JourFerieService } from '../jour-ferie-visu/jour-ferie.service';
 import { Router } from '@angular/router';
+import { AuthService } from '../auth/auth.service';
+import { Collegue } from '../auth/auth.domains';
 
 @Component({
 	selector: 'app-jour-ferie-suppr',
@@ -13,6 +15,8 @@ export class JourFerieSupprComponent implements OnInit {
 	jourFerieModal: JourFerie;
 	messageErreur: string;
 	messageSucces: string;
+
+
 
 	closeResult: string;
 	constructor(private modalService: NgbModal, private _serviceJourFerie: JourFerieService,
@@ -43,12 +47,14 @@ export class JourFerieSupprComponent implements OnInit {
 		if (confirm('Vous êtes sûr, hein ?')) {
 			this._serviceJourFerie.supprimerAbsenceCollective(jourFerieModal.id).subscribe(
 				() => {
+					this.messageSucces = 'Suppression effectuée';
 					setTimeout(
 						() => {
 							this.messageSucces = undefined;
-							this.router.navigate(['jour-feries']);
+							location.reload();
+							this.quitterModifModal();
 						},
-						3000
+						2000
 					);
 				},
 				err => {
@@ -64,6 +70,8 @@ export class JourFerieSupprComponent implements OnInit {
 		this.modalService.dismissAll(JourFerieSupprComponent);
 
 	}
+
+
 }
 
 

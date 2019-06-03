@@ -1,28 +1,37 @@
 <div class="container-fluid">
-		<div class="">
-			<div class="modal-header">
-				<h4 class="modal-title">Supression de la demande</h4>
-			</div>
-			<div class="modal-body">
-				Voulez-vous vraiment supprimer votre demande ?
-				<br />
-				<br />
-				<div class="row ">
-					<p class="col-6 card-text">Date :</p>
-					<p class="col-6 card-text">{{jourFerieModal.date | date : 'dd/MM/yyyy'}}</p>
+	<div class="">
+		<div class="modal-header">
+			<h4 class="modal-title">Supression de la demande</h4>
+		</div>
+		<div class="modal-body">
+			Voulez-vous vraiment supprimer votre demande ?
+			<br />
+			<br />
+			<div class="row ">
+				<p class="col-6 card-text">Date :</p>
+				<p class="col-6 card-text">{{jourFerieModal.date | date : 'dd/MM/yyyy'}}</p>
 
-					<p class="col-6 card-text">Type :</p>
-					<p class="col-6 card-text">{{ jourFerieModal.type }}</p>
+				<p class="col-6 card-text">Type :</p>
+				<p class="col-6 card-text">{{ jourFerieModal.type }}</p>
 
-					<p class="col-6 card-text">Commentaire :</p>
-					<p class="col-6 card-text">{{jourFerieModal.commentaire}}</p>
-				</div>
-				<div class="row justify-content-center">
-					<div class="center">
-						<button class="btn btn-danger" (click)="quitterModifModal();">Annuler</button>
-						<button class="btn btn-success" (click)="submit(jourFerieModal)">Valider</button>
-					</div>
+				<p class="col-6 card-text">Commentaire :</p>
+				<p class="col-6 card-text">{{jourFerieModal.commentaire}}</p>
+			</div>
+			<div class="row justify-content-center">
+				<div class="center">
+					<button class="btn btn-danger" (click)="quitterModifModal();">Annuler</button>
+					<button class="btn btn-success" (click)="submit(jourFerieModal)">Valider</button>
 				</div>
 			</div>
+			<div class="modal-footer">
+				<div class="alert alert-danger text-center" *ngIf="messageErreur">
+					<p><strong>{{ messageErreur }}</strong></p>
+				</div>
+				<div class="alert alert-success text-center" *ngIf="messageSucces">
+					<p><strong>{{ messageSucces }}</strong></p>
+				</div>
+			</div>
+
 		</div>
 	</div>
+</div>

@@ -25,7 +25,7 @@
                     <th scope="col" sortable="type" (sort)="onSort($event)">Type</th>
                     <th scope="col" sortable="date" (sort)="onSort($event)">Jour</th>
                     <th scope="col" sortable="commentaire" (sort)="onSort($event)">Commentaires</th>
-                    <th scope="col">Actions</th>
+                    <th *ngIf="verifRoleAdmin()" scope="col">Actions</th>
                 </tr>
             </thead>
             <tbody>
@@ -37,7 +37,7 @@
                     </td>
 
                     <td>{{ absenceCollective.commentaire }}</td>
-                    <td class="col-8 row">
+                    <td *ngIf="verifRoleAdmin()" class="col-8 row">
                         <div class="col-4">
                             <a (click)="chargerModifModal(absenceCollective);"> <i class="fa fa-pencil-square-o" aria-hidden="true">
 								</i></a>
