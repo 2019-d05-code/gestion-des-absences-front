@@ -40,6 +40,7 @@ import { VisuDemandeAbsenceComponent } from './visu-demande-absence/visu-demande
 import { ChartsModule, WavesModule } from 'angular-bootstrap-md';
 import { ModifJourFerieComponent } from './modif-jour-ferie/modif-jour-ferie.component';
 
+
 @NgModule({
 	declarations: [
 		AppComponent,
@@ -85,6 +86,7 @@ import { ModifJourFerieComponent } from './modif-jour-ferie/modif-jour-ferie.com
 		multi: true,
 	}],
 	bootstrap: [AppComponent],
+	entryComponents: [ModifJourFerieComponent],
 
 
 })

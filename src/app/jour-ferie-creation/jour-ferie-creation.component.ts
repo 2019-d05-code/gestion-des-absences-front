@@ -115,7 +115,7 @@ export class JourFerieCreationComponent implements OnInit {
 		this._service.ajoutAbsenceCollective(this.absenceCollective)
 			.subscribe(
 				() => {
-					this.messageSucces = 'Votre demande d\'absence collective a été enregistrée avce succès';
+					this.messageSucces = 'Votre demande d\'absence collective a été enregistrée avec succès';
 					setTimeout(
 						() => this.messageSucces = undefined,
 						7000

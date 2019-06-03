@@ -1,14 +1,12 @@
 import { Component, OnInit, Input, Directive, EventEmitter, Output, ViewChildren, QueryList, LOCALE_ID } from '@angular/core';
 
 import { JourFerieService } from './jour-ferie.service';
-import { DemandeAbsence } from '../models/DemandeAbsence';
-import { TypeDemande } from '../models/TypeDemande';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { ModifDemandeAbsenceComponent } from '../modif-demande-absence/modif-demande-absence.component';
 import { SuppressionDemandeAbsenceComponent } from '../suppression-demande-absence/suppression-demande-absence.component';
 import { VisuDemandeAbsenceComponent } from '../visu-demande-absence/visu-demande-absence.component';
 import { NgbdSortableHeader } from '../gestion-absences/gestion-absences.component';
 import { JourFerie } from '../models/JourFerie';
+import { ModifJourFerieComponent } from '../modif-jour-ferie/modif-jour-ferie.component';
 
 // Création des types pour le tri du tableau
 export type SortDirection = 'asc' | 'desc' | '';
@@ -89,16 +87,15 @@ export class JourFerieVisuComponent implements OnInit {
 	// charger la modal de suppresion au click
 
 	chargerModifModal(absenceCollective: JourFerie) {
-		const myModal = this.modal.open(ModifDemandeAbsenceComponent);
-		myModal.componentInstance.demandeModal = absenceCollective;
+
+		const myModal = this.modal.open(ModifJourFerieComponent);
+		myModal.componentInstance.jourFerieModal = absenceCollective;
 
 		myModal.result.then((result) => {
 			console.log(result);
 		}, (reason) => {
 			console.log(reason);
 		});
-
-
 
 	}
 
