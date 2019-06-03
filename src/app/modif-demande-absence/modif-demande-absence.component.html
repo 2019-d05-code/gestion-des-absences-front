@@ -96,7 +96,7 @@
             <!--Ajouter un bouton Valider désactivé tant que le formulaire n'est pas valide-->
             <!--TODO-->
 
-            <button [hidden]="!edition" type="button" class="btn btn-success" [disabled]="formCtrl.invalid" (click)="submit(demandeModal)">Valider</button>
+            <button [hidden]="!edition" type="button" class="btn btn-success" [disabled]="formCtrl.invalid" (click)="submit()">Valider</button>
 
             <div class="alert alert-danger text-center" *ngIf="messageErreur">
                 <p><strong>{{ messageErreur | json }}</strong></p>
