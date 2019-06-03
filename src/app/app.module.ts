@@ -12,7 +12,6 @@ import { ModifDemandeAbsenceComponent } from './modif-demande-absence/modif-dema
 import { AccueilComponent } from './accueil/accueil.component';
 import { CreerDemandeAbsenceComponent } from './creer-demande-absence/creer-demande-absence.component';
 import { JourFerieCreationComponent } from './jour-ferie-creation/jour-ferie-creation.component';
-import { JourFerieModifComponent } from './jour-ferie-modif/jour-ferie-modif.component';
 import { JourFerieVisuComponent } from './jour-ferie-visu/jour-ferie-visu.component';
 import { ManagerVueDptCollabComponent } from './manager-vue-dpt-collab/manager-vue-dpt-collab.component';
 import { ManagerVueHistogrammeComponent } from './manager-vue-histogramme/manager-vue-histogramme.component';
@@ -49,7 +48,6 @@ import { ModifJourFerieComponent } from './modif-jour-ferie/modif-jour-ferie.com
 		AccueilComponent,
 		CreerDemandeAbsenceComponent,
 		JourFerieCreationComponent,
-		JourFerieModifComponent,
 		JourFerieVisuComponent,
 		ManagerVueDptCollabComponent,
 		ManagerVueSynthetiqueComponent,
