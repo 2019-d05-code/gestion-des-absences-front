@@ -159,7 +159,7 @@ export class JourFerieCreationComponent implements OnInit {
 
 			let granted = false;
 
-			const roleManager = this.collegueConnecte.roles.filter(role => role === 'ROLE_ADMIN');
+			const roleManager = this.collegueConnecte.roles.filter(role => role === 'ROLE_ADMINISTRATEUR');
 
 			if (roleManager.length > 0) {
 				granted = true;
