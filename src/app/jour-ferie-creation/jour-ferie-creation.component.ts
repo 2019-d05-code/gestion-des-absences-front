@@ -1,9 +1,10 @@
-import { Component, OnInit, Injectable } from '@angular/core';
+import { Component, OnInit, Injectable, Input } from '@angular/core';
 import { NgbDateParserFormatter, NgbDateStruct, NgbDatepickerI18n, NgbDate, NgbCalendar } from '@ng-bootstrap/ng-bootstrap';
 import { AuthService } from '../auth/auth.service';
 import { JourFerie } from '../models/JourFerie';
 import { JourFerieService } from '../jour-ferie-visu/jour-ferie.service';
 import { Router } from '@angular/router';
+import { Collegue } from '../auth/auth.domains';
 
 const I18N_VALUES = {
 	'fr': {
@@ -93,6 +94,9 @@ export class NgbDateFRParserFormatter extends NgbDateParserFormatter {
 		{ provide: NgbDateParserFormatter, useClass: NgbDateFRParserFormatter }]
 })
 export class JourFerieCreationComponent implements OnInit {
+	collegueConnecte: Collegue;
+	@Input() connecte: boolean;
+
 	model: NgbDateStruct;
 	absenceCollective: JourFerie = new JourFerie(new Date(), undefined);
 	date: any;
@@ -101,11 +105,25 @@ export class JourFerieCreationComponent implements OnInit {
 
 	isDisabled = (date: NgbDate, current: { month: number }) => date.month !== current.month;
 	isWeekend = (date: NgbDate) => this.calendar.getWeekday(date) >= 6;
-	constructor(private _service: JourFerieService, private _serviceAuthService: AuthService,
+	constructor(private _service: JourFerieService, private _authSrv: AuthService,
 		private calendar: NgbCalendar, public router: Router) {
 	}
 
-	ngOnInit() { }
+	ngOnInit() {
+		this._authSrv.collegueConnecteObs
+			.subscribe(
+				collegue => {
+					this.collegueConnecte = collegue;
+					if (this.collegueConnecte.estAnonyme()) {
+						this.connecte = false;
+					} else {
+						this.connecte = true;
+					}
+				},
+				() => this.connecte = false
+
+			);
+	}
 
 	/*
 	* Transmet la demande d'absence vers le back
@@ -135,4 +153,20 @@ export class JourFerieCreationComponent implements OnInit {
 			);
 
 	}
+
+	verifRoleAdmin(): boolean {
+		if (this.connecte) {
+
+			let granted = false;
+
+			const roleManager = this.collegueConnecte.roles.filter(role => role === 'ROLE_ADMIN');
+
+			if (roleManager.length > 0) {
+				granted = true;
+
+			}
+			return granted;
+		}
+	}
+
 }
